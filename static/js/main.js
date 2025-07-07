@@ -3,36 +3,108 @@ document.addEventListener('DOMContentLoaded', () => {
     feather.replace();
     gsap.registerPlugin(ScrollTrigger);
 
-    // --- Fungsionalitas Hamburger Menu (Baru) ---
+    // --- Animasi Grid Foto Profil ---
+    function createRevealGrid() {
+        const container = document.querySelector('.reveal-overlay');
+        if (!container) return;
+        const gridSize = 10; 
+        for (let i = 0; i < gridSize * gridSize; i++) {
+            const div = document.createElement('div');
+            div.classList.add('reveal-grid-block');
+            container.appendChild(div);
+        }
+    }
+    createRevealGrid();
+
+    // --- FUNGSI TERJEMAHAN BAHASA ---
+    const langSwitcher = document.querySelector('.lang-switcher');
+    
+    function switchLanguage(lang) {
+        if (!lang || !translations[lang]) return;
+
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.dataset.translateKey;
+            if (translations[lang][key] !== undefined) {
+                if (el.tagName === 'SPAN' && (el.parentElement.tagName === 'BUTTON' || el.parentElement.tagName === 'A')) {
+                    el.textContent = translations[lang][key];
+                } else {
+                    el.innerHTML = translations[lang][key];
+                }
+            }
+        });
+        
+        document.getElementById('current-lang').textContent = lang.toUpperCase();
+        localStorage.setItem('selectedLanguage', lang);
+        
+        feather.replace();
+
+        const heroTitle = document.querySelector('[data-text-split]');
+        if(heroTitle) {
+            splitText('[data-text-split]');
+            gsap.fromTo('.hero-title .char', 
+                { opacity: 0, y: 20 },
+                {
+                    opacity: 1, y: 0, scale: 1, rotateZ: 0,
+                    stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
+                }
+            );
+        }
+    }
+
+    if (langSwitcher) {
+        const langButton = langSwitcher.querySelector('.lang-button');
+        const langDropdown = langSwitcher.querySelector('.lang-dropdown');
+        
+        langButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langSwitcher.classList.toggle('active');
+        });
+        
+        langDropdown.addEventListener('click', (e) => {
+            e.preventDefault();
+            const link = e.target.closest('a');
+            if (link) {
+                const lang = link.dataset.lang;
+                switchLanguage(lang);
+                langSwitcher.classList.remove('active');
+            }
+        });
+    }
+
+    document.addEventListener('click', () => {
+        if (langSwitcher && langSwitcher.classList.contains('active')) {
+            langSwitcher.classList.remove('active');
+        }
+    });
+
+    const savedLang = localStorage.getItem('selectedLanguage') || 'id';
+    setTimeout(() => switchLanguage(savedLang), 100);
+
+    // --- Fungsionalitas UI/UX ---
     const hamburger = document.querySelector('.hamburger-menu');
     const navMenu = document.querySelector('.nav-menu');
-    const navLinksMobile = document.querySelectorAll('.nav-menu .nav-link');
+    const navLinks = document.querySelectorAll('.nav-menu .nav-link');
 
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
     }
 
-    // Fungsi untuk menutup menu saat link di-klik
-    const closeMenu = () => {
-        if (navMenu.classList.contains('active')) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    };
-
-    navLinksMobile.forEach(link => link.addEventListener('click', closeMenu));
-
-
     // --- Animasi Teks Profesional ---
-    const splitText = (selector) => {
+    function splitText(selector) {
         const elem = document.querySelector(selector);
         if (!elem) return;
-        const text = elem.innerText;
-        const words = text.split(' ');
+        const text = elem.textContent;
         elem.innerHTML = '';
+        const words = text.split(' ');
         words.forEach((word, wordIndex) => {
             const wordDiv = document.createElement('div');
             wordDiv.className = 'word';
@@ -48,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-    splitText('[data-text-split]');
 
     // --- Animasi Mouse Parallax ---
     const hero = document.querySelector('.hero');
@@ -64,32 +135,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Animasi Entrance Utama ---
-    const heroTl = gsap.timeline({ delay: 0.5 });
-    heroTl.to('.hero-title .char', { opacity: 1, y: 0, scale: 1, rotateZ: 0, stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8 })
+    const entranceTl = gsap.timeline({ delay: 0.5 });
+    entranceTl.to('.hero-title .char', {
+        opacity: 1, y: 0, scale: 1, rotateZ: 0,
+        stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
+    })
     .from('.hero-subtitle', { opacity: 0, y: 20, ease: 'power3.out' }, '-=0.6')
-    .to('.image-reveal-box', { scaleX: 0, transformOrigin: 'right', duration: 1.2, ease: 'power4.inOut' }, '-=1');
+    // ✅ DIUBAH: Animasi garis bawah dijalankan oleh GSAP
+    .to('.hero-subtitle::after', {
+        scaleX: 1,
+        duration: 1.2,
+        ease: 'expo.out'
+    }, "-=0.8")
+    .from('.hero-buttons', { opacity: 0, y: 20, ease: 'power3.out' }, '-=1')
+    .to('.reveal-grid-block', { 
+        scale: 0,
+        ease: 'power3.inOut',
+        stagger: { amount: 1, from: 'center' }
+    }, '-=1.2');
 
-    // --- Animasi Header saat scroll ---
+    // --- Animasi & Kontrol Scroll ---
     const header = document.querySelector('.main-header');
     if (header) {
         ScrollTrigger.create({
-            start: 'top -80', end: 99999, toggleClass: { className: 'scrolled', target: header }
+            start: 'top -80',
+            end: 99999,
+            toggleClass: { className: 'scrolled', target: header }
         });
     }
     
-    // --- Navbar Aktif Saat Scroll ---
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-menu .nav-link');
-
     function updateActiveNav() {
         let currentSection = 'home';
-        sections.forEach(section => {
+        document.querySelectorAll('section[id]').forEach(section => {
             const sectionTop = section.offsetTop;
             if (pageYOffset >= sectionTop - (header.clientHeight + 50)) {
                 currentSection = section.getAttribute('id');
             }
         });
-        navLinks.forEach(link => {
+        document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
             link.classList.remove('active');
             const href = link.getAttribute('href');
             if (href && href.substring(1) === currentSection) {
@@ -164,17 +247,25 @@ document.addEventListener('DOMContentLoaded', () => {
         return { openImage, openVideo };
     }
 
-    // --- Animasi Scroll ---
-    const animateOnScroll = (selector, y = 50, stagger = 0.1) => {
-        const elem = document.querySelectorAll(selector);
-        if (!elem || elem.length === 0) return;
-        
-        gsap.from(elem, {
-            scrollTrigger: { trigger: elem[0].closest('section'), start: 'top 85%', toggleActions: 'play none none none' },
-            opacity: 0, y: y, duration: 1, ease: 'power3.out', stagger: stagger
-        });
-    };
-    
-    // Animasi untuk semua elemen umum
-    animateOnScroll('.section-title, .section-intro, .education-card, .work-card, .org-card, .project-card, .skills-category, .cert-link-container, .achievement-item', 50, 0.1);
+    // --- ANIMASI SCROLL (Swipe In & Stay) - VERSI FINAL STABIL ---
+    document.querySelectorAll('section:not(.hero)').forEach(section => {
+        const elementsToAnimate = section.querySelectorAll(
+            '.section-title, .about-content-wrapper, .education-card, .work-card, .org-card, .project-card, .achievement-item, .skills-container, .cert-link-container'
+        );
+
+        if (elementsToAnimate.length > 0) {
+             gsap.from(elementsToAnimate, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power3.out'
+            });
+        }
+    });
 });

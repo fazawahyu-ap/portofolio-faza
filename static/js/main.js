@@ -100,6 +100,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'en';
     setTimeout(() => switchLanguage(savedLang), 100);
 
+    // --- PENGHITUNG PENGUNJUNG REAL-TIME (POLLING) ---
+    const visitorCountElement = document.getElementById('visitor-count-number');
+    if (visitorCountElement) {
+        // Buat ID unik untuk pengunjung ini
+        const visitorId = 'user_' + Date.now() + Math.random().toString(36).substring(2);
+        const API_BASE_URL = window.location.origin;
+
+        const sendPing = () => {
+            // Ping ke server untuk memberitahu kita masih online
+            // Menggunakan navigator.sendBeacon jika tersedia karena lebih andal saat halaman ditutup
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(`${API_BASE_URL}/api/ping`, JSON.stringify({ userId: visitorId }));
+            } else {
+                 fetch(`${API_BASE_URL}/api/ping`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: visitorId }),
+                    keepalive: true
+                });
+            }
+        };
+
+        const getCount = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/count`);
+                if (!response.ok) return;
+                const data = await response.json();
+                visitorCountElement.textContent = data.active_users || 1;
+            } catch (error) {
+                console.error('Gagal mengambil data pengunjung:', error);
+                visitorCountElement.textContent = '1';
+            }
+        };
+
+        // Jalankan pertama kali saat halaman dimuat
+        sendPing();
+        getCount();
+
+        // Atur interval untuk ping dan update
+        setInterval(sendPing, 15000); // Kirim ping setiap 15 detik
+        setInterval(getCount, 10000); // Perbarui jumlah setiap 10 detik
+
+        // Menambahkan event listener untuk saat pengguna akan meninggalkan halaman
+        window.addEventListener('unload', sendPing);
+    }
+
+
     // --- Fungsionalitas UI/UX ---
     const hamburger = document.querySelector('.hamburger-menu');
     const navMenu = document.querySelector('.nav-menu');

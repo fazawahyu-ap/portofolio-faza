@@ -961,3 +961,45 @@ section#achievements {
         padding-bottom: 6rem;
     }
 }
+
+.visitor-counter {
+    position: fixed;
+    top: 110px; /* Posisi vertikal di bawah header */
+    left: 2rem;  /* Diubah dari 'right' ke 'left' */
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-size: 0.9rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.visitor-counter:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.visitor-counter i {
+    width: 16px;
+    height: 16px;
+    color: var(--primary-color);
+}
+
+#visitor-count-number {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Penyesuaian untuk layar kecil */
+@media (max-width: 768px) {
+    .visitor-counter {
+        top: 100px;  /* Sesuaikan posisi untuk mobile */
+        left: 1rem;  /* Diubah dari 'right' ke 'left' */
+    }
+}

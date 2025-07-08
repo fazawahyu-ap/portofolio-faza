@@ -1,7 +1,51 @@
-from flask import Flask, render_template, json, request, jsonify
-import datetime
+import os
+import time
+import requests # Library untuk membuat HTTP request
+from flask import Flask, jsonify, request, render_template, json # Pastikan render_template & json diimpor
 
 app = Flask(__name__)
+
+# --- Konfigurasi untuk Penghitung Pengunjung Real-time ---
+KV_URL = os.getenv("KV_REST_API_URL")
+KV_TOKEN = os.getenv("KV_REST_API_TOKEN")
+HEADERS = {"Authorization": f"Bearer {KV_TOKEN}"} if KV_TOKEN else {}
+SESSION_TIMEOUT_SECONDS = 30
+DB_KEY = "active_users"
+
+def cleanup_inactive_users():
+    """Hapus pengguna yang sudah tidak aktif dari Vercel KV."""
+    if not KV_URL: return
+    
+    current_time = int(time.time())
+    timeout_threshold = current_time - SESSION_TIMEOUT_SECONDS
+    requests.post(f"{KV_URL}/zremrangebyscore/{DB_KEY}/-inf/{timeout_threshold}", headers=HEADERS)
+
+@app.route('/api/ping', methods=['POST'])
+def ping():
+    """Endpoint untuk pengguna 'melapor' bahwa mereka masih aktif."""
+    if not KV_URL: return jsonify({"error": "Vercel KV not configured"}), 500
+    
+    data = request.json
+    user_id = data.get('userId')
+    if user_id:
+        current_time = int(time.time())
+        requests.post(f"{KV_URL}/zadd/{DB_KEY}", json=[current_time, user_id], headers=HEADERS)
+        
+    return jsonify({"status": "ok"})
+
+@app.route('/api/count')
+def count():
+    """Endpoint untuk mendapatkan jumlah pengguna aktif."""
+    if not KV_URL: return jsonify({"active_users": 1})
+    
+    cleanup_inactive_users()
+    response = requests.get(f"{KV_URL}/zcard/{DB_KEY}", headers=HEADERS)
+    
+    if response.status_code == 200:
+        count = response.json().get("result", 0)
+        return jsonify({"active_users": max(1, count)})
+    else:
+        return jsonify({"active_users": 1})
 
 @app.route('/')
 def home():

@@ -9,6 +9,15 @@
     <script>const translations = {{ translations_json|safe }};</script>
 </head>
 <body>
+
+    <div id="preloader">
+        <div class="preloader-container">
+            <svg class="preloader-svg" viewBox="0 0 100 100">
+              <path d="M 50,5 A 45,45 0 0 1 95,50" stroke="#84E4C8" /> <path d="M 95,50 A 45,45 0 0 1 50,95" stroke="#F4D03F" /> <path d="M 50,95 A 45,45 0 0 1 5,50" stroke="#AED6F1" /> <path d="M 5,50 A 45,45 0 0 1 50,5" stroke="#F5B7B1" />
+              <circle class="preloader-dot" cx="50" cy="50" r="10"/>
+            </svg>
+        </div>
+    </div>
     <div class="lang-switcher">
         <button class="lang-button">
             <i data-feather="globe"></i>

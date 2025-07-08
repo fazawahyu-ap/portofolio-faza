@@ -1,3 +1,21 @@
+// === KODE BARU DIMULAI DI SINI ===
+// Skrip untuk mengontrol preloader
+document.body.classList.add('preloading'); // Mencegah scroll saat memuat
+
+const preloader = document.getElementById('preloader');
+
+// Gunakan window.addEventListener('load', ...) untuk menunggu semua resource (gambar, dll) dimuat
+window.addEventListener('load', () => {
+    if (preloader) {
+        // Tambahkan kelas untuk memicu transisi fade-out di CSS
+        preloader.classList.add('preloader-hidden');
+    }
+    // Hapus kelas 'preloading' dari body untuk mengizinkan scroll kembali
+    document.body.classList.remove('preloading');
+});
+// === KODE BARU SELESAI DI SINI ===
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Inisialisasi Awal ---
     feather.replace();
@@ -141,12 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
     })
     .from('.hero-subtitle', { opacity: 0, y: 20, ease: 'power3.out' }, '-=0.6')
-    // ✅ DIUBAH: Animasi garis bawah dijalankan oleh GSAP
-    .to('.hero-subtitle::after', {
-        scaleX: 1,
-        duration: 1.2,
-        ease: 'expo.out'
-    }, "-=0.8")
     .from('.hero-buttons', { opacity: 0, y: 20, ease: 'power3.out' }, '-=1')
     .to('.reveal-grid-block', { 
         scale: 0,

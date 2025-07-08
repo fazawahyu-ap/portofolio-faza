@@ -1,4 +1,72 @@
 /* ===== KODE CSS LENGKAP DIMULAI DI SINI ===== */
+
+/* === KODE BARU DIMULAI DI SINI === */
+/* Gaya untuk Preloader */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color); /* Menggunakan warna latar belakang tema */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Transisi untuk fade out */
+    transition: opacity 0.75s ease, visibility 0.75s ease;
+    visibility: visible;
+    opacity: 1;
+}
+
+#preloader.preloader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-svg {
+    width: 80px; /* Ukuran preloader */
+    height: 80px;
+    animation: preloader-spin 2.5s linear infinite;
+}
+
+/* Gaya untuk setiap segmen/garis lingkaran */
+.preloader-svg path {
+    fill: none;
+    stroke-width: 8; /* Ketebalan garis lingkaran */
+    stroke-linecap: round;
+}
+
+/* Gaya untuk titik di tengah */
+.preloader-dot {
+    fill: white; /* Warna titik */
+    /* Animasi titik yang membesar-kecil */
+    animation: preloader-pulse 1.8s ease-in-out infinite;
+    transform-origin: center center; /* Pastikan skala dari tengah */
+}
+
+
+/* Keyframes untuk animasi berputar */
+@keyframes preloader-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Keyframes untuk animasi membesar-kecil (pulse) */
+@keyframes preloader-pulse {
+    0%   { transform: scale(0.7); opacity: 0.7; }
+    50%  { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.7); opacity: 0.7; }
+}
+
+
+/* Mencegah scroll saat preloader aktif */
+body.preloading {
+    overflow: hidden;
+}
+/* === KODE BARU SELESAI DI SINI === */
+
+
 /* Definisi Palet Warna & Font */
 :root {
     --bg-color: #111827;
@@ -176,6 +244,21 @@ section[id] {
 .hero-title .char { display: inline-block; opacity: 0; transform: translateY(50px) scale(0.5) rotateZ(45deg); }
 .hero-subtitle { font-size: clamp(1.2rem, 4vw, 1.8rem); color: var(--primary-color); margin: 1rem 0; font-weight: 500; position: relative; display: inline-block; padding-bottom: 10px; }
 
+@keyframes animate-underline {
+    0% {
+        transform: scaleX(0);
+        transform-origin: left center;
+    }
+    50% {
+        transform: scaleX(1);
+        transform-origin: left center;
+    }
+    100% {
+        transform: scaleX(0);
+        transform-origin: right center;
+    }
+}
+
 .hero-subtitle::after {
     content: '';
     position: absolute;
@@ -184,8 +267,7 @@ section[id] {
     background-color: var(--primary-color);
     bottom: 0;
     left: 0;
-    transform-origin: left center;
-    transform: scaleX(0);
+    animation: animate-underline 4s ease-in-out infinite;
 }
 
 .hero-buttons {

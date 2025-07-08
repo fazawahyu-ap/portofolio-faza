@@ -1,20 +1,14 @@
-// === KODE BARU DIMULAI DI SINI ===
 // Skrip untuk mengontrol preloader
 document.body.classList.add('preloading'); // Mencegah scroll saat memuat
 
 const preloader = document.getElementById('preloader');
 
-// Gunakan window.addEventListener('load', ...) untuk menunggu semua resource (gambar, dll) dimuat
 window.addEventListener('load', () => {
     if (preloader) {
-        // Tambahkan kelas untuk memicu transisi fade-out di CSS
         preloader.classList.add('preloader-hidden');
     }
-    // Hapus kelas 'preloading' dari body untuk mengizinkan scroll kembali
     document.body.classList.remove('preloading');
 });
-// === KODE BARU SELESAI DI SINI ===
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- Inisialisasi Awal ---
@@ -103,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const savedLang = localStorage.getItem('selectedLanguage') || 'id';
+    const savedLang = localStorage.getItem('selectedLanguage') || 'en';
     setTimeout(() => switchLanguage(savedLang), 100);
 
     // --- Fungsionalitas UI/UX ---
@@ -124,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Animasi Teks Profesional ---
     function splitText(selector) {
         const elem = document.querySelector(selector);
         if (!elem) return;

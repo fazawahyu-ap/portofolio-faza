@@ -89,7 +89,9 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--surface-color);
+    background: rgba(31, 41, 55, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
     cursor: pointer;
@@ -140,6 +142,40 @@ body {
 .lang-dropdown a:hover {
     background-color: var(--primary-color);
     color: var(--bg-color);
+}
+
+/* Penghitung Pengunjung */
+.visitor-counter {
+    position: fixed;
+    top: 110px;
+    left: 2rem;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(31, 41, 55, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-size: 0.9rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.visitor-counter:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+.visitor-counter i {
+    width: 16px;
+    height: 16px;
+    color: var(--primary-color);
+}
+#visitor-count-number {
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 /* General Section Styling */
@@ -755,8 +791,8 @@ section#achievements {
 }
 
 .footer-content-wrapper {
-    display: flex;             /* Menggunakan Flexbox untuk layout */
-    align-items: flex-start;   /* PENTING: Meratakan item ke atas */
+    display: flex;
+    align-items: flex-start;
     gap: 4rem;
     max-width: 900px;
     margin: 0 auto 3rem auto;
@@ -764,11 +800,11 @@ section#achievements {
 }
 
 .footer-contact-info {
-    flex: 1; /* Mengatur proporsi kolom kiri */
+    flex: 1;
 }
 
 .footer-form-container {
-    flex: 1.5; /* Mengatur proporsi kolom kanan */
+    flex: 1.5;
 }
 
 .footer-contact-info .footer-cta {
@@ -875,6 +911,42 @@ section#achievements {
     transform: translateY(-2px);
 }
 
+/* Popup Bubble untuk Form */
+.popup-bubble {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translate(-50%, 10px);
+    background-color: rgba(27, 33, 42, 0.8);
+    color: var(--text-primary);
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+    z-index: 3000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    backdrop-filter: blur(10px);
+}
+.popup-bubble.success {
+    background-color: rgba(56, 182, 255, 0.8);
+    color: var(--bg-color);
+    border-color: var(--primary-color);
+    font-weight: 500;
+}
+.popup-bubble.error {
+    background-color: rgba(211, 47, 47, 0.8);
+    color: var(--text-primary);
+    border-color: #D32F2F;
+    font-weight: 500;
+}
+.popup-bubble.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+/* Media Queries */
 @media (max-width: 992px) {
     .skills-container { grid-template-columns: 1fr; }
     .nav-menu { display: none; }
@@ -887,119 +959,65 @@ section#achievements {
 }
 
 @media (max-width: 768px) {
-    .lang-switcher { right: 1rem; top: 100px; }
     .hamburger-menu.active .bar:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
     .hamburger-menu.active .bar:nth-child(2) { opacity: 0; }
     .hamburger-menu.active .bar:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
-    .nav-controls { gap: 0; }
     .nav-menu {
-        display: flex;
-        position: fixed;
-        left: 100%;
-        top: 0;
-        gap: 1.5rem;
-        flex-direction: column;
-        background-color: var(--surface-color);
-        width: 100%;
-        height: 100vh;
-        transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-        justify-content: center;
-        align-items: center;
-        padding: 2rem;
+        display: flex; position: fixed; left: 100%; top: 0;
+        gap: 1.5rem; flex-direction: column; background-color: var(--surface-color);
+        width: 100%; height: 100vh; transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        justify-content: center; align-items: center; padding: 2rem;
     }
     .nav-menu.active { left: 0; }
-
     .nav-link { font-size: 1.5rem; }
     .hero-content { flex-direction: column-reverse; text-align: center; }
-    .hero-buttons { justify-content: center; width: 100%; }
+        .hero-highlight {
+        justify-content: center; /* Ini akan menengahkan tombol highlight */
+    }
 
+    .hero-main-buttons {
+        justify-content: center;
+        width: 100%;
+    }
+    .hero-main-buttons { justify-content: center; width: 100%; }
     .education-timeline::before { left: 8px; }
     .education-card, .education-card:nth-child(odd), .education-card:nth-child(even) {
-        width: calc(100% - 40px);
-        margin: 0 0 2rem 40px;
-        align-self: flex-start;
+        width: calc(100% - 40px); margin: 0 0 2rem 40px; align-self: flex-start;
     }
-    .education-card::after, .education-card:nth-child(odd)::after, .education-card:nth-child(even)::after {
-        left: -49px;
-        right: auto;
-    }
-
+    .education-card::after, .education-card:nth-child(odd)::after, .education-card:nth-child(even)::after { left: -49px; right: auto; }
     .achievement-item { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
     .achievement-image-wrapper { width: 100%; height: 180px; }
-
-    .footer-content-wrapper {
-        flex-direction: column; 
-        gap: 3rem;
-        text-align: center;
-        align-items: center; 
+    .footer-content-wrapper { flex-direction: column; gap: 3rem; text-align: center; align-items: center; }
+    .footer-contact-info, .footer-form-container { width: 100%; text-align: center; }
+    .footer-contact-info .footer-cta, .footer-contact-info .footer-email { text-align: center; }
+    .footer-contact-info .social-links { justify-content: center; }
+    section { padding: 6rem 1.5rem; }
+    
+    .lang-switcher {
+        right: 1rem;
+        top: 110px;
     }
 
-    .footer-contact-info,
-    .footer-form-container {
-        width: 100%; 
-        text-align: center;
+    .lang-button {
+        padding: 0.3rem 0.7rem; 
+        font-size: 0.75rem;     
     }
 
-    .footer-contact-info .footer-cta,
-    .footer-contact-info .footer-email {
-        text-align: center;
+    .lang-button i {
+        width: 12px;          
+        height: 12px;
     }
-
-    .footer-contact-info .social-links {
-        justify-content: center;
-    }
-
-    section {
-        padding: 6rem 1.5rem;
-    }
-
-    section#about,
-    section#certificates,
-    section#achievements,
-    section#projects {
-        padding-top: 6rem;
-        padding-bottom: 6rem;
-    }
-}
-
-.visitor-counter {
-    position: fixed;
-    top: 110px; /* Posisi vertikal di bawah header */
-    left: 2rem;  /* Diubah dari 'right' ke 'left' */
-    z-index: 1001;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 0.6rem 1.2rem;
-    border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    font-size: 0.9rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.visitor-counter:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-}
-
-.visitor-counter i {
-    width: 16px;
-    height: 16px;
-    color: var(--primary-color);
-}
-
-#visitor-count-number {
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-/* Penyesuaian untuk layar kecil */
-@media (max-width: 768px) {
+    
     .visitor-counter {
-        top: 100px;  /* Sesuaikan posisi untuk mobile */
-        left: 1rem;  /* Diubah dari 'right' ke 'left' */
+        top: 110px;
+        left: 1rem;
+        padding: 0.3rem 0.7rem; 
+        font-size: 0.75rem;     
     }
+
+    .visitor-counter i {
+        width: 12px;           
+        height: 12px;
+    }
+
 }

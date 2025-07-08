@@ -33,53 +33,34 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function switchLanguage(lang) {
         if (!lang || !translations[lang]) return;
-
-        // Template HTML untuk logo Python
         const pythonLogoHTML = `<img src="static/img/python-logo.png" alt="Python Logo" class="skill-logo">`;
-
         document.querySelectorAll('[data-translate-key]').forEach(el => {
             const key = el.dataset.translateKey;
             if (translations[lang][key] !== undefined) {
-                // Ambil teks terjemahan asli
                 let translatedText = translations[lang][key];
-
-                // Periksa dan ganti placeholder dengan HTML gambar
                 if (translatedText.includes('#PYTHON_LOGO#')) {
                     translatedText = translatedText.replace('#PYTHON_LOGO#', pythonLogoHTML);
                 }
-
-                // Set konten elemen dengan teks yang sudah diproses
                 el.innerHTML = translatedText;
             }
         });
-        
         document.getElementById('current-lang').textContent = lang.toUpperCase();
         localStorage.setItem('selectedLanguage', lang);
-        
         feather.replace();
-
         const heroTitle = document.querySelector('[data-text-split]');
         if(heroTitle) {
             splitText('[data-text-split]');
-            gsap.fromTo('.hero-title .char', 
-                { opacity: 0, y: 20 },
-                {
-                    opacity: 1, y: 0, scale: 1, rotateZ: 0,
-                    stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
-                }
-            );
+            gsap.fromTo('.hero-title .char', { opacity: 0, y: 20 }, {
+                opacity: 1, y: 0, scale: 1, rotateZ: 0,
+                stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
+            });
         }
     }
 
     if (langSwitcher) {
         const langButton = langSwitcher.querySelector('.lang-button');
         const langDropdown = langSwitcher.querySelector('.lang-dropdown');
-        
-        langButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langSwitcher.classList.toggle('active');
-        });
-        
+        langButton.addEventListener('click', (e) => { e.stopPropagation(); langSwitcher.classList.toggle('active'); });
         langDropdown.addEventListener('click', (e) => {
             e.preventDefault();
             const link = e.target.closest('a');
@@ -103,49 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- PENGHITUNG PENGUNJUNG REAL-TIME (POLLING) ---
     const visitorCountElement = document.getElementById('visitor-count-number');
     if (visitorCountElement) {
-        // Buat ID unik untuk pengunjung ini
         const visitorId = 'user_' + Date.now() + Math.random().toString(36).substring(2);
         const API_BASE_URL = window.location.origin;
-
-        const sendPing = () => {
-            // Ping ke server untuk memberitahu kita masih online
-            // Menggunakan navigator.sendBeacon jika tersedia karena lebih andal saat halaman ditutup
-            if (navigator.sendBeacon) {
-                navigator.sendBeacon(`${API_BASE_URL}/api/ping`, JSON.stringify({ userId: visitorId }));
-            } else {
-                 fetch(`${API_BASE_URL}/api/ping`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userId: visitorId }),
-                    keepalive: true
-                });
-            }
-        };
-
-        const getCount = async () => {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/count`);
-                if (!response.ok) return;
-                const data = await response.json();
-                visitorCountElement.textContent = data.active_users || 1;
-            } catch (error) {
-                console.error('Gagal mengambil data pengunjung:', error);
-                visitorCountElement.textContent = '1';
-            }
-        };
-
-        // Jalankan pertama kali saat halaman dimuat
+        const sendPing = () => { if (navigator.sendBeacon) { navigator.sendBeacon(`${API_BASE_URL}/api/ping`, JSON.stringify({ userId: visitorId })); } else { fetch(`${API_BASE_URL}/api/ping`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: visitorId }), keepalive: true }); } };
+        const getCount = async () => { try { const response = await fetch(`${API_BASE_URL}/api/count`); if (!response.ok) return; const data = await response.json(); visitorCountElement.textContent = data.active_users || 1; } catch (error) { console.error('Gagal mengambil data pengunjung:', error); visitorCountElement.textContent = '1'; } };
         sendPing();
         getCount();
-
-        // Atur interval untuk ping dan update
-        setInterval(sendPing, 15000); // Kirim ping setiap 15 detik
-        setInterval(getCount, 10000); // Perbarui jumlah setiap 10 detik
-
-        // Menambahkan event listener untuk saat pengguna akan meninggalkan halaman
+        setInterval(sendPing, 15000);
+        setInterval(getCount, 10000);
         window.addEventListener('unload', sendPing);
     }
-
 
     // --- Fungsionalitas UI/UX ---
     const hamburger = document.querySelector('.hamburger-menu');
@@ -153,16 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-menu .nav-link');
 
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
+        hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active'); });
+        navLinks.forEach(link => { link.addEventListener('click', () => { hamburger.classList.remove('active'); navMenu.classList.remove('active'); }); });
     }
 
     function splitText(selector) {
@@ -194,34 +134,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const { clientX, clientY } = e;
             const x = (clientX / window.innerWidth - 0.5) * 2;
             const y = (clientY / window.innerHeight - 0.5) * 2;
-            gsap.to('.hero-image-container', {
-                x: -x * 25, y: -y * 25, rotationY: x * 15, rotationX: -y * 15, duration: 1, ease: 'power3.out'
-            });
+            gsap.to('.hero-image-container', { x: -x * 25, y: -y * 25, rotationY: x * 15, rotationX: -y * 15, duration: 1, ease: 'power3.out' });
         });
     }
 
     // --- Animasi Entrance Utama ---
     const entranceTl = gsap.timeline({ delay: 0.5 });
-    entranceTl.to('.hero-title .char', {
-        opacity: 1, y: 0, scale: 1, rotateZ: 0,
-        stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
-    })
+    entranceTl.to('.hero-title .char', { opacity: 1, y: 0, scale: 1, rotateZ: 0, stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8 })
     .from('.hero-subtitle', { opacity: 0, y: 20, ease: 'power3.out' }, '-=0.6')
     .from('.hero-buttons', { opacity: 0, y: 20, ease: 'power3.out' }, '-=1')
-    .to('.reveal-grid-block', { 
-        scale: 0,
-        ease: 'power3.inOut',
-        stagger: { amount: 1, from: 'center' }
-    }, '-=1.2');
+    .to('.reveal-grid-block', { scale: 0, ease: 'power3.inOut', stagger: { amount: 1, from: 'center' } }, '-=1.2');
 
     // --- Animasi & Kontrol Scroll ---
     const header = document.querySelector('.main-header');
     if (header) {
-        ScrollTrigger.create({
-            start: 'top -80',
-            end: 99999,
-            toggleClass: { className: 'scrolled', target: header }
-        });
+        ScrollTrigger.create({ start: 'top -80', end: 99999, toggleClass: { className: 'scrolled', target: header } });
     }
     
     function updateActiveNav() {
@@ -271,15 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextBtn = modalOverlay.querySelector('.slider-btn.next');
         let currentImages = [];
         let currentIndex = 0;
-
         const updateImage = () => { if (currentImages.length > 0) sliderImage.src = `static/img/${currentImages[currentIndex]}`; };
         const closeModal = () => modalOverlay.classList.remove('active');
-
         prevBtn?.addEventListener('click', () => { currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length; updateImage(); });
         nextBtn?.addEventListener('click', () => { currentIndex = (currentIndex + 1) % currentImages.length; updateImage(); });
         modalCloseBtn?.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-
         return {
             open: (imagesData) => {
                 try {
@@ -296,15 +220,63 @@ document.addEventListener('DOMContentLoaded', () => {
         const videoPlayer = modalOverlay.querySelector('.modal-video-player');
         const videoElement = videoPlayer.querySelector('video');
         const galleryModal = initGalleryModal(modalOverlay);
-
         const openImage = (imagesData) => { imageSlider.style.display = 'block'; videoPlayer.style.display = 'none'; galleryModal.open(imagesData); };
         const openVideo = (videoFile) => { imageSlider.style.display = 'none'; videoPlayer.style.display = 'block'; videoElement.src = `static/video/${videoFile}`; videoElement.controls = true; modalOverlay.classList.add('active'); };
         const closeModalAndResetVideo = () => { if (!videoElement.paused) videoElement.pause(); videoElement.currentTime = 0; videoElement.src = ""; };
-
         modalOverlay.querySelector('.modal-close').addEventListener('click', closeModalAndResetVideo);
         modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModalAndResetVideo(); });
-
         return { openImage, openVideo };
+    }
+
+    // --- FORM SUBMISSION DENGAN POPUP BUBBLE ---
+    const contactForm = document.getElementById('contact-form');
+    const popupBubble = document.getElementById('form-popup-bubble');
+    let popupTimer;
+
+    function showPopup(message, isSuccess) {
+        if (!popupBubble) return;
+        
+        clearTimeout(popupTimer);
+
+        popupBubble.textContent = message;
+        popupBubble.className = 'popup-bubble'; // Reset kelas
+        popupBubble.classList.add(isSuccess ? 'success' : 'error');
+        
+        popupBubble.classList.add('active');
+        
+        popupTimer = setTimeout(() => {
+            popupBubble.classList.remove('active');
+        }, 4000);
+    }
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const data = new FormData(form);
+
+        showPopup("Sending message...", true);
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                showPopup("Message sent successfully. Thank you!", true);
+                form.reset();
+            } else {
+                showPopup("Oops! Something went wrong.", false);
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            showPopup("Oops! A network error occurred.", false);
+        }
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", handleSubmit);
     }
 
     // --- ANIMASI SCROLL (Swipe In & Stay) - VERSI FINAL STABIL ---
@@ -328,48 +300,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-
-    const contactForm = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
-
-    async function handleSubmit(event) {
-        event.preventDefault(); // Mencegah form pindah halaman
-        
-        const form = event.target;
-        const data = new FormData(form);
-        
-        // Tampilkan status "mengirim"
-        formStatus.innerHTML = 'Mengirim...';
-        formStatus.style.color = 'var(--text-secondary)';
-
-        try {
-            const response = await fetch(form.action, {
-                method: form.method,
-                body: data,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                // Jika sukses
-                formStatus.innerHTML = "Pesan berhasil terkirim. Terima kasih!";
-                formStatus.style.color = 'var(--primary-color)';
-                form.reset(); // Mengosongkan isian form
-            } else {
-                // Jika ada error dari server
-                formStatus.innerHTML = "Oops! Terjadi masalah saat mengirim pesan.";
-                formStatus.style.color = '#ff6b6b';
-            }
-        } catch (error) {
-            // Jika ada error jaringan
-            console.error('Error submitting form:', error);
-            formStatus.innerHTML = "Oops! Terjadi masalah jaringan.";
-            formStatus.style.color = '#ff6b6b';
-        }
-    }
-
-    if (contactForm) {
-        contactForm.addEventListener("submit", handleSubmit);
-    }
 });

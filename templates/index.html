@@ -19,6 +19,7 @@
             </svg>
         </div>
     </div>
+
     <div class="lang-switcher">
         <button class="lang-button">
             <i data-feather="globe"></i>
@@ -29,12 +30,12 @@
             <li><a href="#" data-lang="id">ID</a></li>
             <li><a href="#" data-lang="en">EN</a></li>
         </ul>
-        <div class="visitor-counter">
-            <i data-feather="users"></i>
-            <span id="visitor-count-number">1</span>
-            <span class="visitor-text">Online</span>
-        </div>
+    </div>
     
+    <div class="visitor-counter">
+        <i data-feather="users"></i>
+        <span id="visitor-count-number">1</span>
+        <span class="visitor-text">Online</span>
     </div>
     
     <header class="main-header">
@@ -337,51 +338,41 @@
         </div>
     </div>
 
-<footer class="main-footer">
-    <div class="footer-content-wrapper">
-        <div class="footer-contact-info">
-            <p class="footer-cta" data-translate-key="footer_cta"></p>
-            <a href="mailto:fazawahyu10@gmail.com" class="footer-email">fazawahyu10@gmail.com</a>
-            <div class="social-links">
-                <a href="https://www.instagram.com/faza_wap/" target="_blank" aria-label="Instagram"><i data-feather="instagram"></i></a>
-                <a href="mailto:fazawahyu10@gmail.com" aria-label="Email"><i data-feather="mail"></i></a>
-                <a href="https://www.linkedin.com/in/faza-wap/" target="_blank" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
+    <footer class="main-footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-contact-info">
+                <p class="footer-cta" data-translate-key="footer_cta"></p>
+                <a href="mailto:fazawahyu10@gmail.com" class="footer-email">fazawahyu10@gmail.com</a>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/faza_wap/" target="_blank" aria-label="Instagram"><i data-feather="instagram"></i></a>
+                    <a href="mailto:fazawahyu10@gmail.com" aria-label="Email"><i data-feather="mail"></i></a>
+                    <a href="https://www.linkedin.com/in/faza-wap/" target="_blank" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-form-container">
+                <h4 class="form-title" data-translate-key="footer_form_title"></h4>
+                <form id="contact-form" action="https://formspree.io/f/mqabvdan" method="POST" class="footer-form">
+                    <input type="email" name="email" class="form-input" placeholder="Your Email" required>
+                    <textarea name="message" class="form-textarea" placeholder="Enter your message here..." required></textarea>
+                    <button type="submit" class="btn btn-submit">
+                        <span data-translate-key="footer_form_button"></span>
+                    </button>
+                </form>
             </div>
         </div>
-
-        <div class="footer-form-container">
-            <h4 class="form-title" data-translate-key="footer_form_title"></h4>
-            <form id="contact-form" action="https://formspree.io/f/mqabvdan" method="POST" class="footer-form">
-
-                <input 
-                    type="email" 
-                    name="email"
-                    class="form-input"
-                    placeholder="Your Email"
-                    required>
-
-                <textarea 
-                    name="message" 
-                    class="form-textarea" 
-                    placeholder="Enter your message here..." 
-                    required></textarea>
-
-                <button type="submit" class="btn btn-submit">
-                    <span data-translate-key="footer_form_button"></span>
-                </button>
-                
-                <div id="form-status" style="margin-top: 1rem; text-align: center;"></div>
-            </form>
-        </div>
-    </div>
-    <p class="copyright">&copy; 2025 - <span data-translate-key="footer_copyright"></span></p>
-</footer>
+        <p class="copyright">&copy; 2025 - <span data-translate-key="footer_copyright"></span></p>
+    </footer>
     
+    <div id="form-popup-bubble" class="popup-bubble"></div>
+
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
-        feather.replace();
+        window.addEventListener('load', () => {
+            feather.replace();
+        });
     </script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>

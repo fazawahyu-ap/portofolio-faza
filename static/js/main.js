@@ -34,20 +34,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     createRevealGrid();
 
-    // --- FUNGSI TERJEMAHAN BAHASA ---
+    // --- FUNGSI TERJEMAHAN BAHASA (DIPERBARUI) ---
     const langSwitcher = document.querySelector('.lang-switcher');
     
     function switchLanguage(lang) {
         if (!lang || !translations[lang]) return;
 
+        // Template HTML untuk logo Python
+        const pythonLogoHTML = `<img src="static/img/python-logo.png" alt="Python Logo" class="skill-logo">`;
+
         document.querySelectorAll('[data-translate-key]').forEach(el => {
             const key = el.dataset.translateKey;
             if (translations[lang][key] !== undefined) {
-                if (el.tagName === 'SPAN' && (el.parentElement.tagName === 'BUTTON' || el.parentElement.tagName === 'A')) {
-                    el.textContent = translations[lang][key];
-                } else {
-                    el.innerHTML = translations[lang][key];
+                // Ambil teks terjemahan asli
+                let translatedText = translations[lang][key];
+
+                // Periksa dan ganti placeholder dengan HTML gambar
+                if (translatedText.includes('#PYTHON_LOGO#')) {
+                    translatedText = translatedText.replace('#PYTHON_LOGO#', pythonLogoHTML);
                 }
+
+                // Set konten elemen dengan teks yang sudah diproses
+                el.innerHTML = translatedText;
             }
         });
         

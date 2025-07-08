@@ -1,6 +1,3 @@
-/* ===== KODE CSS LENGKAP DIMULAI DI SINI ===== */
-
-/* === KODE BARU DIMULAI DI SINI === */
 /* Gaya untuk Preloader */
 #preloader {
     position: fixed;
@@ -8,12 +5,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg-color); /* Menggunakan warna latar belakang tema */
+    background-color: var(--bg-color);
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Transisi untuk fade out */
     transition: opacity 0.75s ease, visibility 0.75s ease;
     visibility: visible;
     opacity: 1;
@@ -25,47 +21,38 @@
 }
 
 .preloader-svg {
-    width: 80px; /* Ukuran preloader */
+    width: 80px;
     height: 80px;
     animation: preloader-spin 2.5s linear infinite;
 }
 
-/* Gaya untuk setiap segmen/garis lingkaran */
 .preloader-svg path {
     fill: none;
-    stroke-width: 8; /* Ketebalan garis lingkaran */
+    stroke-width: 8;
     stroke-linecap: round;
 }
 
-/* Gaya untuk titik di tengah */
 .preloader-dot {
-    fill: white; /* Warna titik */
-    /* Animasi titik yang membesar-kecil */
+    fill: white;
     animation: preloader-pulse 1.8s ease-in-out infinite;
-    transform-origin: center center; /* Pastikan skala dari tengah */
+    transform-origin: center center;
 }
 
 
-/* Keyframes untuk animasi berputar */
 @keyframes preloader-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
-/* Keyframes untuk animasi membesar-kecil (pulse) */
 @keyframes preloader-pulse {
     0%   { transform: scale(0.7); opacity: 0.7; }
     50%  { transform: scale(1.3); opacity: 1; }
     100% { transform: scale(0.7); opacity: 0.7; }
 }
 
-
-/* Mencegah scroll saat preloader aktif */
 body.preloading {
     overflow: hidden;
 }
-/* === KODE BARU SELESAI DI SINI === */
-
 
 /* Definisi Palet Warna & Font */
 :root {
@@ -82,17 +69,17 @@ body.preloading {
 /* Reset & Basic Styling */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { 
-    background-color: var(--bg-color); 
-    color: var(--text-primary); 
-    font-family: var(--font-family); 
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-family);
     line-height: 1.5;
     overflow-x: hidden;
-    padding-top: var(--header-height); 
+    padding-top: var(--header-height);
 }
 
 /* Tombol Bahasa Mengambang */
-.lang-switcher { 
+.lang-switcher {
     position: fixed;
     top: 110px;
     right: 2rem;
@@ -111,7 +98,7 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
-.lang-button:hover { 
+.lang-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
@@ -165,18 +152,18 @@ section[id] {
 .section-title span { color: var(--text-primary); }
 
 /* Header & Navbar */
-.main-header { 
-    position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 2rem; z-index: 1000; transition: all 0.3s ease-in-out; 
+.main-header {
+    position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 2rem; z-index: 1000; transition: all 0.3s ease-in-out;
     height: var(--header-height); display: flex; align-items: center;
-    background-color: rgba(31, 41, 55, 0.7); 
+    background-color: rgba(31, 41, 55, 0.7);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
 }
-.main-header.scrolled { 
-    padding: 1rem 2rem; 
-    height: calc(var(--header-height) - 20px); 
-    background-color: rgba(31, 41, 55, 0.85); 
+.main-header.scrolled {
+    padding: 1rem 2rem;
+    height: calc(var(--header-height) - 20px);
+    background-color: rgba(31, 41, 55, 0.85);
 }
 .navbar { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%;}
 .nav-logo { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); text-decoration: none; z-index: 1001; margin-right: auto; }
@@ -186,12 +173,12 @@ section[id] {
 .nav-controls { display: flex; align-items: center; gap: 1.5rem; }
 .nav-menu { display: flex; gap: 2rem; list-style: none; }
 
-.nav-link { 
-    color: var(--text-secondary); 
-    text-decoration: none; 
-    transition: color 0.3s ease; 
-    font-weight: 500; 
-    position: relative; 
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    position: relative;
     padding: 0.5rem 0;
 }
 .nav-link::after {
@@ -270,8 +257,99 @@ section[id] {
     animation: animate-underline 4s ease-in-out infinite;
 }
 
-.hero-buttons {
-    margin-top: 2rem;
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.hero-intro {
+    /* No specific styles needed, follows normal flow */
+}
+
+.hero-highlight {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.highlight-btn {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.highlight-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+.highlight-btn.animated-border {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.highlight-btn.animated-border::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+    background-color: var(--surface-color);
+    border-radius: 5px;
+    z-index: -1;
+}
+
+.highlight-btn.animated-border::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    z-index: -2;
+    background: conic-gradient(
+        transparent,
+        transparent,
+        transparent,
+        var(--primary-color)
+    );
+    animation: animate-border-spin 4s linear infinite;
+}
+
+@keyframes animate-border-spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+.highlight-btn .python-highlight {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.highlight-btn .python-logo {
+    width: 13px;
+    height: 13px;
+    vertical-align: -2px;
+    margin-right: 4px;
+}
+
+.hero-main-buttons {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -322,25 +400,44 @@ section[id] {
     color: var(--primary-color);
 }
 
-/* Animasi Grid Reveal Foto Profil */
-.hero-image-container { 
-    position: relative; 
-    width: 300px; 
-    height: 300px; 
-    transform-style: preserve-3d; 
+.hero-image-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    transform-style: preserve-3d;
 }
-.profile-picture { 
+
+.profile-picture {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; 
-    height: 100%; 
-    border-radius: 50%; 
-    object-fit: cover; 
-    border: 5px solid var(--surface-color); 
-    box-shadow: 0 0 40px rgba(0, 197, 142, 0.3); 
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
     z-index: 1;
+    animation: shadow-flicker 4s linear infinite;
 }
+
+@keyframes shadow-flicker {
+    0% {
+        box-shadow: 0 0 40px rgba(0, 197, 142, 0.3), 0 0 50px rgba(174, 214, 241, 0.2);
+    }
+    25% {
+        box-shadow: 0 0 55px rgba(0, 197, 142, 0.5), 0 0 65px rgba(244, 208, 63, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 45px rgba(0, 197, 142, 0.4), 0 0 55px rgba(245, 183, 177, 0.4);
+    }
+    75% {
+        box-shadow: 0 0 60px rgba(0, 197, 142, 0.6), 0 0 70px rgba(132, 228, 200, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 40px rgba(0, 197, 142, 0.3), 0 0 50px rgba(174, 214, 241, 0.2);
+    }
+}
+
+
 .reveal-overlay {
     position: absolute;
     top: 0;
@@ -462,8 +559,6 @@ section[id] {
 .education-institution { font-size: 1.3rem; color: var(--text-primary); }
 .education-period { color: var(--text-secondary); font-size: 0.9rem; }
 .education-major { color: var(--primary-color); font-weight: 500; margin-bottom: 1rem; }
-.education-details { list-style: none; padding: 0; }
-.education-details li { background-color: rgba(255,255,255,0.05); padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; }
 
 /* Sisa Sections */
 .work-experience-grid,
@@ -529,22 +624,29 @@ section[id] {
 .skills-subcategory { margin-bottom: 2rem; }
 .skills-subcategory h4 { font-size: 1.1rem; color: var(--text-primary); margin-bottom: 1rem; font-weight: 500; }
 .skills-list { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-.skill-tag { background-color: var(--surface-color); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 5px; font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; border: 1px solid var(--border-color); }
+.skill-tag {
+    background-color: var(--surface-color);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: inline-flex;
+    align-items: center;
+}
+.skill-tag .skill-logo {
+    width: 14px;
+    height: 14px;
+    margin-left: 8px;
+}
 .skill-tag:hover { color: var(--bg-color); background-color: var(--primary-color); border-color: var(--primary-color); transform: translateY(-3px); }
 .certificates-section { text-align: center; }
 .cert-link-container { max-width: 700px; margin: 0 auto; background: linear-gradient(145deg, var(--surface-color), #2a2a2a); padding: 3rem; border-radius: 12px; border: 1px solid var(--border-color); }
 .cert-link-container p { color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.7; }
 .btn-gdrive { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem; background-color: var(--primary-color); color: var(--bg-color); text-decoration: none; font-weight: 700; font-size: 1rem; border-radius: 8px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 197, 142, 0.2); }
 .btn-gdrive:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(0, 197, 142, 0.4); }
-.main-footer { text-align: center; padding: 4rem 2rem; }
-.footer-cta { font-size: 1.5rem; font-weight: 500; color: var(--text-primary); }
-.footer-email { color: var(--primary-color); text-decoration: none; font-size: 1.2rem; display: inline-block; margin: 1rem 0; position: relative; }
-.footer-email::after { content: ''; position: absolute; width: 100%; height: 1px; background: var(--primary-color); bottom: -5px; left: 0; transform: scaleX(0); transition: transform 0.3s ease; }
-.footer-email:hover::after { transform: scaleX(1); }
-.social-links { display: flex; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; }
-.social-links a { color: var(--text-secondary); transition: color 0.3s ease, transform 0.3s ease; }
-.social-links a:hover { color: var(--primary-color); transform: translateY(-3px); }
-.copyright { font-size: 0.9rem; color: var(--text-secondary); }
 
 section#about,
 section#certificates,
@@ -579,7 +681,7 @@ section#achievements {
     border-bottom: none;
 }
 .achievement-item:hover {
-    background-color: rgba(31, 41, 55, 0.5); 
+    background-color: rgba(31, 41, 55, 0.5);
 }
 .achievement-image-wrapper {
     flex-shrink: 0;
@@ -646,8 +748,139 @@ section#achievements {
     line-height: 1.6;
 }
 
-@media (max-width: 992px) { 
-    .skills-container { grid-template-columns: 1fr; } 
+/* =================================================================== */
+/* KODE FOOTER YANG DIPERBARUI (MENGGUNAKAN FLEXBOX) */
+/* =================================================================== */
+
+.main-footer {
+    text-align: center;
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-content-wrapper {
+    display: flex;             /* Menggunakan Flexbox untuk layout */
+    align-items: flex-start;   /* PENTING: Meratakan item ke atas */
+    gap: 4rem;
+    max-width: 900px;
+    margin: 0 auto 3rem auto;
+    text-align: left;
+}
+
+.footer-contact-info {
+    flex: 1; /* Mengatur proporsi kolom kiri */
+}
+
+.footer-form-container {
+    flex: 1.5; /* Mengatur proporsi kolom kanan */
+}
+
+.footer-contact-info .footer-cta {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+.footer-contact-info .footer-email {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: inline-block;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.footer-contact-info .footer-email::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: var(--primary-color);
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.footer-contact-info .footer-email:hover::after {
+    transform: scaleX(1);
+}
+
+.footer-contact-info .social-links {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.social-links a {
+    color: var(--text-secondary);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.footer-form-container .form-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 197, 142, 0.3);
+}
+
+.footer-form .btn-submit {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    width: 100%;
+    padding: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.footer-form .btn-submit:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 992px) {
+    .skills-container { grid-template-columns: 1fr; }
     .nav-menu { display: none; }
     .hamburger-menu { display: flex; }
     .nav-controls { gap: 1rem; }
@@ -657,14 +890,13 @@ section#achievements {
     .about-details li { justify-content: space-between; }
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .lang-switcher { right: 1rem; top: 100px; }
     .hamburger-menu.active .bar:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
     .hamburger-menu.active .bar:nth-child(2) { opacity: 0; }
     .hamburger-menu.active .bar:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
-
     .nav-controls { gap: 0; }
-    .nav-menu { 
+    .nav-menu {
         display: flex;
         position: fixed;
         left: 100%;
@@ -680,11 +912,11 @@ section#achievements {
         padding: 2rem;
     }
     .nav-menu.active { left: 0; }
-    
+
     .nav-link { font-size: 1.5rem; }
     .hero-content { flex-direction: column-reverse; text-align: center; }
     .hero-buttons { justify-content: center; width: 100%; }
-    
+
     .education-timeline::before { left: 8px; }
     .education-card, .education-card:nth-child(odd), .education-card:nth-child(even) {
         width: calc(100% - 40px);
@@ -698,11 +930,33 @@ section#achievements {
 
     .achievement-item { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
     .achievement-image-wrapper { width: 100%; height: 180px; }
-    
+
+    .footer-content-wrapper {
+        flex-direction: column; /* Tumpuk kolom di mobile */
+        gap: 3rem;
+        text-align: center;
+        align-items: center; /* Pusatkan item di mobile */
+    }
+
+    .footer-contact-info,
+    .footer-form-container {
+        width: 100%; /* Lebar penuh di mobile */
+        text-align: center;
+    }
+
+    .footer-contact-info .footer-cta,
+    .footer-contact-info .footer-email {
+        text-align: center;
+    }
+
+    .footer-contact-info .social-links {
+        justify-content: center;
+    }
+
     section {
         padding: 6rem 1.5rem;
     }
-    
+
     section#about,
     section#certificates,
     section#achievements,
@@ -711,4 +965,3 @@ section#achievements {
         padding-bottom: 6rem;
     }
 }
-/* ===== KODE CSS BERAKHIR DI SINI ===== */

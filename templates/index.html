@@ -58,9 +58,24 @@
         <section class="hero" id="home">
              <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title" data-text-split data-translate-key="hero_title"></h1>
-                    <h2 class="hero-subtitle" data-translate-key="hero_subtitle"></h2>
-                    <div class="hero-buttons">
+                    <div class="hero-intro">
+                        <h1 class="hero-title" data-text-split data-translate-key="hero_title"></h1>
+                        <h2 class="hero-subtitle" data-translate-key="hero_subtitle"></h2>
+                        <div class="hero-highlight">
+                            <div class="highlight-btn animated-border">
+                                Hardware-Software Troubleshooting
+                            </div>
+                            <div class="highlight-btn animated-border">
+                                Web Development (
+                                <span class="python-highlight">
+                                    <img src="{{ url_for('static', filename='img/python-logo.png') }}" alt="Python Logo" class="python-logo">
+                                    Python (Flask)
+                                </span>)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-main-buttons">
                         <a href="{{ url_for('static', filename='cv/CV_Faza_Wahyu_Adi_Putra.pdf') }}" download="CV_Faza_Wahyu_Adi_Putra.pdf" class="btn btn-primary">
                             <i data-feather="download"></i> <span data-translate-key="hero_cv_button"></span>
                         </a>
@@ -111,9 +126,6 @@
                         <p class="education-period" data-translate-key="edu_2_period"></p>
                     </div>
                     <p class="education-major" data-translate-key="edu_2_major"></p>
-                    <ul class="education-details">
-                        <li data-translate-key="edu_2_details"></li>
-                    </ul>
                 </div>
             </div>
         </section>
@@ -222,29 +234,29 @@
             <h2 class="section-title" data-translate-key="skills_title"></h2>
             <div class="skills-container">
                 <div class="skills-category">
-                    <h3 class="category-title" data-translate-key="skills_cat_tech"></h3>
-                    {% for sub_category, skill_list in initial_data.skills_data['Teknis'].items() %}
+                    <h3 class="category-title" data-translate-key="{{ skills_structure.technical.title_key }}"></h3>
+                    {% for sub_cat in skills_structure.technical.subcategories %}
                         <div class="skills-subcategory">
-                            <h4>{{ sub_category }}</h4>
+                            <h4 data-translate-key="{{ sub_cat.title_key }}"></h4>
                             <div class="skills-list">
-                                {% for skill in skill_list %}<span class="skill-tag">{{ skill }}</span>{% endfor %}
+                                {% for skill_key in sub_cat.skills %}
+                                    <span class="skill-tag" data-translate-key="{{ skill_key }}"></span>
+                                {% endfor %}
                             </div>
                         </div>
                     {% endfor %}
                 </div>
                 <div class="skills-column">
+                    {% for category in skills_structure.others %}
                     <div class="skills-category">
-                        <h3 class="category-title" data-translate-key="skills_cat_nontech"></h3>
+                        <h3 class="category-title" data-translate-key="{{ category.title_key }}"></h3>
                         <div class="skills-list">
-                            {% for skill in initial_data.skills_data['Non-Teknis'] %}<span class="skill-tag">{{ skill }}</span>{% endfor %}
+                            {% for skill_key in category.skills %}
+                                <span class="skill-tag" data-translate-key="{{ skill_key }}"></span>
+                            {% endfor %}
                         </div>
                     </div>
-                    <div class="skills-category">
-                        <h3 class="category-title" data-translate-key="skills_cat_lang"></h3>
-                        <div class="skills-list">
-                            {% for skill in initial_data.skills_data['Bahasa'] %}<span class="skill-tag">{{ skill }}</span>{% endfor %}
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -319,8 +331,11 @@
         </div>
     </div>
 
-     <footer class="main-footer">
-        <div class="footer-content">
+ <!-- Ganti seluruh bagian <footer> Anda dengan kode ini -->
+<footer class="main-footer">
+    <div class="footer-content-wrapper">
+        <!-- Kolom Kiri: Info Kontak (Tetap sama) -->
+        <div class="footer-contact-info">
             <p class="footer-cta" data-translate-key="footer_cta"></p>
             <a href="mailto:fazawahyu10@gmail.com" class="footer-email">fazawahyu10@gmail.com</a>
             <div class="social-links">
@@ -328,9 +343,32 @@
                 <a href="mailto:fazawahyu10@gmail.com" aria-label="Email"><i data-feather="mail"></i></a>
                 <a href="https://www.linkedin.com/in/faza-wap/" target="_blank" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
             </div>
-            <p class="copyright">&copy; 2025 - <span data-translate-key="footer_copyright"></span></p>
         </div>
-    </footer>
+
+        <div class="footer-form-container">
+            <h4 class="form-title" data-translate-key="footer_form_title"></h4>
+            <form action="https://formspree.io/f/mqabvdan" method="POST" class="footer-form">
+                <!-- Input untuk email (wajib oleh Formspree) -->
+                <input 
+                    type="email" 
+                    name="email"
+                    class="form-input"
+                    placeholder="Your Email"
+                    required>
+                <!-- Textarea untuk pesan -->
+                <textarea 
+                    name="message" 
+                    class="form-textarea" 
+                    placeholder="Enter your message here..." 
+                    required></textarea>
+                <button type="submit" class="btn btn-submit">
+                    <span data-translate-key="footer_form_button"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <p class="copyright">&copy; 2025 - <span data-translate-key="footer_copyright"></span></p>
+</footer>
     
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

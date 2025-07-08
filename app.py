@@ -1,10 +1,11 @@
-from flask import Flask, render_template
-import json
+from flask import Flask, render_template, json, request, jsonify
+import datetime
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
+    # Objek terjemahan sekarang mencakup semua teks, termasuk keahlian dan formulir
     translations = {
         "id": {
             # Nav & Hero
@@ -37,7 +38,6 @@ def home():
             "edu_2_institution": "SMK Negeri 2 Kota Tasikmalaya",
             "edu_2_period": "2020 - 2024",
             "edu_2_major": "Sistem Informasi, Jaringan & Aplikasi (Program 4 Tahun)",
-            "edu_2_details": "Termasuk 9 bulan Praktik Kerja Lapangan (PKL) yang berfokus pada Preventive Maintenance dan Networking.",
             # Organization Section
             "org_title": "Organisasi",
             "org_1_role": "Divisi Media",
@@ -49,7 +49,7 @@ def home():
             # Work Experience
             "work_title": "Pengalaman Kerja Lapangan",
             "work_1_role": "Preventive Maintenance",
-            "work_1_org": "PT. Putra Telecommunication",
+            "work_1_org": "PT. Putra Mulia Telecommunication",
             "work_1_period": "Agustus 2023 - November 2023",
             "work_1_resp_1": "Preventif Maintenance.",
             "work_1_resp_2": "Bertanggung jawab atas kebersihan ruang perangkat (shelter) dan komponen di dalamnya untuk mencegah potensi gangguan sinyal.",
@@ -74,6 +74,28 @@ def home():
             "skills_cat_tech": "Teknis",
             "skills_cat_nontech": "Non-Teknis",
             "skills_cat_lang": "Bahasa",
+            "skill_subcat_it": "Infrastruktur & Dukungan IT",
+            "skill_item_maintenance": "Hardware-Software Maintenance and Troubleshooting",
+            "skill_item_networking": "Jaringan Dasar (Konfigurasi Router)",
+            "skill_item_os": "Instalasi & Konfigurasi Sistem Operasi Windows",
+            "skill_subcat_dev": "Pengembangan Web & Database",
+            "skill_item_frontend_backend": "Front-End & Back-End (Python) #PYTHON_LOGO#",
+            "skill_item_db": "Pengelolaan Database Dasar (MySQL)",
+            "skill_item_uiux": "Design Web UI/UX",
+            "skill_subcat_tools": "Tools & Perangkat Lunak",
+            "skill_item_vscode": "Visual Studio Code",
+            "skill_item_xcode": "Xcode",
+            "skill_item_xampp": "XAMPP",
+            "skill_item_cisco": "Cisco",
+            "skill_item_figma": "Figma",
+            "skill_item_canva": "Canva (Desain Grafis)",
+            "skill_item_capcut": "Capcut (Editing Video)",
+            "skill_item_office": "Microsoft Office (Word, Excel, PowerPoint)",
+            "skill_item_problem_solving": "Pemecahan Masalah (Problem-Solving)",
+            "skill_item_teamwork": "Kerja Sama Tim & Kolaborasi",
+            "skill_item_attention": "Ketelitian (Attention to Detail)",
+            "skill_item_lang_id": "Indonesia (Native)",
+            "skill_item_lang_en": "Inggris (Menengah)",
             # Certificates
             "cert_title": "Sertifikasi",
             "cert_desc": "Saya memiliki berbagai sertifikasi yang menunjukkan komitmen saya untuk terus belajar dan berkembang dalam bidang IT.",
@@ -87,6 +109,11 @@ def home():
             "achieve_gallery_button": "Lihat Gambar",
             # Footer
             "footer_cta": "Tertarik untuk berkolaborasi?",
+            "footer_form_title": "Kritik & Saran",
+            "footer_form_placeholder": "Tuliskan pesan Anda di sini...",
+            "footer_form_button": "Kirim Pesan",
+            "footer_form_sending": "Mengirim...",
+            "footer_form_sent": "Terkirim!",
             "footer_copyright": "Didesain & dikembangkan oleh Faza."
         },
         "en": {
@@ -120,7 +147,6 @@ def home():
             "edu_2_institution": "SMK Negeri 2 Tasikmalaya City",
             "edu_2_period": "2020 - 2024",
             "edu_2_major": "Information Systems, Networking & Applications (4-Year Program)",
-            "edu_2_details": "Includes 9 months of field work practice (PKL) focusing on Preventive Maintenance and Networking.",
              # Organization Section
             "org_title": "Organizations",
             "org_1_role": "Media Division",
@@ -132,7 +158,7 @@ def home():
             # Work Experience
             "work_title": "Field Work Experience",
             "work_1_role": "Preventive Maintenance",
-            "work_1_org": "PT. Putra Telecommunication",
+            "work_1_org": "PT. Putra Mulia Telecommunication",
             "work_1_period": "August 2023 - November 2023",
             "work_1_resp_1": "Preventive Maintenance.",
             "work_1_resp_2": "Responsible for the cleanliness of the equipment room (shelter) and its components to prevent potential signal interference.",
@@ -157,6 +183,28 @@ def home():
             "skills_cat_tech": "Technical",
             "skills_cat_nontech": "Non-Technical",
             "skills_cat_lang": "Languages",
+            "skill_subcat_it": "IT Infrastructure & Support",
+            "skill_item_maintenance": "Hardware-Software Maintenance and Troubleshooting",
+            "skill_item_networking": "Basic Networking (Router Configuration)",
+            "skill_item_os": "Windows Operating System Installation & Configuration",
+            "skill_subcat_dev": "Web Development & Database",
+            "skill_item_frontend_backend": "Front-End & Back-End (Python) #PYTHON_LOGO#",
+            "skill_item_db": "Basic Database Management (MySQL)",
+            "skill_item_uiux": "Web UI/UX Design",
+            "skill_subcat_tools": "Tools & Software",
+            "skill_item_vscode": "Visual Studio Code",
+            "skill_item_xcode": "Xcode",
+            "skill_item_xampp": "XAMPP",
+            "skill_item_cisco": "Cisco",
+            "skill_item_figma": "Figma",
+            "skill_item_canva": "Canva (Graphic Design)",
+            "skill_item_capcut": "Capcut (Video Editing)",
+            "skill_item_office": "Microsoft Office (Word, Excel, PowerPoint)",
+            "skill_item_problem_solving": "Problem-Solving",
+            "skill_item_teamwork": "Teamwork & Collaboration",
+            "skill_item_attention": "Attention to Detail",
+            "skill_item_lang_id": "Indonesian (Native)",
+            "skill_item_lang_en": "English (Intermediate)",
             # Certificates
             "cert_title": "Certifications",
             "cert_desc": "I hold various certifications that demonstrate my commitment to continuous learning and development in the IT field.",
@@ -170,8 +218,43 @@ def home():
             "achieve_gallery_button": "View Images",
             # Footer
             "footer_cta": "Interested in collaborating?",
+            "footer_form_title": "Feedback & Suggestions",
+            "footer_form_placeholder": "Write your message here...",
+            "footer_form_button": "Send Message",
+            "footer_form_sending": "Sending...",
+            "footer_form_sent": "Sent!",
             "footer_copyright": "Designed & developed by Faza."
         }
+    }
+
+    skills_structure = {
+        "technical": {
+            "title_key": "skills_cat_tech",
+            "subcategories": [
+                {
+                    "title_key": "skill_subcat_it",
+                    "skills": ["skill_item_maintenance", "skill_item_networking", "skill_item_os"]
+                },
+                {
+                    "title_key": "skill_subcat_dev",
+                    "skills": ["skill_item_frontend_backend", "skill_item_db", "skill_item_uiux"]
+                },
+                {
+                    "title_key": "skill_subcat_tools",
+                    "skills": ["skill_item_vscode", "skill_item_xcode", "skill_item_xampp", "skill_item_cisco", "skill_item_figma", "skill_item_canva", "skill_item_capcut", "skill_item_office"]
+                }
+            ]
+        },
+        "others": [
+            {
+                "title_key": "skills_cat_nontech",
+                "skills": ["skill_item_problem_solving", "skill_item_teamwork", "skill_item_attention"]
+            },
+            {
+                "title_key": "skills_cat_lang",
+                "skills": ["skill_item_lang_id", "skill_item_lang_en"]
+            }
+        ]
     }
 
     initial_data = {
@@ -183,15 +266,6 @@ def home():
             {'tech': ['C/C++', 'Arduino'], 'gallery_images': ['smk3.jpeg', 'smk2.jpeg','smk1.jpeg'], 'video_file': 'smkv.mp4'},
             {'tech': ['HTML', 'CSS', 'JavaScript', 'PHP'], 'gallery_images': ['ui-1.jpg', 'ui-2.jpg'], 'video_file': 'webgis.mp4'}
         ],
-        "skills_data": {
-            "Teknis": {
-                "Infrastruktur & Dukungan IT": ["Hardware-Software Maintenance and Troubleshooting", "Jaringan Dasar (Konfigurasi Router)", "Instalasi & Konfigurasi Sistem Operasi Windows"],
-                "Pengembangan Web & Database": ["Front-End (HTML, CSS, JavaScript Dasar)", "Back-End (PHP Dasar)", "Python (Flask)", "Pengelolaan Database Dasar (MySQL)", "Design Web UI/UX"],
-                "Tools & Perangkat Lunak": ["Visual Studio Code", "Xcode", "XAMPP", "Cisco", "Figma", "Microsoft Office (Word, Excel, PowerPoint)"]
-            },
-            "Non-Teknis": ["Pemecahan Masalah (Problem-Solving)", "Kerja Sama Tim & Kolaborasi", "Ketelitian (Attention to Detail)"],
-            "Bahasa": ["Indonesia", "Inggris"]
-        },
         "certificate_link": "https://drive.google.com/drive/folders/1Zah1VfcO4CHtFoAsclDLXG5zsPInj3LA?usp=sharing",
         "achievements_data": [{
             "thumbnail": "gcp1.jpeg",
@@ -202,7 +276,8 @@ def home():
     return render_template(
         'index.html',
         initial_data=initial_data,
-        translations_json=json.dumps(translations)
+        translations_json=json.dumps(translations),
+        skills_structure=skills_structure
     )
 
 if __name__ == '__main__':

@@ -83,7 +83,7 @@ def home():
             "achieve_1_title": "Pemenang Merchandise Tier 1 di #JuaraGCP Season 11 2025!",
             "achieve_1_org": "Google Cloud",
             "achieve_1_date": "Mei 2025",
-            "achieve_1_desc": "Termasuk kedalam 1.000 dari 12.000 peserta dengan nilai terbaik yang menyelesaikan completion form dan mengikuti online quiz, dan mendapatkan #SWAG keren dari Google Cloud berupa : Bantal Leher, Stiker, Tas Serut, dan Gantungan Kunci.",
+            "achieve_1_desc": "Termasuk kedalam 1.000 dari 12.000 peserta dengan nilai terbaik yang menyelesaikan pelatihan dan kuis akhir, dan mendapatkan #SWAG keren dari Google Cloud berupa : Bantal Leher, Stiker, Tas Serut, dan Gantungan Kunci.",
             "achieve_gallery_button": "Lihat Gambar",
             # Footer
             "footer_cta": "Tertarik untuk berkolaborasi?",
@@ -166,7 +166,7 @@ def home():
             "achieve_1_title": "Tier 1 Merchandise Winner at #JuaraGCP Season 11 2025!",
             "achieve_1_org": "Google Cloud",
             "achieve_1_date": "May 2025",
-            "achieve_1_desc": "Finished in the top 1,000 of 12,000 participants based on the best scores from the online quiz and completion form. Awarded with Google Cloud #SWAG: a Neck Pillow, Stickers, a Drawstring Bag, and a Keychain.",
+            "achieve_1_desc": "Finished in the top 1,000 of 12,000 participants based on the best scores from the completing the training and taking the final quiz. Awarded with Google Cloud #SWAG: a Neck Pillow, Stickers, a Drawstring Bag, and a Keychain.",
             "achieve_gallery_button": "View Images",
             # Footer
             "footer_cta": "Interested in collaborating?",

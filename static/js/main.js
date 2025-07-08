@@ -328,4 +328,48 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    async function handleSubmit(event) {
+        event.preventDefault(); // Mencegah form pindah halaman
+        
+        const form = event.target;
+        const data = new FormData(form);
+        
+        // Tampilkan status "mengirim"
+        formStatus.innerHTML = 'Mengirim...';
+        formStatus.style.color = 'var(--text-secondary)';
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Jika sukses
+                formStatus.innerHTML = "Pesan berhasil terkirim. Terima kasih!";
+                formStatus.style.color = 'var(--primary-color)';
+                form.reset(); // Mengosongkan isian form
+            } else {
+                // Jika ada error dari server
+                formStatus.innerHTML = "Oops! Terjadi masalah saat mengirim pesan.";
+                formStatus.style.color = '#ff6b6b';
+            }
+        } catch (error) {
+            // Jika ada error jaringan
+            console.error('Error submitting form:', error);
+            formStatus.innerHTML = "Oops! Terjadi masalah jaringan.";
+            formStatus.style.color = '#ff6b6b';
+        }
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", handleSubmit);
+    }
 });

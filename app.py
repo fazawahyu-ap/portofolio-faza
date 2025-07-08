@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # Objek terjemahan sekarang mencakup semua teks, termasuk keahlian dan formulir
     translations = {
         "id": {
             # Nav & Hero

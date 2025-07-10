@@ -44,13 +44,10 @@
             <div class="nav-controls">
                 <ul class="nav-menu">
                     <li class="nav-item"><a href="#about" class="nav-link" data-translate-key="nav_about"></a></li>
-                    <li class="nav-item"><a href="#education" class="nav-link" data-translate-key="nav_education"></a></li>
-                    <li class="nav-item"><a href="#organization" class="nav-link" data-translate-key="nav_organization"></a></li>
                     <li class="nav-item"><a href="#experience" class="nav-link" data-translate-key="nav_experience"></a></li>
                     <li class="nav-item"><a href="#projects" class="nav-link" data-translate-key="nav_projects"></a></li>
-                    <li class="nav-item"><a href="#skills" class="nav-link" data-translate-key="nav_skills"></a></li>
-                    <li class="nav-item"><a href="#certificates" class="nav-link" data-translate-key="nav_certificates"></a></li>
-                    <li class="nav-item"><a href="#achievements" class="nav-link" data-translate-key="nav_achievements"></a></li>
+                    <li class="nav-item"><a href="#skills-certificates" class="nav-link" data-translate-key="nav_skills_certs"></a></li>
+                    <li class="nav-item"><a href="#education-organization" class="nav-link" data-translate-key="nav_edu_org"></a></li>
                 </ul>
                 <div class="hamburger-menu">
                     <div class="bar"></div>
@@ -115,40 +112,46 @@
                     </ul>
                 </div>
             </div>
-        </section>
 
-        <section id="education" class="education-section">
-            <h2 class="section-title" data-translate-key="education_title"></h2>
-            <div class="education-timeline">
-                <div class="education-card">
-                    <div class="education-header">
-                        <h3 class="education-institution" data-translate-key="edu_1_institution"></h3>
-                        <p class="education-period" data-translate-key="edu_1_period"></p>
-                    </div>
-                    <p class="education-major" data-translate-key="edu_1_major"></p>
+            <div class="about-extra-content">
+                <div class="about-achievement-card">
+                    <h3 class="about-extra-title" data-translate-key="achieve_title"></h3>
+                    <article class="achievement-item">
+                        <div class="achievement-image-wrapper" data-images='{{ initial_data.achievements_data[0].gallery_images|tojson|safe }}'>
+                            <img src="{{ url_for('static', filename='img/' + initial_data.achievements_data[0].thumbnail) }}" alt="" class="achievement-thumbnail">
+                            <div class="image-overlay">
+                                <i data-feather="eye"></i>
+                                <span data-translate-key="achieve_gallery_button"></span>
+                            </div>
+                        </div>
+                        <div class="achievement-content">
+                            <p class="achievement-meta"><span data-translate-key="achieve_1_org"></span> &bull; <span data-translate-key="achieve_1_date"></span></p>
+                            <h4 class="achievement-title" data-translate-key="achieve_1_title"></h4>
+                            <p class="achievement-description" data-translate-key="achieve_1_desc"></p>
+                        </div>
+                    </article>
                 </div>
-                <div class="education-card">
-                    <div class="education-header">
-                        <h3 class="education-institution" data-translate-key="edu_2_institution"></h3>
-                        <p class="education-period" data-translate-key="edu_2_period"></p>
-                    </div>
-                    <p class="education-major" data-translate-key="edu_2_major"></p>
-                </div>
-            </div>
-        </section>
 
-        <section id="organization" class="organization-section">
-            <h2 class="section-title" data-translate-key="org_title"></h2>
-            <div class="org-grid">
-                <div class="org-card">
-                    <h4 class="org-role" data-translate-key="org_1_role"></h4>
-                    <p class="org-name" data-translate-key="org_1_name"></p>
-                    <p class="org-period" data-translate-key="org_1_period"></p>
-                </div>
-                 <div class="org-card">
-                    <h4 class="org-role" data-translate-key="org_2_role"></h4>
-                    <p class="org-name" data-translate-key="org_2_name"></p>
-                    <p class="org-period" data-translate-key="org_2_period"></p>
+                <div class="about-journey-container">
+                     <h3 class="about-extra-title" data-translate-key="profiles_title"></h3>
+                    <div class="journey-container">
+                        <a href="https://www.cloudskillsboost.google/public_profiles/9419b3af-c034-49bb-9527-7fbfbb5a6e69" target="_blank" rel="noopener noreferrer" class="journey-button">
+                            <i data-feather="cloud" class="journey-icon"></i>
+                            <div class="journey-text">
+                                <span class="journey-title" data-translate-key="profiles_skills_title"></span>
+                                <small class="journey-desc" data-translate-key="profiles_skills_desc"></small>
+                            </div>
+                            <i data-feather="arrow-right" class="journey-arrow"></i>
+                        </a>
+                        <a href="https://developers.google.com/profile/u/faza-wap" target="_blank" rel="noopener noreferrer" class="journey-button">
+                            <i data-feather="code" class="journey-icon"></i>
+                            <div class="journey-text">
+                                <span class="journey-title" data-translate-key="profiles_gdev_title"></span>
+                                <small class="journey-desc" data-translate-key="profiles_gdev_desc"></small>
+                            </div>
+                            <i data-feather="arrow-right" class="journey-arrow"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -237,8 +240,8 @@
             </div>
         </section>
 
-        <section id="skills" class="skills-section">
-            <h2 class="section-title" data-translate-key="skills_title"></h2>
+        <section id="skills-certificates" class="skills-section">
+            <h2 class="section-title" data-translate-key="skills_certs_title"></h2>
             <div class="skills-container">
                 <div class="skills-category">
                     <h3 class="category-title" data-translate-key="{{ skills_structure.technical.title_key }}"></h3>
@@ -246,9 +249,9 @@
                         <div class="skills-subcategory">
                             <h4 data-translate-key="{{ sub_cat.title_key }}"></h4>
                             <div class="skills-list">
-                                {% for skill_key in sub_cat.skills %}
+                                {%for skill_key in sub_cat.skills %}
                                     <span class="skill-tag" data-translate-key="{{ skill_key }}"></span>
-                                {% endfor %}
+                                {%endfor %}
                             </div>
                         </div>
                     {% endfor %}
@@ -266,11 +269,8 @@
                     {% endfor %}
                 </div>
             </div>
-        </section>
-
-        <section id="certificates" class="certificates-section">
-            <h2 class="section-title" data-translate-key="cert_title"></h2>
             <div class="cert-link-container">
+                 <h3 class="category-title" data-translate-key="cert_title"></h3>
                 <p data-translate-key="cert_desc"></p>
                 <a href="{{ initial_data.certificate_link }}" target="_blank" rel="noopener noreferrer" class="btn-gdrive">
                     <i data-feather="folder"></i>
@@ -279,23 +279,43 @@
             </div>
         </section>
 
-        <section id="achievements" class="achievements-section">
-            <h2 class="section-title" data-translate-key="achieve_title"></h2>
-            <div class="achievements-list">
-                 <article class="achievement-item">
-                    <div class="achievement-image-wrapper" data-images='{{ initial_data.achievements_data[0].gallery_images|tojson|safe }}'>
-                        <img src="{{ url_for('static', filename='img/' + initial_data.achievements_data[0].thumbnail) }}" alt="" class="achievement-thumbnail">
-                        <div class="image-overlay">
-                            <i data-feather="eye"></i>
-                            <span data-translate-key="achieve_gallery_button"></span>
+        <section id="education-organization">
+            <h2 class="section-title" data-translate-key="edu_org_title"></h2>
+            <div class="edu-org-container">
+                <div class="edu-column">
+                    <h3 class="column-title" data-translate-key="education_title"></h3>
+                    <div class="education-timeline">
+                        <div class="education-card">
+                            <div class="education-header">
+                                <h4 class="education-institution" data-translate-key="edu_1_institution"></h4>
+                                <p class="education-period" data-translate-key="edu_1_period"></p>
+                            </div>
+                            <p class="education-major" data-translate-key="edu_1_major"></p>
+                        </div>
+                        <div class="education-card">
+                            <div class="education-header">
+                                <h4 class="education-institution" data-translate-key="edu_2_institution"></h4>
+                                <p class="education-period" data-translate-key="edu_2_period"></p>
+                            </div>
+                            <p class="education-major" data-translate-key="edu_2_major"></p>
                         </div>
                     </div>
-                    <div class="achievement-content">
-                        <p class="achievement-meta"><span data-translate-key="achieve_1_org"></span> &bull; <span data-translate-key="achieve_1_date"></span></p>
-                        <h3 class="achievement-title" data-translate-key="achieve_1_title"></h3>
-                        <p class="achievement-description" data-translate-key="achieve_1_desc"></p>
+                </div>
+                <div class="org-column">
+                    <h3 class="column-title" data-translate-key="org_title"></h3>
+                    <div class="org-grid">
+                        <div class="org-card">
+                            <h4 class="org-role" data-translate-key="org_1_role"></h4>
+                            <p class="org-name" data-translate-key="org_1_name"></p>
+                            <p class="org-period" data-translate-key="org_1_period"></p>
+                        </div>
+                         <div class="org-card">
+                            <h4 class="org-role" data-translate-key="org_2_role"></h4>
+                            <p class="org-name" data-translate-key="org_2_name"></p>
+                            <p class="org-period" data-translate-key="org_2_period"></p>
+                        </div>
                     </div>
-                </article>
+                </div>
             </div>
         </section>
     </main>

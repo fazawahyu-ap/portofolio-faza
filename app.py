@@ -1,11 +1,10 @@
 import os
 import time
-import requests # Library untuk membuat HTTP request
-from flask import Flask, jsonify, request, render_template, json # Pastikan render_template & json diimpor
+import requests
+from flask import Flask, jsonify, request, render_template, json
 
 app = Flask(__name__)
 
-# --- Konfigurasi untuk Penghitung Pengunjung Real-time ---
 KV_URL = os.getenv("KV_REST_API_URL")
 KV_TOKEN = os.getenv("KV_REST_API_TOKEN")
 HEADERS = {"Authorization": f"Bearer {KV_TOKEN}"} if KV_TOKEN else {}
@@ -13,34 +12,26 @@ SESSION_TIMEOUT_SECONDS = 30
 DB_KEY = "active_users"
 
 def cleanup_inactive_users():
-    """Hapus pengguna yang sudah tidak aktif dari Vercel KV."""
     if not KV_URL: return
-    
     current_time = int(time.time())
     timeout_threshold = current_time - SESSION_TIMEOUT_SECONDS
     requests.post(f"{KV_URL}/zremrangebyscore/{DB_KEY}/-inf/{timeout_threshold}", headers=HEADERS)
 
 @app.route('/api/ping', methods=['POST'])
 def ping():
-    """Endpoint untuk pengguna 'melapor' bahwa mereka masih aktif."""
     if not KV_URL: return jsonify({"error": "Vercel KV not configured"}), 500
-    
     data = request.json
     user_id = data.get('userId')
     if user_id:
         current_time = int(time.time())
         requests.post(f"{KV_URL}/zadd/{DB_KEY}", json=[current_time, user_id], headers=HEADERS)
-        
     return jsonify({"status": "ok"})
 
 @app.route('/api/count')
 def count():
-    """Endpoint untuk mendapatkan jumlah pengguna aktif."""
     if not KV_URL: return jsonify({"active_users": 1})
-    
     cleanup_inactive_users()
     response = requests.get(f"{KV_URL}/zcard/{DB_KEY}", headers=HEADERS)
-    
     if response.status_code == 200:
         count = response.json().get("result", 0)
         return jsonify({"active_users": max(1, count)})
@@ -51,21 +42,16 @@ def count():
 def home():
     translations = {
         "id": {
-            # Nav & Hero
             "nav_about": "Tentang",
-            "nav_education": "Pendidikan",
-            "nav_organization": "Organisasi",
-            "nav_experience": "Pengalaman Kerja",
+            "nav_experience": "Pengalaman",
             "nav_projects": "Proyek",
-            "nav_skills": "Keahlian",
-            "nav_certificates": "Sertifikat",
-            "nav_achievements": "Penghargaan",
+            "nav_skills_certs": "Keahlian & Sertifikat",
+            "nav_edu_org": "Pendidikan & Organisasi",
             "hero_title": "Faza Wahyu Adi Putra",
             "hero_subtitle": "Junior IT Support & Developer",
             "hero_cv_button": "Download CV",
             "hero_about_button": "Tentang Saya",
             "hero_email_button": "Email Saya",
-            # About Section
             "about_title": "Tentang Saya",
             "about_summary": "Saya mahasiswa Teknik Informatika yang tertarik pada divisi IT Support. Memiliki 9 bulan pengalaman PKL dalam divisi Preventive Maintenance & Pemeliharaan Dasar Hardware, Dasar-dasar Jaringan (Networking). Berpengalaman dalam lingkungan kerja yang membutuhkan ketelitian dan respons cepat. Siap untuk segera memberikan dukungan teknis dan berkontribusi dalam tim Anda.",
             "about_name_label": "Nama:",
@@ -73,23 +59,17 @@ def home():
             "about_location_label": "Lokasi:",
             "about_location_value": "Semarang, Indonesia",
             "about_email_label": "Email:",
-            # Education Section
-            "education_title": "Riwayat Pendidikan",
-            "edu_1_institution": "Universitas Dian Nuswantoro Semarang",
-            "edu_1_period": "2024 - Sekarang",
-            "edu_1_major": "D3 Teknik Informatika | IPK Sementara: 3.67 / 4.00",
-            "edu_2_institution": "SMK Negeri 2 Kota Tasikmalaya",
-            "edu_2_period": "2020 - 2024",
-            "edu_2_major": "Sistem Informasi, Jaringan & Aplikasi (Program 4 Tahun)",
-            # Organization Section
-            "org_title": "Organisasi",
-            "org_1_role": "Divisi Media",
-            "org_1_name": "Himpunan Mahasiswa DTI",
-            "org_1_period": "2024 - Sekarang",
-            "org_2_role": "Member",
-            "org_2_name": "Google Developer Student Clubs (GDSC) UDINUS",
-            "org_2_period": "2024 - Sekarang",
-            # Work Experience
+            "achieve_title": "Pencapaian & Penghargaan",
+            "achieve_1_title": "Pemenang Merchandise Tier 1 di #JuaraGCP Season 11 2025!",
+            "achieve_1_org": "Google Cloud",
+            "achieve_1_date": "Mei 2025",
+            "achieve_1_desc": "Termasuk kedalam 1.000 dari 12.000 peserta dengan nilai terbaik yang menyelesaikan pelatihan dan kuis akhir, dan mendapatkan #SWAG keren dari Google Cloud berupa : Bantal Leher, Stiker, Tas Serut, dan Gantungan Kunci.",
+            "achieve_gallery_button": "Lihat Gambar",
+            "profiles_title": "Perjalanan Cloud & Developer Google",
+            "profiles_gdev_title": "Profil Google Developer",
+            "profiles_gdev_desc": "Lihat pencapaian, kontribusi, dan rekam jejak saya.",
+            "profiles_skills_title": "Google Cloud Skills Boost",
+            "profiles_skills_desc": "Jelajahi lencana keahlian dan kemajuan belajar saya.",
             "work_title": "Pengalaman Kerja Lapangan",
             "work_1_role": "Preventive Maintenance",
             "work_1_org": "PT. Putra Mulia Telecommunication",
@@ -104,7 +84,6 @@ def home():
             "work_2_resp_2": "Memberikan dukungan teknis dan operasional.",
             "work_2_resp_3": "Membantu operasional kantor dan merancang konten video.",
             "work_gallery_button": "Lihat Dokumentasi",
-            # Projects
             "projects_title": "Proyek Pilihan",
             "proj_1_title": "Project Smart Lamp (IoT)",
             "proj_1_desc": "Sistem pengendalian lampu otomatis menggunakan aplikasi Google Assistant",
@@ -112,8 +91,7 @@ def home():
             "proj_2_desc": "WebGIS interaktif berbasis QGIS yang terhubung database dan dapat diedit langsung melalui backend.",
             "proj_photo_button": "Foto",
             "proj_video_button": "Video",
-            # Skills
-            "skills_title": "Keahlian Saya",
+            "skills_certs_title": "Keahlian & Sertifikasi",
             "skills_cat_tech": "Teknis",
             "skills_cat_nontech": "Non-Teknis",
             "skills_cat_lang": "Bahasa",
@@ -139,18 +117,24 @@ def home():
             "skill_item_attention": "Ketelitian (Attention to Detail)",
             "skill_item_lang_id": "Indonesia (Native)",
             "skill_item_lang_en": "Inggris (Menengah)",
-            # Certificates
             "cert_title": "Sertifikasi",
             "cert_desc": "Saya memiliki berbagai sertifikasi yang menunjukkan komitmen saya untuk terus belajar dan berkembang dalam bidang IT.",
             "cert_button": "Lihat Semua Sertifikat",
-            # Achievements
-            "achieve_title": "Pencapaian & Penghargaan",
-            "achieve_1_title": "Pemenang Merchandise Tier 1 di #JuaraGCP Season 11 2025!",
-            "achieve_1_org": "Google Cloud",
-            "achieve_1_date": "Mei 2025",
-            "achieve_1_desc": "Termasuk kedalam 1.000 dari 12.000 peserta dengan nilai terbaik yang menyelesaikan pelatihan dan kuis akhir, dan mendapatkan #SWAG keren dari Google Cloud berupa : Bantal Leher, Stiker, Tas Serut, dan Gantungan Kunci.",
-            "achieve_gallery_button": "Lihat Gambar",
-            # Footer
+            "edu_org_title": "Pendidikan & Organisasi",
+            "education_title": "Riwayat Pendidikan",
+            "edu_1_institution": "Universitas Dian Nuswantoro Semarang",
+            "edu_1_period": "2024 - Sekarang",
+            "edu_1_major": "D3 Teknik Informatika | IPK Sementara: 3.67 / 4.00",
+            "edu_2_institution": "SMK Negeri 2 Kota Tasikmalaya",
+            "edu_2_period": "2020 - 2024",
+            "edu_2_major": "Sistem Informasi, Jaringan & Aplikasi (Program 4 Tahun)",
+            "org_title": "Organisasi",
+            "org_1_role": "Divisi Media",
+            "org_1_name": "Himpunan Mahasiswa DTI",
+            "org_1_period": "2024 - Sekarang",
+            "org_2_role": "Member",
+            "org_2_name": "Google Developer Group on Campus (GDGoC) Universitas Dian Nuswantoro",
+            "org_2_period": "2024 - Sekarang",
             "footer_cta": "Tertarik untuk berkolaborasi?",
             "footer_form_title": "Kritik & Saran",
             "footer_form_placeholder": "Tuliskan pesan Anda di sini...",
@@ -160,21 +144,16 @@ def home():
             "footer_copyright": "Didesain & dikembangkan oleh Faza."
         },
         "en": {
-            # Nav & Hero
             "nav_about": "About",
-            "nav_education": "Education",
-            "nav_organization": "Organization",
             "nav_experience": "Experience",
             "nav_projects": "Projects",
-            "nav_skills": "Skills",
-            "nav_certificates": "Certificates",
-            "nav_achievements": "Achievements",
+            "nav_skills_certs": "Skills & Certificates",
+            "nav_edu_org": "Education & Organization",
             "hero_title": "Faza Wahyu Adi Putra",
             "hero_subtitle": "Junior IT Support & Developer",
             "hero_cv_button": "Download CV",
             "hero_about_button": "About Me",
             "hero_email_button": "Email Me",
-            # About Section
             "about_title": "About Me",
             "about_summary": "I am an Informatics Engineering student interested in the IT Support division. I have 9 months of internship experience in Preventive Maintenance & Basic Hardware Maintenance, and Networking fundamentals. Experienced in a work environment that requires precision and quick response. Ready to provide technical support and contribute to your team immediately.",
             "about_name_label": "Name:",
@@ -182,23 +161,17 @@ def home():
             "about_location_label": "Location:",
             "about_location_value": "Semarang, Indonesia",
             "about_email_label": "Email:",
-            # Education Section
-            "education_title": "Education History",
-            "edu_1_institution": "Dian Nuswantoro University Semarang",
-            "edu_1_period": "2024 - Present",
-            "edu_1_major": "D3 Informatics Engineering | Current GPA: 3.67 / 4.00",
-            "edu_2_institution": "SMK Negeri 2 Tasikmalaya City",
-            "edu_2_period": "2020 - 2024",
-            "edu_2_major": "Information Systems, Networking & Applications (4-Year Program)",
-             # Organization Section
-            "org_title": "Organizations",
-            "org_1_role": "Media Division",
-            "org_1_name": "DTI Student Association",
-            "org_1_period": "2024 - Present",
-            "org_2_role": "Member",
-            "org_2_name": "Google Developer Student Clubs (GDSC) UDINUS",
-            "org_2_period": "2024 - Present",
-            # Work Experience
+            "achieve_title": "Achievements & Awards",
+            "achieve_1_title": "Tier 1 Merchandise Winner at #JuaraGCP Season 11 2025!",
+            "achieve_1_org": "Google Cloud",
+            "achieve_1_date": "May 2025",
+            "achieve_1_desc": "Finished in the top 1,000 of 12,000 participants based on the best scores from the completing the training and taking the final quiz. Awarded with Google Cloud #SWAG: a Neck Pillow, Stickers, a Drawstring Bag, and a Keychain.",
+            "achieve_gallery_button": "View Images",
+            "profiles_title": "Google Cloud & Developer Journey",
+            "profiles_gdev_title": "Google Developer Profile",
+            "profiles_gdev_desc": "See my achievements, contributions, and track record.",
+            "profiles_skills_title": "Google Cloud Skills Boost",
+            "profiles_skills_desc": "Explore my skill badges and learning progress.",
             "work_title": "Field Work Experience",
             "work_1_role": "Preventive Maintenance",
             "work_1_org": "PT. Putra Mulia Telecommunication",
@@ -213,7 +186,6 @@ def home():
             "work_2_resp_2": "Provided technical and operational support.",
             "work_2_resp_3": "Assisted with office operations and designed video content.",
             "work_gallery_button": "View Documentation",
-            # Projects
             "projects_title": "Featured Projects",
             "proj_1_title": "Smart Lamp Project (IoT)",
             "proj_1_desc": "Automatic lamp control system using the Google Assistant application.",
@@ -221,8 +193,7 @@ def home():
             "proj_2_desc": "Interactive WebGIS based on QGIS connected to a database, editable directly via the backend.",
             "proj_photo_button": "Photos",
             "proj_video_button": "Video",
-            # Skills
-            "skills_title": "My Skills",
+            "skills_certs_title": "My Skills & Certifications",
             "skills_cat_tech": "Technical",
             "skills_cat_nontech": "Non-Technical",
             "skills_cat_lang": "Languages",
@@ -248,18 +219,24 @@ def home():
             "skill_item_attention": "Attention to Detail",
             "skill_item_lang_id": "Indonesian (Native)",
             "skill_item_lang_en": "English (Intermediate)",
-            # Certificates
             "cert_title": "Certifications",
             "cert_desc": "I hold various certifications that demonstrate my commitment to continuous learning and development in the IT field.",
             "cert_button": "View All Certificates",
-            # Achievements
-            "achieve_title": "Achievements & Awards",
-            "achieve_1_title": "Tier 1 Merchandise Winner at #JuaraGCP Season 11 2025!",
-            "achieve_1_org": "Google Cloud",
-            "achieve_1_date": "May 2025",
-            "achieve_1_desc": "Finished in the top 1,000 of 12,000 participants based on the best scores from the completing the training and taking the final quiz. Awarded with Google Cloud #SWAG: a Neck Pillow, Stickers, a Drawstring Bag, and a Keychain.",
-            "achieve_gallery_button": "View Images",
-            # Footer
+            "edu_org_title": "Education & Organization",
+            "education_title": "Education History",
+            "edu_1_institution": "Dian Nuswantoro University Semarang",
+            "edu_1_period": "2024 - Present",
+            "edu_1_major": "D3 Informatics Engineering | Current GPA: 3.67 / 4.00",
+            "edu_2_institution": "SMK Negeri 2 Tasikmalaya City",
+            "edu_2_period": "2020 - 2024",
+            "edu_2_major": "Information Systems, Networking & Applications (4-Year Program)",
+            "org_title": "Organizations",
+            "org_1_role": "Media Division",
+            "org_1_name": "DTI Student Association",
+            "org_1_period": "2024 - Present",
+            "org_2_role": "Member",
+            "org_2_name": "Google Developer Group on Campus (GDGoC) at Dian Nuswantoro University",
+            "org_2_period": "2024 - Present",
             "footer_cta": "Interested in collaborating?",
             "footer_form_title": "Feedback & Suggestions",
             "footer_form_placeholder": "Write your message here...",

@@ -1,5 +1,4 @@
-// Skrip untuk mengontrol preloader
-document.body.classList.add('preloading'); // Mencegah scroll saat memuat
+document.body.classList.add('preloading');
 
 const preloader = document.getElementById('preloader');
 
@@ -11,11 +10,9 @@ window.addEventListener('load', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Inisialisasi Awal ---
     feather.replace();
     gsap.registerPlugin(ScrollTrigger);
 
-    // --- Animasi Grid Foto Profil ---
     function createRevealGrid() {
         const container = document.querySelector('.reveal-overlay');
         if (!container) return;
@@ -28,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     createRevealGrid();
 
-    // --- FUNGSI TERJEMAHAN BAHASA (DIPERBARUI) ---
     const langSwitcher = document.querySelector('.lang-switcher');
     
     function switchLanguage(lang) {
@@ -46,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.getElementById('current-lang').textContent = lang.toUpperCase();
         localStorage.setItem('selectedLanguage', lang);
-        feather.replace();
+        
+        // Re-run text splitting for the hero title after language switch
         const heroTitle = document.querySelector('[data-text-split]');
         if(heroTitle) {
             splitText('[data-text-split]');
@@ -81,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'en';
     setTimeout(() => switchLanguage(savedLang), 100);
 
-    // --- PENGHITUNG PENGUNJUNG REAL-TIME (POLLING) ---
     const visitorCountElement = document.getElementById('visitor-count-number');
     if (visitorCountElement) {
         const visitorId = 'user_' + Date.now() + Math.random().toString(36).substring(2);
@@ -95,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('unload', sendPing);
     }
 
-    // --- Fungsionalitas UI/UX ---
     const hamburger = document.querySelector('.hamburger-menu');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-menu .nav-link');
@@ -127,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- Animasi Mouse Parallax ---
     const hero = document.querySelector('.hero');
     if (hero) {
         hero.addEventListener('mousemove', (e) => {
@@ -138,14 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Animasi Entrance Utama ---
     const entranceTl = gsap.timeline({ delay: 0.5 });
     entranceTl.to('.hero-title .char', { opacity: 1, y: 0, scale: 1, rotateZ: 0, stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8 })
     .from('.hero-subtitle', { opacity: 0, y: 20, ease: 'power3.out' }, '-=0.6')
     .from('.hero-buttons', { opacity: 0, y: 20, ease: 'power3.out' }, '-=1')
     .to('.reveal-grid-block', { scale: 0, ease: 'power3.inOut', stagger: { amount: 1, from: 'center' } }, '-=1.2');
 
-    // --- Animasi & Kontrol Scroll ---
     const header = document.querySelector('.main-header');
     if (header) {
         ScrollTrigger.create({ start: 'top -80', end: 99999, toggleClass: { className: 'scrolled', target: header } });
@@ -170,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateActiveNav);
     updateActiveNav();
     
-    // --- Fungsionalitas Modal ---
     const workModal = initGalleryModal(document.querySelector('#work-modal-overlay'));
     const projectModal = initProjectModal(document.querySelector('#project-modal-overlay'));
     const achievementModal = initGalleryModal(document.querySelector('#achievement-modal-overlay'));
@@ -186,7 +177,9 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (projectVideoBtn) projectModal.openVideo(projectVideoBtn.dataset.video);
         else if (achievementItem) {
             const imageWrapper = achievementItem.querySelector('.achievement-image-wrapper');
-            if(imageWrapper) achievementModal.open(imageWrapper.dataset.images);
+            if(imageWrapper && imageWrapper.dataset.images) {
+                achievementModal.open(imageWrapper.dataset.images);
+            }
         }
     });
 
@@ -208,7 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
             open: (imagesData) => {
                 try {
                     currentImages = JSON.parse(imagesData);
-                    if (currentImages && currentImages.length > 0) { currentIndex = 0; updateImage(); modalOverlay.classList.add('active'); }
+                    if (currentImages && currentImages.length > 0) { 
+                        currentIndex = 0; 
+                        updateImage(); 
+                        modalOverlay.classList.add('active'); 
+                    }
                 } catch (e) { console.error("Error parsing images data:", e); }
             }
         };
@@ -228,22 +225,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return { openImage, openVideo };
     }
 
-    // --- FORM SUBMISSION DENGAN POPUP BUBBLE ---
     const contactForm = document.getElementById('contact-form');
     const popupBubble = document.getElementById('form-popup-bubble');
     let popupTimer;
 
     function showPopup(message, isSuccess) {
         if (!popupBubble) return;
-        
         clearTimeout(popupTimer);
-
         popupBubble.textContent = message;
-        popupBubble.className = 'popup-bubble'; // Reset kelas
+        popupBubble.className = 'popup-bubble';
         popupBubble.classList.add(isSuccess ? 'success' : 'error');
-        
         popupBubble.classList.add('active');
-        
         popupTimer = setTimeout(() => {
             popupBubble.classList.remove('active');
         }, 4000);
@@ -253,9 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const form = event.target;
         const data = new FormData(form);
-
         showPopup("Sending message...", true);
-
         try {
             const response = await fetch(form.action, {
                 method: form.method,
@@ -279,10 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener("submit", handleSubmit);
     }
 
-    // --- ANIMASI SCROLL (Swipe In & Stay) - VERSI FINAL STABIL ---
     document.querySelectorAll('section:not(.hero)').forEach(section => {
         const elementsToAnimate = section.querySelectorAll(
-            '.section-title, .about-content-wrapper, .education-card, .work-card, .org-card, .project-card, .achievement-item, .skills-container, .cert-link-container'
+            '.section-title, .about-content-wrapper, .about-extra-content, .work-card, .project-card, .skills-container, .cert-link-container, .edu-org-container'
         );
 
         if (elementsToAnimate.length > 0) {

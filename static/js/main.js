@@ -289,4 +289,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // New GSAP animation for skill tags
+    document.querySelectorAll('.skills-list').forEach(list => {
+        gsap.from(list.querySelectorAll('.skill-tag'), {
+            scrollTrigger: {
+                trigger: list,
+                start: 'top 90%',
+                toggleActions: 'play none none none',
+            },
+            opacity: 0,
+            y: 20,
+            scale: 0.8,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'back.out(1.7)'
+        });
+    });
 });

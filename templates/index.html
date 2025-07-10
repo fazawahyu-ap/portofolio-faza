@@ -115,7 +115,6 @@
 
             <div class="about-extra-content">
                 <div class="about-achievement-card">
-                    <h3 class="about-extra-title" data-translate-key="achieve_title"></h3>
                     <article class="achievement-item">
                         <div class="achievement-image-wrapper" data-images='{{ initial_data.achievements_data[0].gallery_images|tojson|safe }}'>
                             <img src="{{ url_for('static', filename='img/' + initial_data.achievements_data[0].thumbnail) }}" alt="" class="achievement-thumbnail">
@@ -133,7 +132,6 @@
                 </div>
 
                 <div class="about-journey-container">
-                     <h3 class="about-extra-title" data-translate-key="profiles_title"></h3>
                     <div class="journey-container">
                         <a href="https://www.cloudskillsboost.google/public_profiles/9419b3af-c034-49bb-9527-7fbfbb5a6e69" target="_blank" rel="noopener noreferrer" class="journey-button">
                             <i data-feather="cloud" class="journey-icon"></i>

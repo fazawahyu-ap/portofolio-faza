@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createRevealGrid() {
         const container = document.querySelector('.reveal-overlay');
         if (!container) return;
-        const gridSize = 10; 
+        const gridSize = 10;
         for (let i = 0; i < gridSize * gridSize; i++) {
             const div = document.createElement('div');
             div.classList.add('reveal-grid-block');
@@ -43,10 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('current-lang').textContent = lang.toUpperCase();
         localStorage.setItem('selectedLanguage', lang);
         
-        // Re-run text splitting for the hero title after language switch
-        const heroTitle = document.querySelector('[data-text-split]');
+        const heroTitle = document.querySelector('.hero-title[data-text-split]');
         if(heroTitle) {
-            splitText('[data-text-split]');
+            splitText('.hero-title[data-text-split]');
             gsap.fromTo('.hero-title .char', { opacity: 0, y: 20 }, {
                 opacity: 1, y: 0, scale: 1, rotateZ: 0,
                 stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
@@ -100,8 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.forEach(link => { link.addEventListener('click', () => { hamburger.classList.remove('active'); navMenu.classList.remove('active'); }); });
     }
 
-    function splitText(selector) {
-        const elem = document.querySelector(selector);
+    function splitText(target) {
+        let elem;
+        if (typeof target === 'string') {
+            elem = document.querySelector(target);
+        } else {
+            elem = target;
+        }
+
         if (!elem) return;
         const text = elem.textContent;
         elem.innerHTML = '';
@@ -132,10 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    splitText('.hero-title');
     const entranceTl = gsap.timeline({ delay: 0.5 });
     entranceTl.to('.hero-title .char', { opacity: 1, y: 0, scale: 1, rotateZ: 0, stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8 })
     .from('.hero-subtitle', { opacity: 0, y: 20, ease: 'power3.out' }, '-=0.6')
-    .from('.hero-buttons', { opacity: 0, y: 20, ease: 'power3.out' }, '-=1')
+    .from('.hero-main-buttons', { opacity: 0, y: 20, ease: 'power3.out' }, '-=1')
     .to('.reveal-grid-block', { scale: 0, ease: 'power3.inOut', stagger: { amount: 1, from: 'center' } }, '-=1.2');
 
     const header = document.querySelector('.main-header');
@@ -271,10 +277,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('section:not(.hero)').forEach(section => {
         const elementsToAnimate = section.querySelectorAll(
-            '.section-title, .about-content-wrapper, .about-extra-content, .work-card, .project-card, .skills-container, .cert-link-container, .edu-org-container'
+            '.section-title, .about-content-wrapper, .work-card, .project-card, .skills-container, .cert-link-container, .edu-org-container'
         );
 
-        if (elementsToAnimate.length > 0) {
+        const aboutSectionElements = section.querySelectorAll(
+            '.about-text, .about-details, .about-achievement-card, .about-journey-container'
+        );
+
+        if (section.id === 'about' && aboutSectionElements.length > 0) {
+            gsap.from(aboutSectionElements, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power3.out'
+            });
+        } else if (elementsToAnimate.length > 0) {
              gsap.from(elementsToAnimate, {
                 scrollTrigger: {
                     trigger: section,
@@ -288,22 +311,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: 'power3.out'
             });
         }
-    });
-
-    // New GSAP animation for skill tags
-    document.querySelectorAll('.skills-list').forEach(list => {
-        gsap.from(list.querySelectorAll('.skill-tag'), {
-            scrollTrigger: {
-                trigger: list,
-                start: 'top 90%',
-                toggleActions: 'play none none none',
-            },
-            opacity: 0,
-            y: 20,
-            scale: 0.8,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'back.out(1.7)'
-        });
     });
 });

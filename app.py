@@ -115,7 +115,7 @@ def home():
             "skill_item_problem_solving": "Pemecahan Masalah (Problem-Solving)",
             "skill_item_teamwork": "Kerja Sama Tim & Kolaborasi",
             "skill_item_attention": "Ketelitian (Attention to Detail)",
-            "skill_item_lang_id": "Indonesia (Native)",
+            "skill_item_lang_id": "Indonesia (Fasih)",
             "skill_item_lang_en": "Inggris (Menengah)",
             "cert_title": "Sertifikasi",
             "cert_desc": "Saya memiliki berbagai sertifikasi yang menunjukkan komitmen saya untuk terus belajar dan berkembang dalam bidang IT.",

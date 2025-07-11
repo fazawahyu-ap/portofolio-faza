@@ -98,7 +98,7 @@ def home():
             "skill_item_networking": "Jaringan Dasar (Konfigurasi Router)",
             "skill_item_os": "Instalasi & Konfigurasi Sistem Operasi Windows",
             "skill_subcat_dev": "Pengembangan Web",
-            "skill_item_frontend_backend": "Front-End & Back-End (Python) #PYTHON_LOGO#",
+            "skill_item_frontend_backend": "Front-End & Back-End (Python) #PYTHON_LOGO#", # Ini akan ditangani di JS
             "skill_item_db": "Pengelolaan Database Dasar (MySQL)",
             "skill_item_uiux": "Design Web UI/UX",
             "skill_subcat_tools": "Tools & Perangkat Lunak",
@@ -113,7 +113,8 @@ def home():
             "skill_item_problem_solving": "Pemecahan Masalah (Problem-Solving)",
             "skill_item_teamwork": "Kerja Sama Tim & Kolaborasi",
             "skill_item_attention": "Ketelitian (Attention to Detail)",
-            "skill_item_lang_id": "Indonesia ()",
+            # Perbaikan di sini: Isi tanda kurung dengan "Fasih"
+            "skill_item_lang_id": "Indonesia (Fasih)",
             "skill_item_lang_en": "Inggris (Menengah)",
             "cert_title": "Sertifikasi",
             "cert_desc": "Saya memiliki berbagai sertifikasi yang menunjukkan komitmen saya untuk terus belajar dan berkembang dalam bidang IT.",
@@ -198,7 +199,7 @@ def home():
             "skill_item_networking": "Basic Networking (Router Configuration)",
             "skill_item_os": "Windows Operating System Installation & Configuration",
             "skill_subcat_dev": "Web Development",
-            "skill_item_frontend_backend": "Front-End & Back-End (Python) #PYTHON_LOGO#",
+            "skill_item_frontend_backend": "Front-End & Back-End (Python) #PYTHON_LOGO#", # Ini akan ditangani di JS
             "skill_item_db": "Basic Database Management (MySQL)",
             "skill_item_uiux": "Web UI/UX Design",
             "skill_subcat_tools": "Tools & Software",

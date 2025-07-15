@@ -665,15 +665,22 @@ section[id] {
     .about-achievement-card .achievement-item { flex-direction: column; align-items: flex-start; }
     .achievement-image-wrapper { width: 100%; height: 180px; }
     
-    #education-organization .education-timeline::before { left: 8px; }
+    #education-organization .education-timeline::before {
+        left: 15px;
+    }
     #education-organization .education-card,
     #education-organization .education-card:nth-child(odd),
     #education-organization .education-card:nth-child(even) {
-        width: calc(100% - 40px); margin: 0 0 2rem 40px; align-self: flex-start;
+        width: calc(100% - 35px);
+        margin: 0 0 2rem 35px;
+        align-self: flex-start;
     }
     #education-organization .education-card::after,
     #education-organization .education-card:nth-child(odd)::after,
-    #education-organization .education-card:nth-child(even)::after { left: -49px; right: auto; }
+    #education-organization .education-card:nth-child(even)::after {
+        left: -23px;
+        right: auto;
+    }
     
     .footer-content-wrapper { flex-direction: column; gap: 3rem; text-align: center; align-items: center; }
     .footer-contact-info, .footer-form-container { width: 100%; text-align: center; }

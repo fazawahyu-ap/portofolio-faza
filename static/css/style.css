@@ -681,6 +681,10 @@ section[id] {
         left: -23px;
         right: auto;
     }
+
+    .edu-org-container {
+    grid-template-columns: 1fr;
+    }
     
     .footer-content-wrapper { flex-direction: column; gap: 3rem; text-align: center; align-items: center; }
     .footer-contact-info, .footer-form-container { width: 100%; text-align: center; }

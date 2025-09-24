@@ -158,7 +158,7 @@ def home():
             "about_name_value": "Faza Wahyu Adi Putra",
             "about_location_label": "Location:",
             "about_location_value": "Semarang, Indonesia",
-            "about_email_label": "Email",
+            "about_email_label": "Email:",
             "achieve_1_title": "Tier 1 Merchandise Winner at #JuaraGCP Season 11 2025!",
             "achieve_1_org": "Google Cloud",
             "achieve_1_date": "May 2025",

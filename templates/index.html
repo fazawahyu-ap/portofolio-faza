@@ -32,21 +32,16 @@
         </ul>
     </div>
     
-    <div class="visitor-counter">
-        <i data-feather="users"></i>
-        <span class="visitor-text">Online</span>
-    </div>
-    
     <header class="main-header">
         <nav class="navbar">
-            <a href="#" class="nav-logo">Faza<span>.dev</span></a>
+            <a href="/" class="nav-logo">Faza<span>.dev</span></a>
             <div class="nav-controls">
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="#about" class="nav-link" data-translate-key="nav_about"></a></li>
-                    <li class="nav-item"><a href="#experience" class="nav-link" data-translate-key="nav_experience"></a></li>
-                    <li class="nav-item"><a href="#projects" class="nav-link" data-translate-key="nav_projects"></a></li>
-                    <li class="nav-item"><a href="#skills-certificates" class="nav-link" data-translate-key="nav_skills_certs"></a></li>
-                    <li class="nav-item"><a href="#education-organization" class="nav-link" data-translate-key="nav_edu_org"></a></li>
+                    <li class="nav-item"><a href="/#about" class="nav-link" data-translate-key="nav_about"></a></li>
+                    <li class="nav-item"><a href="/#experience" class="nav-link" data-translate-key="nav_experience"></a></li>
+                    <li class="nav-item"><a href="/#projects" class="nav-link" data-translate-key="nav_projects"></a></li>
+                    <li class="nav-item"><a href="/#skills-certificates" class="nav-link" data-translate-key="nav_skills_certs"></a></li>
+                    <li class="nav-item"><a href="/#education-organization" class="nav-link" data-translate-key="nav_edu_org"></a></li>
                 </ul>
                 <div class="hamburger-menu">
                     <div class="bar"></div>
@@ -66,7 +61,7 @@
                         <h2 class="hero-subtitle" data-translate-key="hero_subtitle"></h2>
                         <div class="hero-highlight">
                             <div class="highlight-btn animated-border">
-                                Hardware-Software Troubleshooting
+                                Hardware & Software Troubleshooting
                             </div>
                             <div class="highlight-btn animated-border">
                                 Web Development |
@@ -83,7 +78,7 @@
                             <i data-feather="download"></i> <span data-translate-key="hero_cv_button"></span>
                         </a>
                         <a href="#about" class="btn btn-secondary">
-                            <i data-feather="arrow-down"></i> <span data-translate-key="hero_about_button"></span>
+                            <i data-feather="user"></i> <span data-translate-key="hero_about_button"></span>
                         </a>
                         <a href="mailto:fazawahyu10@gmail.com" class="btn btn-secondary">
                             <i data-feather="mail"></i> <span data-translate-key="hero_email_button"></span>
@@ -244,7 +239,7 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="card-header"><i data-feather="folder"></i><a href="#" class="project-link"><i data-feather="external-link"></i></a></div>
+                    <div class="card-header"><i data-feather="folder"></i><a href="#" target="_blank" class="project-link"><i data-feather="external-link"></i></a></div>
                     <h3 data-translate-key="proj_2_title"></h3>
                     <p data-translate-key="proj_2_desc"></p>
                     <div class="tech-tags">
@@ -259,38 +254,55 @@
                         </button>
                     </div>
                 </div>
+                <div class="project-card">
+                    <div class="card-header"><i data-feather="folder"></i><a href="https://tempmail-za.vercel.app/" target="_blank" class="project-link"><i data-feather="external-link"></i></a></div>
+                    <h3 data-translate-key="proj_3_title"></h3>
+                    <p data-translate-key="proj_3_desc"></p>
+                    <div class="tech-tags">
+                        {% for tech in initial_data.projects[2].tech %}<span>{{ tech }}</span>{% endfor %}
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://tempmail-za.vercel.app/" target="_blank" class="btn btn-project-url">
+                            <i data-feather="link"></i> <span data-translate-key="proj_url_button"></span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="skills-certificates" class="skills-section">
             <h2 class="section-title" data-translate-key="skills_certs_title"></h2>
-            <div class="skills-container">
-                <div class="skills-category">
-                    <h3 class="category-title" data-translate-key="{{ skills_structure.technical.title_key }}"></h3>
-                    {% for sub_cat in skills_structure.technical.subcategories %}
-                        <div class="skills-subcategory">
-                            <h4 data-translate-key="{{ sub_cat.title_key }}"></h4>
-                            <div class="skills-list">
-                                {%for skill_key in sub_cat.skills %}
-                                    <span class="skill-tag" data-translate-key="{{ skill_key }}"></span>
-                                {%endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="skills-column">
-                    {% for category in skills_structure.others %}
-                    <div class="skills-category">
-                        <h3 class="category-title" data-translate-key="{{ category.title_key }}"></h3>
-                        <div class="skills-list">
-                            {% for skill_key in category.skills %}
-                                <span class="skill-tag" data-translate-key="{{ skill_key }}"></span>
-                            {% endfor %}
-                        </div>
+            
+            <div class="skill-grid">
+                {% for category in page_data.skills.technical %}
+                <div class="skill-card">
+                    <h3 class="skill-card-title" data-translate-key="{{ category.title_key }}"></h3>
+                    <div class="skills-list">
+                        {% for skill in category.skills %}
+                        <span class="skill-tag">
+                            <i class="skill-icon" data-feather="{{ skill.icon }}"></i>
+                            <span data-translate-key="{{ skill.key }}"></span>
+                        </span>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
+
+                {% for category in page_data.skills.others %}
+                <div class="skill-card">
+                    <h3 class="skill-card-title" data-translate-key="{{ category.title_key }}"></h3>
+                    <div class="skills-list">
+                        {% for skill in category.skills %}
+                        <span class="skill-tag">
+                            <i class="skill-icon" data-feather="{{ skill.icon }}"></i>
+                            <span data-translate-key="{{ skill.key }}"></span>
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
             </div>
+
             <div class="cert-link-container">
                  <h3 class="category-title" data-translate-key="cert_title"></h3>
                 <p data-translate-key="cert_desc"></p>
@@ -303,41 +315,40 @@
 
         <section id="education-organization">
             <h2 class="section-title" data-translate-key="edu_org_title"></h2>
-            <div class="edu-org-container">
-                <div class="edu-column">
-                    <h3 class="column-title" data-translate-key="education_title"></h3>
-                    <div class="education-timeline">
-                        <div class="education-card">
-                            <div class="education-header">
-                                <h4 class="education-institution" data-translate-key="edu_1_institution"></h4>
-                                <p class="education-period" data-translate-key="edu_1_period"></p>
-                            </div>
-                            <p class="education-major" data-translate-key="edu_1_major"></p>
-                        </div>
-                        <div class="education-card">
-                            <div class="education-header">
-                                <h4 class="education-institution" data-translate-key="edu_2_institution"></h4>
-                                <p class="education-period" data-translate-key="edu_2_period"></p>
-                            </div>
-                            <p class="education-major" data-translate-key="edu_2_major"></p>
-                        </div>
+            
+            <div class="education-timeline">
+                {% for edu in page_data.education_and_orgs %}
+                <div class="experience-card integrated-card">
+                    <div class="education-main">
+                        <h4 data-translate-key="{{ edu.institution_key }}"></h4>
+                        <p class="role" data-translate-key="{{ edu.major_key }}"></p>
+                        <p class="duration" data-translate-key="{{ edu.period_key }}"></p>
+                        <p class="description" data-translate-key="{{ edu.desc_key }}"></p>
                     </div>
-                </div>
-                <div class="org-column">
-                    <h3 class="column-title" data-translate-key="org_title"></h3>
-                    <div class="org-grid">
-                        <div class="org-card">
-                            <h4 class="org-role" data-translate-key="org_1_role"></h4>
-                            <p class="org-name" data-translate-key="org_1_name"></p>
-                            <p class="org-period" data-translate-key="org_1_period"></p>
+
+                    {% if edu.organizations %}
+                    <div class="organization-section">
+                        <h5 class="organization-title">
+                            <i data-feather="users"></i>
+                            <span data-translate-key="org_title"></span>
+                        </h5>
+                        {% for org in edu.organizations %}
+                        <div class="organization-item">
+                            <h6 data-translate-key="{{ org.name_key }}"></h6>
+                            <p class="role" data-translate-key="{{ org.role_key }}"></p>
+                            <p class="duration" data-translate-key="{{ org.period_key }}"></p>
+                            <p class="description" data-translate-key="{{ org.desc_key }}"></p>
+                            {% if org.details_button %}
+                            <a href="/organization" class="btn-details">
+                                <i data-feather="info"></i> <span data-translate-key="org_details_button"></span>
+                            </a>
+                            {% endif %}
                         </div>
-                         <div class="org-card">
-                            <h4 class="org-role" data-translate-key="org_2_role"></h4>
-                            <p class="org-name" data-translate-key="org_2_name"></p>
-                            <p class="org-period" data-translate-key="org_2_period"></p>
-                        </div>
+                        {% endfor %}
                     </div>
+                    {% endif %}
                 </div>
+                {% endfor %}
             </div>
         </section>
     </main>
@@ -420,11 +431,6 @@
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script>
-        window.addEventListener('load', () => {
-            feather.replace();
-        });
-    </script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

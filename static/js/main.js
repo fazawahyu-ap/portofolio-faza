@@ -29,18 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function switchLanguage(lang) {
         if (!lang || !translations[lang]) return;
-        const pythonLogoHTML = `<img src="static/img/python-logo.png" alt="Python Logo" class="skill-logo">`;
+        
         document.querySelectorAll('[data-translate-key]').forEach(el => {
             const key = el.dataset.translateKey;
             if (translations[lang][key] !== undefined) {
-                let translatedText = translations[lang][key];
-                if (translatedText.includes('#PYTHON_LOGO#')) {
-                    translatedText = translatedText.replace('#PYTHON_LOGO#', pythonLogoHTML);
-                }
-                el.innerHTML = translatedText;
+                el.innerHTML = translations[lang][key];
             }
         });
-        document.getElementById('current-lang').textContent = lang.toUpperCase();
+        
+        const currentLangSpan = document.getElementById('current-lang');
+        if(currentLangSpan) {
+            currentLangSpan.textContent = lang.toUpperCase();
+        }
+        
         localStorage.setItem('selectedLanguage', lang);
         
         const heroTitle = document.querySelector('.hero-title[data-text-split]');
@@ -51,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
             });
         }
+        // Pastikan ikon di-render ulang setelah ganti bahasa
+        feather.replace();
     }
 
     if (langSwitcher) {
@@ -74,21 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+    const savedLang = localStorage.getItem('selectedLanguage') || 'id';
     setTimeout(() => switchLanguage(savedLang), 100);
-
-    const visitorCountElement = document.getElementById('visitor-count-number');
-    if (visitorCountElement) {
-        const visitorId = 'user_' + Date.now() + Math.random().toString(36).substring(2);
-        const API_BASE_URL = window.location.origin;
-        const sendPing = () => { if (navigator.sendBeacon) { navigator.sendBeacon(`${API_BASE_URL}/api/ping`, JSON.stringify({ userId: visitorId })); } else { fetch(`${API_BASE_URL}/api/ping`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: visitorId }), keepalive: true }); } };
-        const getCount = async () => { try { const response = await fetch(`${API_BASE_URL}/api/count`); if (!response.ok) return; const data = await response.json(); visitorCountElement.textContent = data.active_users || 1; } catch (error) { console.error('Gagal mengambil data pengunjung:', error); visitorCountElement.textContent = '1'; } };
-        sendPing();
-        getCount();
-        setInterval(sendPing, 15000);
-        setInterval(getCount, 10000);
-        window.addEventListener('unload', sendPing);
-    }
 
     const hamburger = document.querySelector('.hamburger-menu');
     const navMenu = document.querySelector('.nav-menu');
@@ -100,13 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function splitText(target) {
-        let elem;
-        if (typeof target === 'string') {
-            elem = document.querySelector(target);
-        } else {
-            elem = target;
-        }
-
+        let elem = document.querySelector(target);
         if (!elem) return;
         const text = elem.textContent;
         elem.innerHTML = '';
@@ -151,16 +135,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateActiveNav() {
         let currentSection = 'home';
+        const currentPath = window.location.pathname;
+        if (currentPath.includes('organization')) return;
+
         document.querySelectorAll('section[id]').forEach(section => {
             const sectionTop = section.offsetTop;
-            if (pageYOffset >= sectionTop - (header.clientHeight + 50)) {
+            if (window.pageYOffset >= sectionTop - (header.clientHeight + 50)) {
                 currentSection = section.getAttribute('id');
             }
         });
         document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
             link.classList.remove('active');
             const href = link.getAttribute('href');
-            if (href && href.substring(1) === currentSection) {
+            if (href && href.split('#')[1] === currentSection) {
                 link.classList.add('active');
             }
         });
@@ -197,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextBtn = modalOverlay.querySelector('.slider-btn.next');
         let currentImages = [];
         let currentIndex = 0;
-        const updateImage = () => { if (currentImages.length > 0) sliderImage.src = `static/img/${currentImages[currentIndex]}`; };
+        const updateImage = () => { if (currentImages.length > 0) sliderImage.src = `/static/img/${currentImages[currentIndex]}`; };
         const closeModal = () => modalOverlay.classList.remove('active');
         prevBtn?.addEventListener('click', () => { currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length; updateImage(); });
         nextBtn?.addEventListener('click', () => { currentIndex = (currentIndex + 1) % currentImages.length; updateImage(); });
@@ -221,11 +208,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!modalOverlay) return { openImage: () => {}, openVideo: () => {} };
         const imageSlider = modalOverlay.querySelector('.project-image-slider');
         const videoPlayer = modalOverlay.querySelector('.modal-video-player');
-        const videoElement = videoPlayer.querySelector('video');
+        const videoElement = videoPlayer?.querySelector('video');
         const galleryModal = initGalleryModal(modalOverlay);
         const openImage = (imagesData) => { imageSlider.style.display = 'block'; videoPlayer.style.display = 'none'; galleryModal.open(imagesData); };
-        const openVideo = (videoFile) => { imageSlider.style.display = 'none'; videoPlayer.style.display = 'block'; videoElement.src = `static/video/${videoFile}`; videoElement.controls = true; modalOverlay.classList.add('active'); };
-        const closeModalAndResetVideo = () => { if (!videoElement.paused) videoElement.pause(); videoElement.currentTime = 0; videoElement.src = ""; };
+        const openVideo = (videoFile) => { 
+            if (imageSlider) imageSlider.style.display = 'none';
+            if (videoPlayer) videoPlayer.style.display = 'block';
+            if (videoElement) {
+                videoElement.src = `/static/video/${videoFile}`;
+                videoElement.controls = true;
+            }
+            modalOverlay.classList.add('active'); 
+        };
+        const closeModalAndResetVideo = () => { if (videoElement && !videoElement.paused) { videoElement.pause(); videoElement.currentTime = 0; videoElement.src = ""; } };
         modalOverlay.querySelector('.modal-close').addEventListener('click', closeModalAndResetVideo);
         modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModalAndResetVideo(); });
         return { openImage, openVideo };
@@ -277,39 +272,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('section:not(.hero)').forEach(section => {
         const elementsToAnimate = section.querySelectorAll(
-            '.section-title, .about-content-wrapper, .work-card, .project-card, .skills-container, .cert-link-container, .edu-org-container'
+            '.section-title, .about-content-wrapper, .work-card, .project-card, .skill-grid, .cert-link-container, .education-timeline'
         );
 
-        const aboutSectionElements = section.querySelectorAll(
-            '.about-text, .about-details, .about-achievement-card, .about-journey-container'
-        );
+        gsap.from(elementsToAnimate, {
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out'
+        });
+    });
 
-        if (section.id === 'about' && aboutSectionElements.length > 0) {
-            gsap.from(aboutSectionElements, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none',
-                },
-                opacity: 0,
-                y: 50,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
-        } else if (elementsToAnimate.length > 0) {
-             gsap.from(elementsToAnimate, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none',
-                },
-                opacity: 0,
-                y: 50,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
-        }
+    const smoothScrollAnchors = document.querySelectorAll('a.scroll-down-btn');
+
+    smoothScrollAnchors.forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
     });
 });

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengalaman Organisasi | Himpunan Mahasiswa DTI</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    </head>
+<body>
+
+    <header class="main-header scrolled">
+        <nav class="navbar">
+            <a href="/" class="nav-logo">Faza<span>.dev</span></a>
+            <div class="nav-controls">
+                <a href="/#education-organization" class="btn btn-secondary">
+                    <i data-feather="arrow-left"></i> Kembali
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="org-hero">
+            <div class="org-hero-content">
+                <h1>Himpunan Mahasiswa DTI</h1>
+                <p class="role-subtitle">Pengalaman sebagai Anggota Divisi Media</p>
+            </div>
+        </section>
+
+        <section class="page-container org-about-section">
+            <div class="org-about-layout">
+                <div class="org-about-text">
+                    <h2 class="section-subtitle-left">Tentang Peran Saya</h2>
+                    <p class="description-text">
+                        Sebagai anggota Divisi Media di Himpunan Mahasiswa DTI, saya berperan dalam mengelola dan mengembangkan konten kreatif untuk berbagai kegiatan organisasi. Saya turut berkontribusi dalam dokumentasi acara, publikasi media sosial, serta desain visual yang mendukung citra profesional dan informatif Himpunan.
+                    </p>
+                </div>
+                <div class="formal-photo">
+                    <img src="{{ url_for('static', filename='img/cocard.jpg') }}" alt="Foto Kartu Anggota HMDTI">
+                </div>
+            </div>
+        </section>
+
+        <section class="page-container org-responsibilities-section">
+            <h2 class="section-subtitle-left">Tanggung Jawab Utama</h2>
+            <div class="responsibilities-grid">
+                <div class="responsibility-card">
+                    <i data-feather="camera"></i>
+                    <h3>Dokumentasi & Publikasi</h3>
+                    <p>Mengelola dokumentasi foto dan video, serta mempublikasikan kegiatan himpunan di platform media sosial.</p>
+                </div>
+                <div class="responsibility-card">
+                    <i data-feather="pen-tool"></i>
+                    <h3>Desain Materi Visual</h3>
+                    <p>Mendesain berbagai materi visual seperti poster, pamflet, dan konten grafis untuk acara resmi dan media sosial.</p>
+                </div>
+                <div class="responsibility-card">
+                    <i data-feather="users"></i>
+                    <h3>Kolaborasi & Partisipasi</h3>
+                    <p>Berpartisipasi aktif dalam seminar, workshop, dan proyek kolaboratif yang diadakan antar divisi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="activity-gallery" class="gallery-section">
+            <h2 class="section-title">Galeri Kegiatan</h2>
+            
+            <div class="activity-list">
+                <div class="activity-item reverse">
+                    <div class="activity-number">01</div>
+                    <div class="activity-image">
+                        <img src="{{ url_for('static', filename='img/anggotahmdti.jpeg') }}" alt="Kegiatan Musyawarah Besar HMDTI">
+                    </div>
+                    <div class="activity-description">
+                        <h3>Musyawarah Besar HMDTI</h3>
+                        <p>
+Saya berpartisipasi dalam Musyawarah Besar (MUBES) HMDTI. Acara ini mencakup agenda penting seperti pemilihan ketua umum dan pelantikan anggota baru.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-number">02</div>
+                    <div class="activity-image">
+                        <img src="{{ url_for('static', filename='img/pendamping.jpeg') }}" alt="Kegiatan Dinus Inside 2025">
+                    </div>
+                    <div class="activity-description">
+                        <h3>Pendamping Mahasiswa Baru Dinus Inside 2025</h3>
+                        <p>
+Menjadi bagian dari tim kepanitiaan Dinus Inside 2025 sebagai Pendamping Mahasiswa Baru. Dalam peran ini, saya berkolaborasi dengan panitia lain untuk memastikan kelancaran acara orientasi.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="activity-item reverse">
+                     <div class="activity-number">03</div>
+                     <div class="activity-image">
+                        <img src="{{ url_for('static', filename='img/-.png') }}" alt="Kegiatan Selanjutnya">
+                    </div>
+                     <div class="activity-description">
+                        <h3>Coming Soon</h3>
+                        <p>
+                            Kegiatan dan kontribusi lainnya akan segera diperbarui di sini.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p class="copyright">&copy; 2025 - Didesain & dikembangkan oleh Faza.</p>
+    </footer>
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>

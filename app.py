@@ -96,8 +96,9 @@ translations = {
         "edu_org_title": "Pendidikan & Organisasi",
         "education_title": "Pendidikan",
         "edu_1_institution": "Universitas Dian Nuswantoro Semarang",
+        "edu_1_status": "Status Mahasiswa Aktif",  
         "edu_1_period": "2024 - Sekarang",
-        "edu_1_major": "D3 Teknik Informatika | IPK Sementara: 3.67 / 4.00",
+        "edu_1_major": "D3 Teknik Informatika",
         "edu_1_desc": "Fokus pada pengembangan perangkat lunak dan dasar-dasar infrastruktur IT, dengan proyek-proyek praktis dalam pemrograman dan jaringan.",
         "edu_2_institution": "SMK Negeri 2 Kota Tasikmalaya",
         "edu_2_period": "2020 - 2024",
@@ -206,8 +207,9 @@ translations = {
         "edu_org_title": "Education & Organization",
         "education_title": "Education",
         "edu_1_institution": "Dian Nuswantoro University Semarang",
+        "edu_1_status": "Active Student Status",
         "edu_1_period": "2024 - Present",
-        "edu_1_major": "D3 Informatics Engineering | Current GPA: 3.67 / 4.00",
+        "edu_1_major": "D3 Informatics Engineering",
         "edu_1_desc": "Focusing on software development and IT infrastructure fundamentals, with practical projects in programming and networking.",
         "edu_2_institution": "SMK Negeri 2 Tasikmalaya City",
         "edu_2_period": "2020 - 2024",
@@ -269,7 +271,7 @@ def home():
                         {"key": "skill_item_vscode", "icon": "terminal"},
                         {"key": "skill_item_xampp", "icon": "server"},
                         {"key": "skill_item_cisco", "icon": "git-branch"},
-                        {"key": "skill_item_figma", "icon": "figma"}
+                        {"key": "skill_item_figma", "icon": "pen-tool"}
                     ]
                 }
             ],

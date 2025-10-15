@@ -1,59 +1,59 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faza | Digital Portofolio</title>
-    <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <script>const translations = {{ translations_json|safe }};</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faza | Digital Portofolio</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <script>const translations = {{ translations_json|safe }};</script>
 </head>
 <body>
 
-    <div id="preloader">
-        <div class="preloader-container">
-            <svg class="preloader-svg" viewBox="0 0 100 100">
-              <path d="M 50,5 A 45,45 0 0 1 95,50" stroke="#84E4C8" /> <path d="M 95,50 A 45,45 0 0 1 50,95" stroke="#F4D03F" /> <path d="M 50,95 A 45,45 0 0 1 5,50" stroke="#AED6F1" /> <path d="M 5,50 A 45,45 0 0 1 50,5" stroke="#F5B7B1" />
-              <circle class="preloader-dot" cx="50" cy="50" r="10"/>
-            </svg>
+  <div id="preloader">
+    <div class="preloader-container">
+      <svg class="preloader-svg" viewBox="0 0 100 100">
+        <path d="M 50,5 A 45,45 0 0 1 95,50" stroke="#84E4C8" />
+        <path d="M 95,50 A 45,45 0 0 1 50,95" stroke="#F4D03F" />
+        <path d="M 50,95 A 45,45 0 0 1 5,50" stroke="#AED6F1" />
+        <path d="M 5,50 A 45,45 0 0 1 50,5" stroke="#F5B7B1" />
+        <circle class="preloader-dot" cx="50" cy="50" r="10"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="lang-switcher">
+    <button class="lang-button">
+      <i data-feather="globe"></i>
+      <span id="current-lang">ID</span>
+      <i data-feather="chevron-down" class="chevron"></i>
+    </button>
+    <ul class="lang-dropdown">
+      <li><a href="#" data-lang="id">ID</a></li>
+      <li><a href="#" data-lang="en">EN</a></li>
+    </ul>
+  </div>
+
+  <header class="main-header">
+    <nav class="navbar">
+      <a href="/" class="nav-logo">Faza<span>.dev</span></a>
+      <div class="nav-controls">
+<ul class="nav-menu">
+  <li><a href="/#about" class="nav-link" data-translate-key="nav_about"></a></li>
+  <li><a href="/#experience" class="nav-link" data-translate-key="nav_experience"></a></li>
+  <li><a href="/#projects" class="nav-link" data-translate-key="nav_projects"></a></li>
+  <li><a href="/#skills-certificates" class="nav-link" data-translate-key="nav_skills_certs"></a></li>
+  <li><a href="/#education-organization" class="nav-link" data-translate-key="nav_edu_org"></a></li>
+</ul>
+        <div class="hamburger-menu">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
         </div>
-    </div>
+      </div>
+    </nav>
+  </header>
 
-    <div class="lang-switcher">
-        <button class="lang-button">
-            <i data-feather="globe"></i>
-            <span id="current-lang">ID</span>
-            <i data-feather="chevron-down" class="chevron"></i>
-        </button>
-        <ul class="lang-dropdown">
-            <li><a href="#" data-lang="id">ID</a></li>
-            <li><a href="#" data-lang="en">EN</a></li>
-        </ul>
-    </div>
-    
-    <header class="main-header">
-        <nav class="navbar">
-            <a href="/" class="nav-logo">Faza<span>.dev</span></a>
-            <div class="nav-controls">
-                <ul class="nav-menu">
-                    <li class="nav-item"><a href="/#about" class="nav-link" data-translate-key="nav_about"></a></li>
-                    <li class="nav-item"><a href="/#experience" class="nav-link" data-translate-key="nav_experience"></a></li>
-                    <li class="nav-item"><a href="/#projects" class="nav-link" data-translate-key="nav_projects"></a></li>
-                    <li class="nav-item"><a href="/#skills-certificates" class="nav-link" data-translate-key="nav_skills_certs"></a></li>
-                    <li class="nav-item"><a href="/#education-organization" class="nav-link" data-translate-key="nav_edu_org"></a></li>
-                </ul>
-                <div class="hamburger-menu">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero" id="home">
+  <main>
+       <section class="hero" id="home">
             <div class="hero-content">
                 <div class="hero-text">
                     <div class="hero-intro">
@@ -66,7 +66,7 @@
                             <div class="highlight-btn animated-border">
                                 Web Development |
                                 <span class="python-highlight">
-                                    <img src="{{ url_for('static', filename='img/python-logo.png') }}" alt="Python Logo" class="python-logo">
+                                    <img src="/static/img/python-logo.png" alt="Python Logo" class="python-logo">
                                     Python
                                 </span>
                             </div>
@@ -74,7 +74,7 @@
                     </div>
                     
                     <div class="hero-main-buttons">
-                        <a href="{{ url_for('static', filename='cv/CV_Faza_Wahyu_Adi_Putra.pdf') }}" download="CV_Faza_Wahyu_Adi_Putra.pdf" class="btn btn-primary">
+                        <a href="/static/cv/CV_Faza_Wahyu_Adi_Putra.pdf" download="CV_Faza_Wahyu_Adi_Putra.pdf" class="btn btn-primary">
                             <i data-feather="download"></i> <span data-translate-key="hero_cv_button"></span>
                         </a>
                         <a href="#about" class="btn btn-secondary">
@@ -89,7 +89,7 @@
                 <div class="hero-image-wrapper">
                     <div class="hero-image-container">
                         <div class="reveal-overlay"></div>
-                        <img src="{{ url_for('static', filename='img/profile2.jpeg') }}" alt="Foto Profil Faza" class="profile-picture">
+                        <img src="/static/img/profile2.jpeg" alt="Foto Profil Faza" class="profile-picture">
                     </div>
                     <div class="hero-social-links">
                         <a href="https://x.com/@faza_wap/" target="_blank" aria-label="X / Twitter">
@@ -106,252 +106,414 @@
             </div>
         </section>
 
-        <section id="about" class="about-section">
-            <h2 class="section-title"><span data-translate-key="about_title"></span></h2>
-            <div class="about-content-wrapper">
-                <div class="about-text">
+    <a href="#about" class="scroll-down-btn" aria-label="Scroll to About section">
+        <i data-feather="arrow-down"></i>
+    </a>
+<section id="about" class="about-section">
+    <div class="about-container">
+        <!-- Header -->
+        <div class="about-header">
+            <h2 class="section-title" data-translate-key="about_title"></h2>
+        </div>
+
+        <!-- Main Content -->
+        <div class="about-content-compact">
+            <!-- Left Column - Profile & Basic Info -->
+            <div class="about-left">
+                <div class="profile-card">
+                    <div class="profile-image">
+                        <img src="/static/img/profile2.jpeg" alt="Faza Wahyu" class="profile-pic">
+                    </div>
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <i data-feather="map-pin"></i>
+                            <span data-translate-key="about_location_value"></span>
+                        </div>
+                        <div class="info-item">
+                            <i data-feather="mail"></i>
+                            <a href="mailto:fazawahyu10@gmail.com">fazawahyu10@gmail.com</a>
+                        </div>
+                        <div class="info-item">
+                            <i data-feather="book"></i>
+                            <span>D3 Teknik Informatika</span>
+                        </div>
+                    </div>
+                    <div class="profile-social">
+                        <a href="https://x.com/@faza_wap/" target="_blank">
+                            <i data-feather="twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/faza_wap/" target="_blank">
+                            <i data-feather="instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/faza-wap/" target="_blank">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Description & Highlights -->
+            <div class="about-right">
+                <!-- Description -->
+                <div class="description-box">
                     <p data-translate-key="about_summary"></p>
                 </div>
-               <div class="about-details">
-                    <ul>
-                        <li><strong><span data-translate-key="about_name_label"></span></strong><span data-translate-key="about_name_value"></span></li>
-                        <li><strong><span data-translate-key="about_location_label"></span></strong><span data-translate-key="about_location_value"></span></li>
-                        <li><strong><span data-translate-key="about_email_label"></span></strong><a href="mailto:fazawahyu10@gmail.com">fazawahyu10@gmail.com</a></li>
-                        <li class="social-media-card">
-                            <a href="https://x.com/@faza_wap/" target="_blank" aria-label="X / Twitter">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-                            </a>
-                            <a href="https://www.instagram.com/faza_wap/" target="_blank" aria-label="Instagram">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9 26.3 26.2 58 34.4 93.9 36.2 37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
-                            </a>
-                            <a href="https://www.linkedin.com/in/faza-wap/" target="_blank" aria-label="LinkedIn">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
 
-            <div class="about-extra-content">
-                <div class="about-achievement-card">
-                    <article class="achievement-item">
-                        <div class="achievement-image-wrapper" data-images='{{ initial_data.achievements_data[0].gallery_images|tojson|safe }}'>
-                            <img src="{{ url_for('static', filename='img/' + initial_data.achievements_data[0].thumbnail) }}" alt="" class="achievement-thumbnail">
-                            <div class="image-overlay">
-                                <i data-feather="eye"></i>
-                                <span data-translate-key="achieve_gallery_button"></span>
-                            </div>
+                <!-- Highlights -->
+                <div class="highlights-grid">
+                    <div class="highlight-item">
+                        <i data-feather="briefcase"></i>
+                        <div>
+                            <h4>9+ Months</h4>
+                            <p>IT Support Experience</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i data-feather="tool"></i>
+                        <div>
+                            <h4>Hardware & Software</h4>
+                            <p>Troubleshooting</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i data-feather="code"></i>
+                        <div>
+                            <h4>Python</h4>
+                            <p>Development</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievement & Links -->
+                <div class="achievement-section">
+                    <div class="achievement-card">
+                        <div class="achievement-badge">
+                            <i data-feather="award"></i>
                         </div>
                         <div class="achievement-content">
-                            <p class="achievement-meta"><span data-translate-key="achieve_1_org"></span> &bull; <span data-translate-key="achieve_1_date"></span></p>
-                            <h4 class="achievement-title" data-translate-key="achieve_1_title"></h4>
-                            <p class="achievement-description" data-translate-key="achieve_1_desc"></p>
+                            <h4 data-translate-key="achieve_1_title"></h4>
+                            <p data-translate-key="achieve_1_org"></p>
+                            <button class="btn-gallery" data-images='{{ initial_data.achievements_data[0].gallery_images|tojson|safe }}'>
+                                <i data-feather="image"></i>
+                                <span data-translate-key="achieve_gallery_button"></span>
+                            </button>
                         </div>
-                    </article>
-                </div>
+                    </div>
 
-                <div class="about-journey-container">
-                    <div class="journey-container">
-                        <a href="https://www.cloudskillsboost.google/public_profiles/9419b3af-c034-49bb-9527-7fbfbb5a6e69" target="_blank" rel="noopener noreferrer" class="journey-button">
-                            <i data-feather="cloud" class="journey-icon"></i>
-                            <div class="journey-text">
-                                <span class="journey-title" data-translate-key="profiles_skills_title"></span>
-                                <small class="journey-desc" data-translate-key="profiles_skills_desc"></small>
+                    <a href="https://www.cloudskillsboost.google/public_profiles/9419b3af-c034-49bb-9527-7fbfbb5a6e69" target="_blank" class="skills-link">
+                        <i data-feather="cloud"></i>
+                        <span data-translate-key="profiles_skills_title"></span>
+                        <i data-feather="external-link"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="experience" class="experience-section">
+        <h2 class="section-title" data-translate-key="work_title"></h2>
+        <div class="work-experience-grid">
+            <div class="work-card">
+                <div class="work-header">
+                    <i data-feather="briefcase" class="work-icon"></i>
+                    <div class="work-info">
+                        <h4 class="work-role" data-translate-key="work_1_role"></h4>
+                        <p class="work-org" data-translate-key="work_1_org"></p>
+                    </div>
+                </div>
+                <p class="work-period" data-translate-key="work_1_period"></p>
+                <ul class="work-responsibilities">
+                    <li data-translate-key="work_1_resp_1"></li>
+                    <li data-translate-key="work_1_resp_2"></li>
+                    <li data-translate-key="work_1_resp_3"></li>
+                </ul>
+                <div class="work-footer">
+                    <button class="btn-gallery" data-images='{{ initial_data.work_experiences[0].gallery_images|tojson|safe }}'>
+                        <i data-feather="camera"></i> <span data-translate-key="work_gallery_button"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="work-card">
+                <div class="work-header">
+                    <i data-feather="briefcase" class="work-icon"></i>
+                    <div class="work-info">
+                        <h4 class="work-role" data-translate-key="work_2_role"></h4>
+                        <p class="work-org" data-translate-key="work_2_org"></p>
+                    </div>
+                </div>
+                <p class="work-period" data-translate-key="work_2_period"></p>
+                <ul class="work-responsibilities">
+                    <li data-translate-key="work_2_resp_1"></li>
+                    <li data-translate-key="work_2_resp_2"></li>
+                    <li data-translate-key="work_2_resp_3"></li>
+                </ul>
+                <div class="work-footer">
+                    <button class="btn-gallery" data-images='{{ initial_data.work_experiences[1].gallery_images|tojson|safe }}'>
+                        <i data-feather="camera"></i> <span data-translate-key="work_gallery_button"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects">
+        <h2 class="section-title" data-translate-key="projects_title"></h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="card-header"> <i data-feather="folder"></i> <a href="https://github.com/Raka-coder/project-smarthome-pio" target="_blank" class="project-link"><i data-feather="external-link"></i></a></div>
+                <h3 data-translate-key="proj_1_title"></h3>
+                <p data-translate-key="proj_1_desc"></p>
+                <div class="tech-tags">
+                    {% for tech in initial_data.projects[0].tech %}<span>{{ tech }}</span>{% endfor %}
+                </div>
+                <div class="card-footer">
+                    <button class="btn-project-gallery" data-images='{{ initial_data.projects[0].gallery_images|tojson|safe }}'>
+                        <i data-feather="image"></i> <span data-translate-key="proj_photo_button"></span>
+                    </button>
+                    <button class="btn-project-video" data-video="{{ initial_data.projects[0].video_file }}">
+                        <i data-feather="video"></i> <span data-translate-key="proj_video_button"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="card-header"><i data-feather="folder"></i><a href="#" target="_blank" class="project-link"><i data-feather="external-link"></i></a></div>
+                <h3 data-translate-key="proj_2_title"></h3>
+                <p data-translate-key="proj_2_desc"></p>
+                <div class="tech-tags">
+                     {% for tech in initial_data.projects[1].tech %}<span>{{ tech }}</span>{% endfor %}
+                </div>
+                <div class="card-footer">
+                    <button class="btn-project-gallery" data-images='{{ initial_data.projects[1].gallery_images|tojson|safe }}'>
+                        <i data-feather="image"></i> <span data-translate-key="proj_photo_button"></span>
+                    </button>
+                    <button class="btn-project-video" data-video="{{ initial_data.projects[1].video_file }}">
+                        <i data-feather="video"></i> <span data-translate-key="proj_video_button"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="card-header"><i data-feather="folder"></i><a href="https://tempmail-za.vercel.app/" target="_blank" class="project-link"><i data-feather="external-link"></i></a></div>
+                <h3 data-translate-key="proj_3_title"></h3>
+                <p data-translate-key="proj_3_desc"></p>
+                <div class="tech-tags">
+                    {% for tech in initial_data.projects[2].tech %}<span>{{ tech }}</span>{% endfor %}
+                </div>
+                <div class="card-footer">
+                    <a href="https://tempmail-za.vercel.app/" target="_blank" class="btn btn-project-url">
+                        <i data-feather="link"></i> <span data-translate-key="proj_url_button"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section id="skills-certificates" class="skills-section">
+    <h2 class="section-title" data-translate-key="skills_certs_title"></h2>
+    
+    <div class="skills-certs-container">
+        <!-- Skills Grid -->
+        <div class="skills-grid">
+            <!-- Core Technical Skills -->
+            <div class="skill-category-card">
+                <div class="skill-category-header">
+                    <div class="skill-category-icon">
+                        <i data-feather="cpu"></i>
+                    </div>
+                    <h3>Technical Expertise</h3>
+                </div>
+                <div class="skill-items">
+                    <!-- IT Support -->
+                    <div class="skill-subcategory">
+                        <h4>IT Support & Infrastructure</h4>
+                        <div class="skill-tags">
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="tool"></i>
+                                <span>Hardware & Software Troubleshooting</span>
                             </div>
-                            <i data-feather="arrow-right" class="journey-arrow"></i>
-                        </a>
-                        <a href="https://developers.google.com/profile/u/faza-wap" target="_blank" rel="noopener noreferrer" class="journey-button">
-                            <i data-feather="code" class="journey-icon"></i>
-                            <div class="journey-text">
-                                <span class="journey-title" data-translate-key="profiles_gdev_title"></span>
-                                <small class="journey-desc" data-translate-key="profiles_gdev_desc"></small>
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="wifi"></i>
+                                <span>Networking Fundamentals</span>
                             </div>
-                            <i data-feather="arrow-right" class="journey-arrow"></i>
-                        </a>
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="hard-drive"></i>
+                                <span>Windows OS Management</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Development -->
+                    <div class="skill-subcategory">
+                        <h4>Development</h4>
+                        <div class="skill-tags">
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="code"></i>
+                                <span>Python Development</span>
+                            </div>
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="database"></i>
+                                <span>MySQL Database</span>
+                            </div>
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="layout"></i>
+                                <span>Web UI/UX Design</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section id="experience" class="experience-section">
-            <h2 class="section-title" data-translate-key="work_title"></h2>
-            <div class="work-experience-grid">
-                <div class="work-card">
-                    <div class="work-header">
-                        <i data-feather="briefcase" class="work-icon"></i>
-                        <div class="work-info">
-                            <h4 class="work-role" data-translate-key="work_1_role"></h4>
-                            <p class="work-org" data-translate-key="work_1_org"></p>
-                        </div>
+            <!-- Tools & Professional Skills -->
+            <div class="skill-category-card">
+                <div class="skill-category-header">
+                    <div class="skill-category-icon">
+                        <i data-feather="user"></i>
                     </div>
-                    <p class="work-period" data-translate-key="work_1_period"></p>
-                    <ul class="work-responsibilities">
-                        <li data-translate-key="work_1_resp_1"></li>
-                        <li data-translate-key="work_1_resp_2"></li>
-                        <li data-translate-key="work_1_resp_3"></li>
-                    </ul>
-                    <div class="work-footer">
-                        <button class="btn-gallery" data-images='{{ initial_data.work_experiences[0].gallery_images|tojson|safe }}'>
-                            <i data-feather="camera"></i> <span data-translate-key="work_gallery_button"></span>
-                        </button>
-                    </div>
+                    <h3>Tools & Professional</h3>
                 </div>
-                <div class="work-card">
-                    <div class="work-header">
-                        <i data-feather="briefcase" class="work-icon"></i>
-                        <div class="work-info">
-                            <h4 class="work-role" data-translate-key="work_2_role"></h4>
-                            <p class="work-org" data-translate-key="work_2_org"></p>
+                <div class="skill-items">
+                    <!-- Tools -->
+                    <div class="skill-subcategory">
+                        <h4>Tools</h4>
+                        <div class="skill-tags">
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="terminal"></i>
+                                <span>VS Code</span>
+                            </div>
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="server"></i>
+                                <span>XAMPP</span>
+                            </div>
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="git-branch"></i>
+                                <span>Cisco</span>
+                            </div>
                         </div>
                     </div>
-                    <p class="work-period" data-translate-key="work_2_period"></p>
-                    <ul class="work-responsibilities">
-                        <li data-translate-key="work_2_resp_1"></li>
-                        <li data-translate-key="work_2_resp_2"></li>
-                        <li data-translate-key="work_2_resp_3"></li>
-                    </ul>
-                    <div class="work-footer">
-                        <button class="btn-gallery" data-images='{{ initial_data.work_experiences[1].gallery_images|tojson|safe }}'>
-                            <i data-feather="camera"></i> <span data-translate-key="work_gallery_button"></span>
-                        </button>
+                    
+                    <!-- Professional -->
+                    <div class="skill-subcategory">
+                        <h4>Professional</h4>
+                        <div class="skill-tags">
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="key"></i>
+                                <span>Problem-Solving</span>
+                            </div>
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="users"></i>
+                                <span>Team Collaboration</span>
+                            </div>
+                            <div class="skill-tag">
+                                <i class="skill-icon" data-feather="globe"></i>
+                                <span>English (Intermediate)</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- Certificates Card -->
+        <div class="certificate-card">
+            <div class="certificate-header">
+                <div class="certificate-icon">
+                    <i data-feather="award"></i>
+                </div>
+                <div class="certificate-info">
+                    <h3 data-translate-key="cert_title"></h3>
+                    <p data-translate-key="cert_desc"></p>
+                </div>
+            </div>
+            <a href="{{ initial_data.certificate_link }}" target="_blank" rel="noopener noreferrer" class="certificate-btn">
+                <i data-feather="folder"></i>
+                <span data-translate-key="cert_button"></span>
+                <i data-feather="external-link"></i>
+            </a>
+        </div>
+    </div>
+</section>
+    
+    <section id="education-organization" class="edu-org-section">
+        <h2 class="section-title" data-translate-key="edu_org_title"></h2>
         
-        <section id="projects">
-            <h2 class="section-title" data-translate-key="projects_title"></h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <div class="card-header"> <i data-feather="folder"></i> <a href="https://github.com/Raka-coder/project-smarthome-pio" target="_blank" class="project-link"><i data-feather="external-link"></i></a></div>
-                    <h3 data-translate-key="proj_1_title"></h3>
-                    <p data-translate-key="proj_1_desc"></p>
-                    <div class="tech-tags">
-                        {% for tech in initial_data.projects[0].tech %}<span>{{ tech }}</span>{% endfor %}
+        <div class="edu-org-container">
+            <div class="edu-timeline">
+    <div class="timeline-item">
+        <div class="timeline-marker">
+            <i data-feather="award"></i>
+        </div>
+        <div class="timeline-content">
+            <div class="edu-header">
+                <div class="edu-main-info">
+                    <div class="university-header">
+                        <i data-feather="book-open" class="university-icon"></i>
+                        <h3 class="edu-title" data-translate-key="edu_1_institution"></h3>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn-project-gallery" data-images='{{ initial_data.projects[0].gallery_images|tojson|safe }}'>
-                            <i data-feather="image"></i> <span data-translate-key="proj_photo_button"></span>
-                        </button>
-                        <button class="btn-project-video" data-video="{{ initial_data.projects[0].video_file }}">
-                            <i data-feather="video"></i> <span data-translate-key="proj_video_button"></span>
-                        </button>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="card-header"><i data-feather="folder"></i><a href="#" target="_blank" class="project-link"><i data-feather="external-link"></i></a></div>
-                    <h3 data-translate-key="proj_2_title"></h3>
-                    <p data-translate-key="proj_2_desc"></p>
-                    <div class="tech-tags">
-                         {% for tech in initial_data.projects[1].tech %}<span>{{ tech }}</span>{% endfor %}
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn-project-gallery" data-images='{{ initial_data.projects[1].gallery_images|tojson|safe }}'>
-                            <i data-feather="image"></i> <span data-translate-key="proj_photo_button"></span>
-                        </button>
-                        <button class="btn-project-video" data-video="{{ initial_data.projects[1].video_file }}">
-                            <i data-feather="video"></i> <span data-translate-key="proj_video_button"></span>
-                        </button>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="card-header"><i data-feather="folder"></i><a href="https://tempmail-za.vercel.app/" target="_blank" class="project-link"><i data-feather="external-link"></i></a></div>
-                    <h3 data-translate-key="proj_3_title"></h3>
-                    <p data-translate-key="proj_3_desc"></p>
-                    <div class="tech-tags">
-                        {% for tech in initial_data.projects[2].tech %}<span>{{ tech }}</span>{% endfor %}
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://tempmail-za.vercel.app/" target="_blank" class="btn btn-project-url">
-                            <i data-feather="link"></i> <span data-translate-key="proj_url_button"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills-certificates" class="skills-section">
-            <h2 class="section-title" data-translate-key="skills_certs_title"></h2>
-            
-            <div class="skill-grid">
-                {% for category in page_data.skills.technical %}
-                <div class="skill-card">
-                    <h3 class="skill-card-title" data-translate-key="{{ category.title_key }}"></h3>
-                    <div class="skills-list">
-                        {% for skill in category.skills %}
-                        <span class="skill-tag">
-                            <i class="skill-icon" data-feather="{{ skill.icon }}"></i>
-                            <span data-translate-key="{{ skill.key }}"></span>
-                        </span>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-
-                {% for category in page_data.skills.others %}
-                <div class="skill-card">
-                    <h3 class="skill-card-title" data-translate-key="{{ category.title_key }}"></h3>
-                    <div class="skills-list">
-                        {% for skill in category.skills %}
-                        <span class="skill-tag">
-                            <i class="skill-icon" data-feather="{{ skill.icon }}"></i>
-                            <span data-translate-key="{{ skill.key }}"></span>
-                        </span>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="cert-link-container">
-                 <h3 class="category-title" data-translate-key="cert_title"></h3>
-                <p data-translate-key="cert_desc"></p>
-                <a href="{{ initial_data.certificate_link }}" target="_blank" rel="noopener noreferrer" class="btn-gdrive">
-                    <i data-feather="folder"></i>
-                    <span data-translate-key="cert_button"></span>
-                </a>
-            </div>
-        </section>
-
-        <section id="education-organization">
-            <h2 class="section-title" data-translate-key="edu_org_title"></h2>
-            
-            <div class="education-timeline">
-                {% for edu in page_data.education_and_orgs %}
-                <div class="experience-card integrated-card">
-                    <div class="education-main">
-                        <h4 data-translate-key="{{ edu.institution_key }}"></h4>
-                        <p class="role" data-translate-key="{{ edu.major_key }}"></p>
-                        <p class="duration" data-translate-key="{{ edu.period_key }}"></p>
-                        <p class="description" data-translate-key="{{ edu.desc_key }}"></p>
-                    </div>
-
-                    {% if edu.organizations %}
-                    <div class="organization-section">
-                        <h5 class="organization-title">
-                            <i data-feather="users"></i>
-                            <span data-translate-key="org_title"></span>
-                        </h5>
-                        {% for org in edu.organizations %}
-                        <div class="organization-item">
-                            <h6 data-translate-key="{{ org.name_key }}"></h6>
-                            <p class="role" data-translate-key="{{ org.role_key }}"></p>
-                            <p class="duration" data-translate-key="{{ org.period_key }}"></p>
-                            <p class="description" data-translate-key="{{ org.desc_key }}"></p>
-                            {% if org.details_button %}
-                            <a href="/organization" class="btn-details">
-                                <i data-feather="info"></i> <span data-translate-key="org_details_button"></span>
-                            </a>
-                            {% endif %}
+                    <div class="edu-status-container">
+                        <span class="edu-major" data-translate-key="edu_1_major"></span>
+                        <div class="edu-status active">
+                            <i data-feather="user-check"></i>
+                            <span data-translate-key="edu_1_status"></span>
                         </div>
-                        {% endfor %}
                     </div>
-                    {% endif %}
                 </div>
-                {% endfor %}
+                <span class="edu-period" data-translate-key="edu_1_period"></span>
             </div>
-        </section>
-    </main>
+            <p class="edu-description" data-translate-key="edu_1_desc"></p>
+            
+            <div class="org-section">
+                <h4 class="org-title">
+                    <i data-feather="users"></i>
+                    <span data-translate-key="org_title"></span>
+                </h4>
+                <div class="org-grid">
+                    <div class="org-card">
+                        <div class="org-header">
+                            <h5 class="org-name" data-translate-key="org_1_name"></h5>
+                            <span class="org-role" data-translate-key="org_1_role"></span>
+                        </div>
+                        <p class="org-period" data-translate-key="org_1_period"></p>
+                        <p class="org-description" data-translate-key="org_1_desc"></p>
+                        <div class="org-actions">
+                            <a href="/organization" class="btn-org-details">
+                                <i data-feather="info"></i>
+                                <span data-translate-key="org_details_button"></span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="org-card">
+                        <div class="org-header">
+                            <h5 class="org-name" data-translate-key="org_2_name"></h5>
+                            <span class="org-role" data-translate-key="org_2_role"></span>
+                        </div>
+                        <p class="org-period" data-translate-key="org_2_period"></p>
+                        <p class="org-description" data-translate-key="org_2_desc"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="timeline-item">
+        <div class="timeline-marker">
+            <i data-feather="book"></i>
+        </div>
+        <div class="timeline-content">
+            <div class="edu-header">
+                <div class="edu-main-info">
+                    <div class="university-header">
+                        <i data-feather="book" class="university-icon"></i>
+                        <h3 class="edu-title" data-translate-key="edu_2_institution"></h3>
+                    </div>
+                    <p class="edu-major" data-translate-key="edu_2_major"></p>
+                </div>
+                <span class="edu-period" data-translate-key="edu_2_period"></span>
+            </div>
+            <p class="edu-description" data-translate-key="edu_2_desc"></p>
+        </div>
+    </div>
+  </main>
 
     <div id="work-modal-overlay" class="modal-overlay">
         <div class="modal-container">
@@ -391,46 +553,66 @@
         </div>
     </div>
 
-    <footer class="main-footer">
-        <div class="footer-content-wrapper">
-            <div class="footer-contact-info">
-                <p class="footer-cta" data-translate-key="footer_cta"></p>
-                <a href="mailto:fazawahyu10@gmail.com" class="footer-email">fazawahyu10@gmail.com</a>
-                <div class="social-links">
-                    <a href="https://x.com/@faza_wap/" target="_blank" aria-label="X / Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-                    </a>
-                    <a href="https://www.instagram.com/faza_wap/" target="_blank" aria-label="Instagram">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                    </a>
-                    <a href="mailto:fazawahyu10@gmail.com" aria-label="Email">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/faza-wap/" target="_blank" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                    </a>
-                </div>
+<footer class="main-footer">
+    <div class="footer-content-wrapper">
+        <!-- Contact Info -->
+        <div class="footer-contact-info">
+            <div class="footer-brand">
+                <a href="/" class="footer-logo">Faza<span>.dev</span></a>
             </div>
+            <p class="footer-tagline">Bridging Hardware Issues with Software Solutions</p>
+            
+            <p class="footer-cta" data-translate-key="footer_cta">Tertarik untuk berkolaborasi?</p>
+            <a href="mailto:fazawahyu10@gmail.com" class="footer-email">
+                <i data-feather="mail"></i>
+                fazawahyu10@gmail.com
+            </a>
+            
+<div class="footer-social-links">
+    <a href="https://x.com/@faza_wap/" target="_blank" class="footer-social-link" aria-label="X/Twitter">
+        <i data-feather="twitter"></i>
+    </a>
+    <a href="https://www.instagram.com/faza_wap/" target="_blank" class="footer-social-link" aria-label="Instagram">
+        <i data-feather="instagram"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/faza-wap/" target="_blank" class="footer-social-link" aria-label="LinkedIn">
+        <i data-feather="linkedin"></i>
+    </a>
+    <a href="mailto:fazawahyu10@gmail.com" class="footer-social-link" aria-label="Email">
+        <i data-feather="mail"></i>
+    </a>
+</div>
+        </div>
 
-            <div class="footer-form-container">
-                <h4 class="form-title" data-translate-key="footer_form_title"></h4>
-                <form id="contact-form" action="https://formspree.io/f/mqabvdan" method="POST" class="footer-form">
-                    <input type="email" name="email" class="form-input" placeholder="Your Email" required>
-                    <textarea name="message" class="form-textarea" placeholder="Enter your message here..." required></textarea>
-                    <button type="submit" class="btn btn-submit">
-                        <span data-translate-key="footer_form_button"></span>
-                    </button>
-                </form>
+        <!-- Contact Form -->
+        <div class="footer-form-container">
+            <h4 class="form-title" data-translate-key="footer_form_title">Kritik & Saran</h4>
+            <form id="contact-form" action="https://formspree.io/f/mqabvdan" method="POST" class="footer-form">
+                <input type="email" name="email" class="form-input" placeholder="Your email address" required>
+                <textarea name="message" class="form-textarea" placeholder="Tell me about your project or just say hello..." required></textarea>
+                <button type="submit" class="btn-submit">
+                    <span data-translate-key="footer_form_button">Kirim Pesan</span>
+                    <i data-feather="send"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="copyright-section">
+        <div class="copyright-content">
+            <p class="copyright">&copy; 2025 - <span data-translate-key="footer_copyright">Didesain & dikembangkan oleh Faza</span></p>
+            <div class="footer-links">
+                <a href="#home" class="footer-link">Back to Top</a>
             </div>
         </div>
-        <p class="copyright">&copy; 2025 - <span data-translate-key="footer_copyright"></span></p>
-    </footer>
+    </div>
+</footer>
     
     <div id="form-popup-bubble" class="popup-bubble"></div>
 
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/feather.min.js') }}"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

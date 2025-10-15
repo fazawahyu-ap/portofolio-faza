@@ -1,65 +1,115 @@
+// =============================
+// PRELOADER
+// =============================
 document.body.classList.add('preloading');
-
 const preloader = document.getElementById('preloader');
 
 window.addEventListener('load', () => {
-    if (preloader) {
-        preloader.classList.add('preloader-hidden');
-    }
+    if (preloader) preloader.classList.add('preloader-hidden');
     document.body.classList.remove('preloading');
+    if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+    }
 });
 
+// =============================
+// DOM READY
+// =============================
 document.addEventListener('DOMContentLoaded', () => {
-    feather.replace();
-    gsap.registerPlugin(ScrollTrigger);
-
-    function createRevealGrid() {
-        const container = document.querySelector('.reveal-overlay');
-        if (!container) return;
-        const gridSize = 10;
-        for (let i = 0; i < gridSize * gridSize; i++) {
-            const div = document.createElement('div');
-            div.classList.add('reveal-grid-block');
-            container.appendChild(div);
-        }
+    // Init GSAP
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
     }
-    createRevealGrid();
 
+    // =============================
+    // UTILITY FUNCTIONS
+    // =============================
+
+    // Fungsi untuk memecah teks menjadi karakter untuk animasi
+    function splitText(target) {
+        const elem = document.querySelector(target);
+        if (!elem) return;
+        // Simpan teks asli jika belum ada, untuk mencegah pemecahan berulang
+        if (!elem.dataset.originalText) {
+            elem.dataset.originalText = elem.textContent;
+        }
+        const text = elem.dataset.originalText;
+        elem.innerHTML = ''; // Kosongkan elemen sebelum diisi lagi
+        const words = text.split(' ');
+        words.forEach((word, wordIndex) => {
+            const wordDiv = document.createElement('div');
+            wordDiv.className = 'word';
+            for (let char of word) {
+                const charSpan = document.createElement('span');
+                charSpan.className = 'char';
+                charSpan.innerText = char;
+                wordDiv.appendChild(charSpan);
+            }
+            elem.appendChild(wordDiv);
+            if (wordIndex < words.length - 1) elem.insertAdjacentHTML('beforeend', ' ');
+        });
+    }
+
+    // =============================
+    // LANGUAGE SWITCHER & CORE INITIALIZATION
+    // =============================
     const langSwitcher = document.querySelector('.lang-switcher');
-    
+
     function switchLanguage(lang) {
         if (!lang || !translations[lang]) return;
-        
+
+        // 1. Ganti semua teks berdasarkan atribut data-translate-key
         document.querySelectorAll('[data-translate-key]').forEach(el => {
             const key = el.dataset.translateKey;
             if (translations[lang][key] !== undefined) {
                 el.innerHTML = translations[lang][key];
             }
         });
-        
+
+        // 2. Update indicator bahasa
         const currentLangSpan = document.getElementById('current-lang');
-        if(currentLangSpan) {
-            currentLangSpan.textContent = lang.toUpperCase();
-        }
-        
+        if (currentLangSpan) currentLangSpan.textContent = lang.toUpperCase();
+
+        // 3. Simpan pilihan bahasa
         localStorage.setItem('selectedLanguage', lang);
+
+        // 💡 BAGIAN PENTING: Jalankan fungsi yang butuh konten setelah penerjemahan selesai
         
-        const heroTitle = document.querySelector('.hero-title[data-text-split]');
-        if(heroTitle) {
-            splitText('.hero-title[data-text-split]');
-            gsap.fromTo('.hero-title .char', { opacity: 0, y: 20 }, {
-                opacity: 1, y: 0, scale: 1, rotateZ: 0,
-                stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
-            });
+        // 4. Inisialisasi ulang Feather Icons agar ikon baru muncul
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+            
         }
-        // Pastikan ikon di-render ulang setelah ganti bahasa
-        feather.replace();
+
+        // 5. Jalankan animasi Hero
+        const heroTitle = document.querySelector('.hero-title');
+        if (heroTitle && typeof gsap !== 'undefined') {
+            // Hapus animasi sebelumnya & atur ulang properti untuk menghindari bug
+            gsap.killTweensOf('.hero-title .char, .hero-subtitle, .hero-main-buttons');
+            gsap.set('.hero-title .char, .hero-subtitle, .hero-main-buttons', { clearProps: "all" });
+
+            // Simpan teks asli ke data-attribute sebelum dipecah
+            heroTitle.dataset.originalText = heroTitle.textContent;
+            splitText('.hero-title');
+            
+            gsap.timeline()
+                .fromTo('.hero-title .char', { opacity: 0, y: 20 }, {
+                    opacity: 1, y: 0, stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8
+                })
+                .from('.hero-subtitle', { opacity: 0, y: 20, ease: 'power3.out' }, '-=0.6')
+                .from('.hero-main-buttons', { opacity: 0, y: 20, ease: 'power3.out' }, '-=0.8');
+        }
     }
 
     if (langSwitcher) {
         const langButton = langSwitcher.querySelector('.lang-button');
         const langDropdown = langSwitcher.querySelector('.lang-dropdown');
-        langButton.addEventListener('click', (e) => { e.stopPropagation(); langSwitcher.classList.toggle('active'); });
+
+        langButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langSwitcher.classList.toggle('active');
+        });
+
         langDropdown.addEventListener('click', (e) => {
             e.preventDefault();
             const link = e.target.closest('a');
@@ -77,62 +127,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Panggil switchLanguage saat pertama kali halaman dimuat
     const savedLang = localStorage.getItem('selectedLanguage') || 'id';
-    setTimeout(() => switchLanguage(savedLang), 100);
+    switchLanguage(savedLang);
 
+    // =============================
+    // GRID REVEAL EFFECT (ANIMASI AWAL)
+    // =============================
+    function createRevealGrid() {
+        const container = document.querySelector('.reveal-overlay');
+        if (!container) return;
+        for (let i = 0; i < 100; i++) {
+            const div = document.createElement('div');
+            div.classList.add('reveal-grid-block');
+            container.appendChild(div);
+        }
+    }
+    createRevealGrid();
+    gsap.to('.reveal-grid-block', {
+        scale: 0,
+        ease: 'power3.inOut',
+        stagger: { amount: 1, from: 'center' },
+        delay: 0.2, // Sedikit delay agar tidak terlalu buru-buru
+        duration: 1.5
+    });
+
+    // =============================
+    // HAMBURGER NAV
+    // =============================
     const hamburger = document.querySelector('.hamburger-menu');
     const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-menu .nav-link');
+    const navLinks = document.querySelectorAll('.nav-menu a');
 
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active'); });
-        navLinks.forEach(link => { link.addEventListener('click', () => { hamburger.classList.remove('active'); navMenu.classList.remove('active'); }); });
-    }
-
-    function splitText(target) {
-        let elem = document.querySelector(target);
-        if (!elem) return;
-        const text = elem.textContent;
-        elem.innerHTML = '';
-        const words = text.split(' ');
-        words.forEach((word, wordIndex) => {
-            const wordDiv = document.createElement('div');
-            wordDiv.className = 'word';
-            for (let char of word) {
-                const charSpan = document.createElement('span');
-                charSpan.className = 'char';
-                charSpan.innerText = char;
-                wordDiv.appendChild(charSpan);
-            }
-            elem.appendChild(wordDiv);
-            if (wordIndex < words.length - 1) {
-                elem.insertAdjacentHTML('beforeend', ' ');
-            }
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
         });
-    };
-
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    }
+    
+    // =============================
+    // HERO MOUSE MOVE EFFECT
+    // =============================
     const hero = document.querySelector('.hero');
     if (hero) {
         hero.addEventListener('mousemove', (e) => {
             const { clientX, clientY } = e;
             const x = (clientX / window.innerWidth - 0.5) * 2;
             const y = (clientY / window.innerHeight - 0.5) * 2;
-            gsap.to('.hero-image-container', { x: -x * 25, y: -y * 25, rotationY: x * 15, rotationX: -y * 15, duration: 1, ease: 'power3.out' });
+            gsap.to('.hero-image-container', {
+                x: -x * 25, y: -y * 25,
+                rotationY: x * 15, rotationX: -y * 15,
+                duration: 1, ease: 'power3.out'
+            });
         });
     }
 
-    splitText('.hero-title');
-    const entranceTl = gsap.timeline({ delay: 0.5 });
-    entranceTl.to('.hero-title .char', { opacity: 1, y: 0, scale: 1, rotateZ: 0, stagger: 0.04, ease: 'back.out(1.7)', duration: 0.8 })
-    .from('.hero-subtitle', { opacity: 0, y: 20, ease: 'power3.out' }, '-=0.6')
-    .from('.hero-main-buttons', { opacity: 0, y: 20, ease: 'power3.out' }, '-=1')
-    .to('.reveal-grid-block', { scale: 0, ease: 'power3.inOut', stagger: { amount: 1, from: 'center' } }, '-=1.2');
-
+    // =============================
+    // HEADER SCROLL BEHAVIOR
+    // =============================
     const header = document.querySelector('.main-header');
     if (header) {
-        ScrollTrigger.create({ start: 'top -80', end: 99999, toggleClass: { className: 'scrolled', target: header } });
+        ScrollTrigger.create({
+            start: 'top -80',
+            end: 99999,
+            toggleClass: { className: 'scrolled', target: header }
+        });
     }
-    
+
     function updateActiveNav() {
         let currentSection = 'home';
         const currentPath = window.location.pathname;
@@ -144,38 +212,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentSection = section.getAttribute('id');
             }
         });
-        document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
             link.classList.remove('active');
             const href = link.getAttribute('href');
-            if (href && href.split('#')[1] === currentSection) {
+            if (href && href.includes('#') && href.split('#')[1] === currentSection) {
                 link.classList.add('active');
             }
         });
     }
     window.addEventListener('scroll', updateActiveNav);
     updateActiveNav();
-    
-    const workModal = initGalleryModal(document.querySelector('#work-modal-overlay'));
-    const projectModal = initProjectModal(document.querySelector('#project-modal-overlay'));
-    const achievementModal = initGalleryModal(document.querySelector('#achievement-modal-overlay'));
-    
-    document.addEventListener('click', (e) => {
-        const workGalleryBtn = e.target.closest('.btn-gallery');
-        const projectGalleryBtn = e.target.closest('.btn-project-gallery');
-        const projectVideoBtn = e.target.closest('.btn-project-video');
-        const achievementItem = e.target.closest('.achievement-item');
 
-        if (workGalleryBtn) workModal.open(workGalleryBtn.dataset.images);
-        else if (projectGalleryBtn) projectModal.openImage(projectGalleryBtn.dataset.images);
-        else if (projectVideoBtn) projectModal.openVideo(projectVideoBtn.dataset.video);
-        else if (achievementItem) {
-            const imageWrapper = achievementItem.querySelector('.achievement-image-wrapper');
-            if(imageWrapper && imageWrapper.dataset.images) {
-                achievementModal.open(imageWrapper.dataset.images);
-            }
-        }
-    });
-
+    // =============================
+    // GALLERY & PROJECT MODALS
+    // =============================
     function initGalleryModal(modalOverlay) {
         if (!modalOverlay) return { open: () => {} };
         const modalCloseBtn = modalOverlay.querySelector('.modal-close');
@@ -184,22 +235,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextBtn = modalOverlay.querySelector('.slider-btn.next');
         let currentImages = [];
         let currentIndex = 0;
-        const updateImage = () => { if (currentImages.length > 0) sliderImage.src = `/static/img/${currentImages[currentIndex]}`; };
+
+        const updateImage = () => {
+            if (sliderImage && currentImages.length > 0)
+                sliderImage.src = `/static/img/${currentImages[currentIndex]}`;
+        };
         const closeModal = () => modalOverlay.classList.remove('active');
-        prevBtn?.addEventListener('click', () => { currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length; updateImage(); });
-        nextBtn?.addEventListener('click', () => { currentIndex = (currentIndex + 1) % currentImages.length; updateImage(); });
+
+        prevBtn?.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+            updateImage();
+        });
+        nextBtn?.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % currentImages.length;
+            updateImage();
+        });
         modalCloseBtn?.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
         return {
             open: (imagesData) => {
                 try {
                     currentImages = JSON.parse(imagesData);
-                    if (currentImages && currentImages.length > 0) { 
-                        currentIndex = 0; 
-                        updateImage(); 
-                        modalOverlay.classList.add('active'); 
+                    if (currentImages?.length > 0) {
+                        currentIndex = 0;
+                        updateImage();
+                        modalOverlay.classList.add('active');
                     }
-                } catch (e) { console.error("Error parsing images data:", e); }
+                } catch (e) {
+                    console.error("Error parsing images data:", e);
+                }
             }
         };
     }
@@ -210,22 +277,64 @@ document.addEventListener('DOMContentLoaded', () => {
         const videoPlayer = modalOverlay.querySelector('.modal-video-player');
         const videoElement = videoPlayer?.querySelector('video');
         const galleryModal = initGalleryModal(modalOverlay);
-        const openImage = (imagesData) => { imageSlider.style.display = 'block'; videoPlayer.style.display = 'none'; galleryModal.open(imagesData); };
-        const openVideo = (videoFile) => { 
+
+        const openImage = (imagesData) => {
+            if (imageSlider) imageSlider.style.display = 'block';
+            if (videoPlayer) videoPlayer.style.display = 'none';
+            if (videoElement) videoElement.pause();
+            galleryModal.open(imagesData);
+        };
+
+        const openVideo = (videoFile) => {
             if (imageSlider) imageSlider.style.display = 'none';
             if (videoPlayer) videoPlayer.style.display = 'block';
             if (videoElement) {
                 videoElement.src = `/static/video/${videoFile}`;
-                videoElement.controls = true;
+                videoElement.play();
             }
-            modalOverlay.classList.add('active'); 
+            modalOverlay.classList.add('active');
         };
-        const closeModalAndResetVideo = () => { if (videoElement && !videoElement.paused) { videoElement.pause(); videoElement.currentTime = 0; videoElement.src = ""; } };
-        modalOverlay.querySelector('.modal-close').addEventListener('click', closeModalAndResetVideo);
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModalAndResetVideo(); });
+
+        const closeModalAndResetVideo = () => {
+            if (videoElement && !videoElement.paused) {
+                videoElement.pause();
+                videoElement.currentTime = 0;
+                videoElement.src = "";
+            }
+        };
+
+        modalOverlay.querySelector('.modal-close')?.addEventListener('click', closeModalAndResetVideo);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModalAndResetVideo();
+        });
+
         return { openImage, openVideo };
     }
 
+    const workModal = initGalleryModal(document.querySelector('#work-modal-overlay'));
+    const projectModal = initProjectModal(document.querySelector('#project-modal-overlay'));
+    const achievementModal = initGalleryModal(document.querySelector('#achievement-modal-overlay'));
+
+    document.addEventListener('click', (e) => {
+        const workGalleryBtn = e.target.closest('.btn-gallery');
+        const projectGalleryBtn = e.target.closest('.btn-project-gallery');
+        const projectVideoBtn = e.target.closest('.btn-project-video');
+        const achievementItem = e.target.closest('.achievement-item, .achievement-image-wrapper');
+
+        if (workGalleryBtn) workModal.open(workGalleryBtn.dataset.images);
+        else if (projectGalleryBtn) projectModal.openImage(projectGalleryBtn.dataset.images);
+        else if (projectVideoBtn) projectModal.openVideo(projectVideoBtn.dataset.video);
+        else if (achievementItem) {
+            const imgWrap = achievementItem.closest('.achievement-item').querySelector('.achievement-image-wrapper');
+            if (imgWrap && imgWrap.dataset.images) {
+                achievementModal.open(imgWrap.dataset.images);
+            }
+        }
+    });
+
+    // =============================
+    // CONTACT FORM
+    // =============================
     const contactForm = document.getElementById('contact-form');
     const popupBubble = document.getElementById('form-popup-bubble');
     let popupTimer;
@@ -235,74 +344,92 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(popupTimer);
         popupBubble.textContent = message;
         popupBubble.className = 'popup-bubble';
-        popupBubble.classList.add(isSuccess ? 'success' : 'error');
-        popupBubble.classList.add('active');
-        popupTimer = setTimeout(() => {
-            popupBubble.classList.remove('active');
-        }, 4000);
+        popupBubble.classList.add(isSuccess ? 'success' : 'error', 'active');
+        popupTimer = setTimeout(() => popupBubble.classList.remove('active'), 4000);
     }
 
     async function handleSubmit(event) {
         event.preventDefault();
         const form = event.target;
         const data = new FormData(form);
-        showPopup("Sending message...", true);
+        showPopup("Mengirim pesan...", true);
         try {
             const response = await fetch(form.action, {
                 method: form.method,
                 body: data,
                 headers: { 'Accept': 'application/json' }
             });
-
             if (response.ok) {
-                showPopup("Message sent successfully. Thank you!", true);
+                showPopup("Pesan berhasil terkirim. Terima kasih!", true);
                 form.reset();
-            } else {
-                showPopup("Oops! Something went wrong.", false);
-            }
+            } else showPopup("Oops! Terjadi kesalahan.", false);
         } catch (error) {
-            console.error('Error submitting form:', error);
-            showPopup("Oops! A network error occurred.", false);
+            showPopup("Oops! Terjadi kesalahan jaringan.", false);
         }
     }
 
-    if (contactForm) {
-        contactForm.addEventListener("submit", handleSubmit);
-    }
+    if (contactForm) contactForm.addEventListener("submit", handleSubmit);
 
-    document.querySelectorAll('section:not(.hero)').forEach(section => {
-        const elementsToAnimate = section.querySelectorAll(
-            '.section-title, .about-content-wrapper, .work-card, .project-card, .skill-grid, .cert-link-container, .education-timeline'
-        );
+    // =============================
+    // SCROLL ANIMATIONS (AOS atau GSAP)
+    // =============================
+    // Menggunakan AOS dari file organization.html sebagai referensi
+// main.js
 
-        gsap.from(elementsToAnimate, {
+// ... (kode lain di atasnya) ...
+
+// =============================
+// SCROLL ANIMATIONS
+// =============================
+// Cek jika library AOS (Animate on Scroll) ada, jika tidak, gunakan GSAP
+if (typeof AOS !== 'undefined') {
+    AOS.init({
+        duration: 600,
+        once: true,
+        offset: 50,
+    });
+} else { 
+    // PENDEKATAN BARU: Animasikan setiap elemen secara individual
+    const elementsToAnimate = document.querySelectorAll(
+        '.section-title, .about-content-wrapper, .about-extra-content, .work-card, .project-card, .skills-category, .edu-timeline'
+    );
+
+    elementsToAnimate.forEach(element => {
+        gsap.from(element, {
             scrollTrigger: {
-                trigger: section,
+                trigger: element, // Pemicunya adalah elemen itu sendiri
                 start: 'top 85%',
                 toggleActions: 'play none none none',
+                once: true // Animasi hanya berjalan sekali
             },
             opacity: 0,
             y: 50,
             duration: 0.8,
-            stagger: 0.1,
             ease: 'power3.out'
         });
     });
+}
 
-    const smoothScrollAnchors = document.querySelectorAll('a.scroll-down-btn');
+    // =============================
+    // ORGANIZATION PAGE SPECIFIC LOGIC
+    // =============================
+    // Cek jika kita berada di halaman organisasi
+    if (document.querySelector('.org-hero-compact')) {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetEl = document.querySelector(anchor.getAttribute('href'));
+                if (targetEl) {
+                    const headerOffset = document.querySelector('.main-header')?.offsetHeight || 80;
+                    const elementPosition = targetEl.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-    smoothScrollAnchors.forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
         });
-    });
+    }
 });

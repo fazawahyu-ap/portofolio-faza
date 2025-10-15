@@ -7,7 +7,8 @@
     <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    </head>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
 <body>
 
     <header class="main-header scrolled">
@@ -15,108 +16,318 @@
             <a href="/" class="nav-logo">Faza<span>.dev</span></a>
             <div class="nav-controls">
                 <a href="/#education-organization" class="btn btn-secondary">
-                    <i data-feather="arrow-left"></i> Kembali
+                    <i data-feather="arrow-left"></i> Kembali ke Beranda
                 </a>
             </div>
         </nav>
     </header>
 
     <main>
-        <section class="org-hero">
-            <div class="org-hero-content">
-                <h1>Himpunan Mahasiswa DTI</h1>
-                <p class="role-subtitle">Pengalaman sebagai Anggota Divisi Media</p>
-            </div>
-        </section>
-
-        <section class="page-container org-about-section">
-            <div class="org-about-layout">
-                <div class="org-about-text">
-                    <h2 class="section-subtitle-left">Tentang Peran Saya</h2>
-                    <p class="description-text">
-                        Sebagai anggota Divisi Media di Himpunan Mahasiswa DTI, saya berperan dalam mengelola dan mengembangkan konten kreatif untuk berbagai kegiatan organisasi. Saya turut berkontribusi dalam dokumentasi acara, publikasi media sosial, serta desain visual yang mendukung citra profesional dan informatif Himpunan.
-                    </p>
+        <!-- Compact Hero Section -->
+        <section class="org-hero-compact">
+            <div class="org-hero-content-compact">
+                <div class="org-breadcrumb" data-aos="fade-down">
+                    <a href="/" class="breadcrumb-link">
+                        <i data-feather="home"></i>
+                        <span>Beranda</span>
+                    </a>
+                    <i data-feather="chevron-right" class="breadcrumb-separator"></i>
+                    <span class="breadcrumb-current">Organisasi</span>
                 </div>
-                <div class="formal-photo">
-                    <img src="{{ url_for('static', filename='img/cocard.jpg') }}" alt="Foto Kartu Anggota HMDTI">
-                </div>
-            </div>
-        </section>
-
-        <section class="page-container org-responsibilities-section">
-            <h2 class="section-subtitle-left">Tanggung Jawab Utama</h2>
-            <div class="responsibilities-grid">
-                <div class="responsibility-card">
-                    <i data-feather="camera"></i>
-                    <h3>Dokumentasi & Publikasi</h3>
-                    <p>Mengelola dokumentasi foto dan video, serta mempublikasikan kegiatan himpunan di platform media sosial.</p>
-                </div>
-                <div class="responsibility-card">
-                    <i data-feather="pen-tool"></i>
-                    <h3>Desain Materi Visual</h3>
-                    <p>Mendesain berbagai materi visual seperti poster, pamflet, dan konten grafis untuk acara resmi dan media sosial.</p>
-                </div>
-                <div class="responsibility-card">
-                    <i data-feather="users"></i>
-                    <h3>Kolaborasi & Partisipasi</h3>
-                    <p>Berpartisipasi aktif dalam seminar, workshop, dan proyek kolaboratif yang diadakan antar divisi.</p>
+                
+                <h1 data-aos="fade-up">Himpunan Mahasiswa DTI</h1>
+                <p class="role-subtitle-compact" data-aos="fade-up" data-aos-delay="100">
+                    Anggota Aktif Divisi Media & Kreatif
+                    <span class="role-period" data-aos="fade-up" data-aos-delay="200">2024 - Sekarang</span>
+                </p>
+                
+                <div class="hero-actions-compact" data-aos="fade-up" data-aos-delay="300">
+                    <a href="#about-role" class="btn btn-primary btn-compact">
+                        <i data-feather="user"></i>
+                        <span>Jelajahi Peran Saya</span>
+                    </a>
+                    <a href="#activities" class="btn btn-secondary btn-compact">
+                        <i data-feather="calendar"></i>
+                        <span>Lihat Kegiatan</span>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="activity-gallery" class="gallery-section">
-            <h2 class="section-title">Galeri Kegiatan</h2>
+        <!-- All-in-One About Role Section -->
+        <section id="about-role" class="page-container-compact">
+            <div class="about-role-comprehensive">
+                <!-- Header Section with Card -->
+                <div class="about-header-with-card">
+                    <div class="header-content" data-aos="fade-right">
+                        <div class="section-header-comprehensive">
+                            <h2>Tentang Peran Saya</h2>
+                            <div class="role-badge-comprehensive">
+                                <i data-feather="award"></i>
+                                <span>Divisi Media & Kreatif</span>
+                            </div>
+                        </div>
+                        
+                        <div class="role-description-comprehensive">
+                            <p>
+                                Sebagai <strong>anggota Divisi Media di Himpunan Mahasiswa DTI</strong>, saya bertanggung jawab dalam pengelolaan konten kreatif, dokumentasi kegiatan, dan publikasi media sosial. 
+                                Peran ini memungkinkan saya untuk berkontribusi dalam membangun citra profesional organisasi melalui desain visual dan strategi konten yang efektif.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="header-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="id-card-side">
+                            <img src="{{ url_for('static', filename='img/cocard.jpg') }}" alt="Kartu Anggota HMDTI" class="id-card-image-side">
+                            <div class="id-card-overlay-side">
+                                <div class="id-card-content-side">
+                                    <i data-feather="credit-card"></i>
+                                    <div>
+                                        <h4>Kartu Anggota</h4>
+                                        <p>Himpunan Mahasiswa DTI</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="about-content-comprehensive">
+                    <!-- Left Column: Role Details & Skills -->
+                    <div class="about-left-column">
+                        <!-- Role Meta Info -->
+                        <div class="role-meta-comprehensive" data-aos="fade-right">
+                            <h3 class="meta-title">Informasi Peran</h3>
+                            <div class="meta-grid-comprehensive">
+                                <div class="meta-item-comprehensive">
+                                    <div class="meta-icon-wrapper">
+                                        <i data-feather="clock"></i>
+                                    </div>
+                                    <div class="meta-content">
+                                        <span class="meta-label">Periode</span>
+                                        <span class="meta-value">2024 - Sekarang</span>
+                                    </div>
+                                </div>
+                                <div class="meta-item-comprehensive">
+                                    <div class="meta-icon-wrapper">
+                                        <i data-feather="users"></i>
+                                    </div>
+                                    <div class="meta-content">
+                                        <span class="meta-label">Status</span>
+                                        <span class="meta-value">Aktif</span>
+                                    </div>
+                                </div>
+                                <div class="meta-item-comprehensive">
+                                    <div class="meta-icon-wrapper">
+                                        <i data-feather="target"></i>
+                                    </div>
+                                    <div class="meta-content">
+                                        <span class="meta-label">Fokus</span>
+                                        <span class="meta-value">Media & Kreatif</span>
+                                    </div>
+                                </div>
+                                <div class="meta-item-comprehensive">
+                                    <div class="meta-icon-wrapper">
+                                        <i data-feather="bar-chart-2"></i>
+                                    </div>
+                                    <div class="meta-content">
+                                        <span class="meta-label">Level</span>
+                                        <span class="meta-value">Anggota</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills & Tools -->
+                        <div class="skills-comprehensive" data-aos="fade-right" data-aos-delay="100">
+                            <h3 class="skills-title">Skills & Tools</h3>
+                            <div class="skills-categories-comprehensive">
+                                <div class="skill-category-comprehensive">
+                                    <h4><i data-feather="camera"></i> Dokumentasi</h4>
+                                    <div class="skills-list-comprehensive">
+                                        <span class="skill-tag-comprehensive">Fotografi</span>
+                                        <span class="skill-tag-comprehensive">Videografi</span>
+                                        <span class="skill-tag-comprehensive">Desain</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-category-comprehensive">
+                                    <h4><i data-feather="image"></i> Desain</h4>
+                                    <div class="skills-list-comprehensive">
+                                        <span class="skill-tag-comprehensive">Canva</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-category-comprehensive">
+                                    <h4><i data-feather="share-2"></i> Media Sosial</h4>
+                                    <div class="skills-list-comprehensive">
+                                        <span class="skill-tag-comprehensive">Content Strategy</span>
+                                        <span class="skill-tag-comprehensive">Social Media</span>
+                                        <span class="skill-tag-comprehensive">Engagement</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Responsibilities -->
+                    <div class="about-right-column">
+                        <!-- Responsibilities -->
+                        <div class="responsibilities-comprehensive" data-aos="fade-left">
+                            <h3 class="responsibilities-title">Tanggung Jawab Utama</h3>
+                            <div class="responsibilities-grid-comprehensive">
+                                <div class="responsibility-item-comprehensive">
+                                    <div class="responsibility-header-comprehensive">
+                                        <div class="responsibility-icon-comprehensive">
+                                            <i data-feather="camera"></i>
+                                        </div>
+                                        <h4>Dokumentasi & Publikasi</h4>
+                                    </div>
+                                    <p>Mengelola dokumentasi foto/video kegiatan dan publikasi konten di media sosial</p>
+                                    <ul class="responsibility-features-comprehensive">
+                                        <li>Foto & video dokumentasi</li>
+                                        <li>Manajemen media sosial</li>
+                                        <li>Strategi konten digital</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="responsibility-item-comprehensive">
+                                    <div class="responsibility-header-comprehensive">
+                                        <div class="responsibility-icon-comprehensive">
+                                            <i data-feather="pen-tool"></i>
+                                        </div>
+                                        <h4>Desain Visual</h4>
+                                    </div>
+                                    <p>Mendesain materi visual untuk kebutuhan organisasi dan media sosial</p>
+                                    <ul class="responsibility-features-comprehensive">
+                                        <li>Desain grafis & branding</li>
+                                        <li>Konten visual menarik</li>
+                                        <li>Material promosi</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="responsibility-item-comprehensive">
+                                    <div class="responsibility-header-comprehensive">
+                                        <div class="responsibility-icon-comprehensive">
+                                            <i data-feather="users"></i>
+                                        </div>
+                                        <h4>Kolaborasi Tim</h4>
+                                    </div>
+                                    <p>Berpartisipasi aktif dan berkolaborasi dengan berbagai divisi</p>
+                                    <ul class="responsibility-features-comprehensive">
+                                        <li>Koordinasi antar divisi</li>
+                                        <li>Partisipasi kegiatan</li>
+                                        <li>Dukungan tim</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section with Images -->
+        <section id="activities" class="page-container-compact">
+            <div class="section-header-center" data-aos="fade-up">
+                <h2>Kegiatan & Pengalaman</h2>
+                <p>Linimasa partisipasi dalam organisasi</p>
+            </div>
             
-            <div class="activity-list">
-                <div class="activity-item reverse">
-                    <div class="activity-number">01</div>
-                    <div class="activity-image">
-                        <img src="{{ url_for('static', filename='img/anggotahmdti.jpeg') }}" alt="Kegiatan Musyawarah Besar HMDTI">
+            <div class="timeline-with-images">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item-image" data-aos="fade-up">
+                    <div class="timeline-image-container">
+                        <img src="{{ url_for('static', filename='img/anggotahmdti.jpeg') }}" alt="Musyawarah Besar HMDTI">
+                        <div class="timeline-image-overlay">
+                            <i data-feather="calendar"></i>
+                            <span>Feb 2025</span>
+                        </div>
                     </div>
-                    <div class="activity-description">
-                        <h3>Musyawarah Besar HMDTI</h3>
-                        <p>
-Saya berpartisipasi dalam Musyawarah Besar (MUBES) HMDTI. Acara ini mencakup agenda penting seperti pemilihan ketua umum dan pelantikan anggota baru.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-number">02</div>
-                    <div class="activity-image">
-                        <img src="{{ url_for('static', filename='img/pendamping.jpeg') }}" alt="Kegiatan Dinus Inside 2025">
-                    </div>
-                    <div class="activity-description">
-                        <h3>Pendamping Mahasiswa Baru Dinus Inside 2025</h3>
-                        <p>
-Menjadi bagian dari tim kepanitiaan Dinus Inside 2025 sebagai Pendamping Mahasiswa Baru. Dalam peran ini, saya berkolaborasi dengan panitia lain untuk memastikan kelancaran acara orientasi.
-                        </p>
+                    <div class="timeline-content-image">
+                        <div class="timeline-header-image">
+                            <h3>Musyawarah Besar HMDTI</h3>
+                            <span class="timeline-date-image">Februari 2025</span>
+                        </div>
+                        <p>Berpartisipasi dalam agenda penting organisasi termasuk pemilihan ketua umum dan pelantikan anggota baru. Kegiatan ini merupakan momen penting dalam struktur organisasi HMDTI.</p>
+                        <div class="timeline-tags-image">
+                            <span class="tag-image">Organisasi</span>
+                            <span class="tag-image">Musyawarah</span>
+                            <span class="tag-image">Leadership</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="activity-item reverse">
-                     <div class="activity-number">03</div>
-                     <div class="activity-image">
-                        <img src="{{ url_for('static', filename='img/-.png') }}" alt="Kegiatan Selanjutnya">
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item-image" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-image-container">
+                        <img src="{{ url_for('static', filename='img/pendamping.jpeg') }}" alt="Dinus Inside 2025">
+                        <div class="timeline-image-overlay">
+                            <i data-feather="calendar"></i>
+                            <span>Jan 2025</span>
+                        </div>
                     </div>
-                     <div class="activity-description">
-                        <h3>Coming Soon</h3>
-                        <p>
-                            Kegiatan dan kontribusi lainnya akan segera diperbarui di sini.
-                        </p>
+                    <div class="timeline-content-image">
+                        <div class="timeline-header-image">
+                            <h3>Dinus Inside 2025</h3>
+                            <span class="timeline-date-image">Januari 2025</span>
+                        </div>
+                        <p>Menjadi Pendamping Mahasiswa Baru, berkolaborasi dengan panitia untuk memastikan kelancaran acara orientasi. Bertanggung jawab dalam guiding mahasiswa baru.</p>
+                        <div class="timeline-tags-image">
+                            <span class="tag-image">Orientasi</span>
+                            <span class="tag-image">Mentoring</span>
+                            <span class="tag-image">Event</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item-image" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-image-container">
+                        <img src="{{ url_for('static', filename='img/-.png') }}" alt="Kegiatan Mendatang">
+                        <div class="timeline-image-overlay">
+                            <i data-feather="clock"></i>
+                            <span>Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="timeline-content-image">
+                        <div class="timeline-header-image">
+                            <h3>Pengembangan Berkelanjutan</h3>
+                            <span class="timeline-date-image">2025 - Sekarang</span>
+                        </div>
+                        <p>Terus aktif berkontribusi dalam berbagai kegiatan dan proyek organisasi yang akan datang. Selalu terbuka untuk kolaborasi dan pengembangan skill baru.</p>
+                        <div class="timeline-tags-image">
+                            <span class="tag-image">Ongoing</span>
+                            <span class="tag-image">Development</span>
+                            <span class="tag-image active">Active</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
     </main>
 
     <footer class="main-footer">
         <p class="copyright">&copy; 2025 - Didesain & dikembangkan oleh Faza.</p>
     </footer>
     
+    <!-- Scripts -->
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
     <script>
-        feather.replace();
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 600,
+                once: true,
+                offset: 50,
+                disable: window.innerWidth < 768
+            });
+            feather.replace();
+        });
     </script>
 </body>
 </html>

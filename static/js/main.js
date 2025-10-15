@@ -433,3 +433,50 @@ if (typeof AOS !== 'undefined') {
         });
     }
 });
+
+// Simple Navbar Scroll Behavior
+function initNavbar() {
+    const header = document.querySelector('.main-header');
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    function updateNavbar() {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > 100) {
+            header.classList.add('scrolled');
+            
+            // Hide on scroll down, show on scroll up
+            if (currentScrollY > lastScrollY) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+        } else {
+            header.classList.remove('scrolled');
+            header.style.transform = 'translateY(0)';
+        }
+        
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+    
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(updateNavbar);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', onScroll);
+    
+    // Reset navbar when clicking nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            header.style.transform = 'translateY(0)';
+        });
+    });
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', initNavbar);

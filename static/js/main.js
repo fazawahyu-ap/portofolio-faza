@@ -480,3 +480,43 @@ function initNavbar() {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', initNavbar);
+
+// Coordinated Navbar and Lang Button
+function initCoordinatedNavbar() {
+    const header = document.querySelector('.main-header');
+    const langSwitcher = document.querySelector('.lang-switcher');
+    let lastScrollY = window.scrollY;
+    
+    function updatePositions() {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > 100) {
+            header.classList.add('scrolled');
+            // Lang button will automatically move via CSS
+        } else {
+            header.classList.remove('scrolled');
+            // Lang button returns to original position via CSS
+        }
+        
+        lastScrollY = currentScrollY;
+    }
+    
+    // Throttle scroll events
+    let ticking = false;
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updatePositions();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', onScroll);
+    
+    // Initial position check
+    updatePositions();
+}
+
+document.addEventListener('DOMContentLoaded', initCoordinatedNavbar);

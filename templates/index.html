@@ -22,35 +22,37 @@
     </div>
   </div>
 
-  <div class="lang-switcher">
-    <button class="lang-button">
-      <i data-feather="globe"></i>
-      <span id="current-lang">ID</span>
-      <i data-feather="chevron-down" class="chevron"></i>
-    </button>
-    <ul class="lang-dropdown">
-      <li><a href="#" data-lang="id">ID</a></li>
-      <li><a href="#" data-lang="en">EN</a></li>
-    </ul>
-  </div>
-
-  <header class="main-header">
+<header class="main-header">
     <nav class="navbar">
-      <a href="/" class="nav-logo">Faza<span>.dev</span></a>
-      <div class="nav-controls">
-<ul class="nav-menu">
-  <li><a href="/#about" class="nav-link" data-translate-key="nav_about"></a></li>
-  <li><a href="/#experience" class="nav-link" data-translate-key="nav_experience"></a></li>
-  <li><a href="/#projects" class="nav-link" data-translate-key="nav_projects"></a></li>
-  <li><a href="/#skills-certificates" class="nav-link" data-translate-key="nav_skills_certs"></a></li>
-  <li><a href="/#education-organization" class="nav-link" data-translate-key="nav_edu_org"></a></li>
-</ul>
-        <div class="hamburger-menu">
-          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <a href="/" class="nav-logo">Faza<span>.dev</span></a>
+        <div class="nav-controls">
+            <ul class="nav-menu">
+                <li><a href="/#about" class="nav-link" data-translate-key="nav_about"></a></li>
+                <li><a href="/#experience" class="nav-link" data-translate-key="nav_experience"></a></li>
+                <li><a href="/#projects" class="nav-link" data-translate-key="nav_projects"></a></li>
+                <li><a href="/#skills-certificates" class="nav-link" data-translate-key="nav_skills_certs"></a></li>
+                <li class="nav-item-with-lang">
+                    <a href="/#education-organization" class="nav-link" data-translate-key="nav_edu_org"></a>
+                    <div class="lang-switcher">
+                        <button class="lang-button">
+                            <i data-feather="globe"></i>
+                            <span id="current-lang">ID</span>
+                            <i data-feather="chevron-down" class="chevron"></i>
+                        </button>
+                        <ul class="lang-dropdown">
+                            <li><a href="#" data-lang="id">ID</a></li>
+                            <li><a href="#" data-lang="en">EN</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="hamburger-menu">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
         </div>
-      </div>
     </nav>
-  </header>
+</header>
 
   <main>
        <section class="hero" id="home">
@@ -111,14 +113,11 @@
     </a>
 <section id="about" class="about-section">
     <div class="about-container">
-        <!-- Header -->
         <div class="about-header">
             <h2 class="section-title" data-translate-key="about_title"></h2>
         </div>
 
-        <!-- Main Content -->
         <div class="about-content-compact">
-            <!-- Left Column - Profile & Basic Info -->
             <div class="about-left">
                 <div class="profile-card">
                     <div class="profile-image">
@@ -132,10 +131,6 @@
                         <div class="info-item">
                             <i data-feather="mail"></i>
                             <a href="mailto:fazawahyu10@gmail.com">fazawahyu10@gmail.com</a>
-                        </div>
-                        <div class="info-item">
-                            <i data-feather="book"></i>
-                            <span>D3 Teknik Informatika</span>
                         </div>
                     </div>
                     <div class="profile-social">

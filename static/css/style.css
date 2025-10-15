@@ -27,7 +27,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { background-color: var(--bg-color); color: var(--text-primary); font-family: var(--font-family); line-height: 1.5; overflow-x: hidden; padding-top: var(--header-height); }
-.lang-switcher { position: fixed; top: 110px; right: 2rem; z-index: 1001; }
+.lang-switcher {
+    position: relative; 
+}
 .lang-button { display: flex; align-items: center; gap: 0.5rem; background: rgba(31, 41, 55, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--border-color); color: var(--text-secondary); cursor: pointer; padding: 0.6rem 1rem; border-radius: 50px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .lang-button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
 .lang-button i { width: 16px; height: 16px; }
@@ -248,19 +250,6 @@ section[id] { scroll-margin-top: 110px; }
 .skill-tag:hover { color: var(--primary-color); border-color: var(--primary-color); transform: translateY(-4px) scale(1.03); box-shadow: 0 8px 25px rgba(0, 197, 142, 0.2); }
 .skill-icon { width: 18px; height: 18px; color: var(--text-secondary); transition: color 0.3s ease; }
 .skill-tag:hover .skill-icon { color: var(--primary-color); }
-
-/* 2. Layout & Judul Konten */
-
-/* 3. Grid Tanggung Jawab */
-
-/* 4. Menghapus gaya lama yang tidak terpakai di halaman ini */
-
-/* 5. Responsive untuk layout baru */
-
-
-/* Compact About Layout */
-
-/* Compact Responsibilities */
 
 /* Compact Timeline */
 
@@ -3003,36 +2992,265 @@ section[id] { scroll-margin-top: 110px; }
     transform: scale(1.1);
 }
 
+/* ===== HEADER & NAVIGATION ===== */
 .main-header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1.5rem 2rem;
     z-index: 1000;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    height: var(--header-height);
+    /* Transisi yang lebih halus untuk semua properti */
+    transition: background-color 0.4s ease, padding 0.4s ease, height 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    height: var(--header-height); /* 95px */
     display: flex;
     align-items: center;
     background-color: rgba(31, 41, 55, 0.7);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
-    transform: translateY(0);
 }
 
+/* Header saat di-scroll */
 .main-header.scrolled {
-    padding: 1rem 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     height: calc(var(--header-height) - 20px);
     background-color: rgba(31, 41, 55, 0.95);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Pastikan content tidak tertutup */
-body {
-    padding-top: var(--header-height);
+/* Kontainer utama navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Cara terbaik untuk memisahkan logo dan kontrol navigasi */
+    align-items: center; /* Menyejajarkan logo dan kontrol secara vertikal */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* Padding dipindahkan ke sini agar lebih konsisten */
+    padding: 0 2rem;
 }
 
-.main-header.scrolled + main {
-    padding-top: calc(var(--header-height) - 20px);
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-decoration: none;
+    flex-shrink: 0; /* Mencegah logo mengecil */
+}
+
+.nav-logo span {
+    color: var(--primary-color);
+}
+
+/* Kontainer untuk menu navigasi dan hamburger */
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Daftar menu (ul) */
+.nav-menu {
+    display: flex;
+    align-items: center; /* PENTING: Menyejajarkan semua item menu secara vertikal */
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Link navigasi individual (a) */
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    display: inline-block;
+}
+
+/* Animasi garis bawah pada link */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    left: 0;
+    bottom: 0;
+    transform: scaleX(0);
+    transform-origin: center; /* Animasi dari tengah agar lebih bagus */
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-primary);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    transform: scaleX(1);
+}
+
+/* Item menu spesial yang berisi link dan language switcher */
+.nav-item-with-lang {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* ===== LANGUAGE SWITCHER (DI DALAM HEADER) ===== */
+.lang-switcher {
+    position: relative;
+}
+
+.lang-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(31, 41, 55, 0.6);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem 0.9rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.lang-button:hover {
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+.lang-button i {
+    width: 14px;
+    height: 14px;
+}
+
+.lang-button .chevron {
+    transition: transform 0.3s ease;
+}
+
+.lang-switcher.active .lang-button .chevron {
+    transform: rotate(180deg);
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    list-style: none;
+    padding: 0.5rem;
+    width: 80px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.lang-switcher.active .lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-dropdown a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 6px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.lang-dropdown a:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+
+/* ===== HAMBURGER MENU ===== */
+.hamburger-menu {
+    display: none; /* Sembunyi di desktop */
+    cursor: pointer;
+    z-index: 1001;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+}
+
+.hamburger-menu .bar {
+    height: 3px;
+    width: 100%;
+    background-color: var(--text-primary);
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ===== GAYA RESPONSIVE UNTUK HEADER ===== */
+@media (max-width: 992px) { /* Breakpoint tablet */
+    .nav-menu {
+        display: none; /* Sembunyikan menu desktop */
+        /* Gaya untuk menu mobile (flyout) */
+        position: fixed;
+        left: 100%;
+        top: 0;
+        gap: 1.5rem;
+        flex-direction: column;
+        background-color: var(--surface-color);
+        width: 100%;
+        height: 100vh;
+        transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    .nav-menu.active {
+        display: flex; /* Tampilkan menu saat aktif */
+        left: 0;
+    }
+    
+    .nav-link {
+        font-size: 1.5rem;
+    }
+    
+    .hamburger-menu {
+        display: flex; /* Tampilkan ikon hamburger */
+    }
+    
+    /* Animasi ikon hamburger */
+    .hamburger-menu.active .bar:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+    }
+    .hamburger-menu.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger-menu.active .bar:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Penyesuaian language switcher di menu mobile */
+    .nav-item-with-lang {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 1.5rem; /* Kurangi padding di layar kecil */
+    }
 }

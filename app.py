@@ -3,19 +3,16 @@ from flask import Flask, jsonify, render_template, json, request
 
 app = Flask(__name__)
 
-# Environment variable untuk kontrol maintenance
 MAINTENANCE_MODE = os.environ.get('MAINTENANCE_MODE', 'false').lower() == 'true'
 
 @app.before_request
 def check_maintenance():
-    # Allow access to static files even during maintenance
     if request.path.startswith('/static/'):
         return None
         
     if MAINTENANCE_MODE and request.path != '/maintenance':
         return render_template('maintenance.html'), 503
 
-# Define translations globally to be accessible by all routes
 translations = {
     "id": {
         "nav_about": "Tentang",

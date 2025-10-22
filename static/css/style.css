@@ -2514,7 +2514,6 @@ section[id] { scroll-margin-top: 110px; }
     color: var(--text-secondary);
 }
 
-/* Responsive Design */
 /* Responsive Design - Fixed Mobile Alignment */
 @media (max-width: 768px) {
     .about-section {
@@ -2972,7 +2971,6 @@ section[id] { scroll-margin-top: 110px; }
     }
 }
 
-/* Animation for form submission */
 @keyframes formSuccess {
     0% { transform: scale(1); }
     50% { transform: scale(1.02); }
@@ -3010,7 +3008,6 @@ section[id] { scroll-margin-top: 110px; }
     border-bottom: 1px solid var(--border-color);
 }
 
-/* Header saat di-scroll */
 .main-header.scrolled {
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -3018,16 +3015,13 @@ section[id] { scroll-margin-top: 110px; }
     background-color: rgba(31, 41, 55, 0.95);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
-
-/* Kontainer utama navbar */
 .navbar {
     display: flex;
-    justify-content: space-between; /* Cara terbaik untuk memisahkan logo dan kontrol navigasi */
-    align-items: center; /* Menyejajarkan logo dan kontrol secara vertikal */
+    justify-content: space-between; 
+    align-items: center;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    /* Padding dipindahkan ke sini agar lebih konsisten */
     padding: 0 2rem;
 }
 
@@ -3036,31 +3030,28 @@ section[id] { scroll-margin-top: 110px; }
     font-weight: 800;
     color: var(--text-primary);
     text-decoration: none;
-    flex-shrink: 0; /* Mencegah logo mengecil */
+    flex-shrink: 0; 
 }
 
 .nav-logo span {
     color: var(--primary-color);
 }
 
-/* Kontainer untuk menu navigasi dan hamburger */
 .nav-controls {
     display: flex;
     align-items: center;
     gap: 1.5rem;
 }
 
-/* Daftar menu (ul) */
 .nav-menu {
     display: flex;
-    align-items: center; /* PENTING: Menyejajarkan semua item menu secara vertikal */
+    align-items: center; 
     gap: 2rem;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-/* Link navigasi individual (a) */
 .nav-link {
     color: var(--text-secondary);
     text-decoration: none;
@@ -3071,7 +3062,6 @@ section[id] { scroll-margin-top: 110px; }
     display: inline-block;
 }
 
-/* Animasi garis bawah pada link */
 .nav-link::after {
     content: '';
     position: absolute;
@@ -3081,7 +3071,7 @@ section[id] { scroll-margin-top: 110px; }
     left: 0;
     bottom: 0;
     transform: scaleX(0);
-    transform-origin: center; /* Animasi dari tengah agar lebih bagus */
+    transform-origin: center; 
     transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -3095,7 +3085,6 @@ section[id] { scroll-margin-top: 110px; }
     transform: scaleX(1);
 }
 
-/* Item menu spesial yang berisi link dan language switcher */
 .nav-item-with-lang {
     display: flex;
     align-items: center;
@@ -3181,7 +3170,7 @@ section[id] { scroll-margin-top: 110px; }
 
 /* ===== HAMBURGER MENU ===== */
 .hamburger-menu {
-    display: none; /* Sembunyi di desktop */
+    display: none;
     cursor: pointer;
     z-index: 1001;
     flex-direction: column;
@@ -3201,8 +3190,7 @@ section[id] { scroll-margin-top: 110px; }
 /* ===== GAYA RESPONSIVE UNTUK HEADER ===== */
 @media (max-width: 992px) { /* Breakpoint tablet */
     .nav-menu {
-        display: none; /* Sembunyikan menu desktop */
-        /* Gaya untuk menu mobile (flyout) */
+        display: none; 
         position: fixed;
         left: 100%;
         top: 0;
@@ -3218,7 +3206,7 @@ section[id] { scroll-margin-top: 110px; }
     }
 
     .nav-menu.active {
-        display: flex; /* Tampilkan menu saat aktif */
+        display: flex; 
         left: 0;
     }
     
@@ -3227,10 +3215,9 @@ section[id] { scroll-margin-top: 110px; }
     }
     
     .hamburger-menu {
-        display: flex; /* Tampilkan ikon hamburger */
+        display: flex; 
     }
     
-    /* Animasi ikon hamburger */
     .hamburger-menu.active .bar:nth-child(1) {
         transform: rotate(45deg) translate(7px, 7px);
     }
@@ -3241,7 +3228,6 @@ section[id] { scroll-margin-top: 110px; }
         transform: rotate(-45deg) translate(7px, -7px);
     }
 
-    /* Penyesuaian language switcher di menu mobile */
     .nav-item-with-lang {
         flex-direction: column;
         align-items: center;
@@ -3251,6 +3237,6 @@ section[id] { scroll-margin-top: 110px; }
 
 @media (max-width: 768px) {
     .navbar {
-        padding: 0 1.5rem; /* Kurangi padding di layar kecil */
+        padding: 0 1.5rem; 
     }
 }
